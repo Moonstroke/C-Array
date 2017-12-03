@@ -20,7 +20,7 @@ typedef void data; /**< A more eloquent name for the type of the elements */
 /**
  * \brief A structure able to contain a dynamic number of elements.
  *
- * This structure is defined remotele from this file for data encapsulation.
+ * This structure is defined remotely from this file for data encapsulation.
  *
  * An instance of this structure will increase its capacity whenever needed,
  * without explicit user management. The type of the elements is not checked --
