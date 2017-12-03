@@ -1,3 +1,12 @@
+/**
+ * \file "array.h"
+ * \author joH1
+ * \version 0.1
+ *
+ * This file contains the definition of an \a Array, a dynamic container for
+ * any elements.
+ */
+
 #ifndef ARRAY_H
 #define ARRAY_H
 
@@ -5,22 +14,31 @@
 #include <stdbool.h>
 
 
-typedef void data; /**< A more talkative type name */
+typedef void data; /**< A more eloquent name for the type of the elements */
 
 
 /**
- * Opaque type definition
+ * \brief A structure able to contain a dynamic number of elements.
+ *
+ * This structure is defined remotele from this file for data encapsulation.
+ *
+ * An instance of this structure will increase its capacity whenever needed,
+ * without explicit user management. The type of the elements is not checked --
+ * this means it is user's responsibility to manage carefully their \a arrays to
+ * avoid undefined behavior!
+ *
+ * \note This structure is only able to contain pointed types, not primitive
+ *       types (unless you try to interpret the addresses as integers)...
  */
 typedef struct array Array;
 
 
 /**
- * \brief Initializer method.
+ * \brief Constructs an array with initial capacity of \a size elements.
  *
- * Constructs an array of `size` slots, with `size` times `itemsize` allocated
- * bytes
+ * \param[in] size The number of elements to allocate
  *
- * \param[in] size
+ * \return A new instance of \a Array, with \a size elements slots.
  */
 Array *newarray(size_t size);
 
@@ -47,15 +65,13 @@ size_t asize(const Array *self);
  *        invalid.
  *
  * An index is valid if an only if:
- * \code
- * -arraysize(array) <= index < -1 || 0 <= index < arraysize(array)
- * \endcode
- * Negative indexes will get \c |index|'th item from the end
+ * \code -arraysize(array) <= index < -1 || 0 <= index < arraysize(array) \endcode
+ * Negative indexes will get \c |index| 'th item from the end
  *
  * \param[in] self  The array
  * \param[in] index The index at which to look for an element
  *
- * \return The \a index'th element in the array, or \c NULL if the index is
+ * \return The \a index 'th element in the array, or \c NULL if the index is
  *         invalid
  */
 data *aget(const Array *self, ssize_t index);
@@ -67,14 +83,14 @@ data *aget(const Array *self, ssize_t index);
  * \param[in]     index   The index at which to update the element
  * \param[in]     newitem The new element to set
  *
- * \return The former element found at index \c index, or \c NULL if the index
+ * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid
  */
 data *aset(Array *self, ssize_t index, data *newitem);
 
 
 /**
- * \brief Inserts an element at \c index'th position.
+ * \brief Inserts an element at \a index'th position.
  *
  * \param[in,out] self    The array
  * \param[in]     index   The index at which to insert an element

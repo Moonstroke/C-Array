@@ -1,3 +1,11 @@
+/**
+ * \file "array_funcs.h"
+ * \author joH1
+ * \version 0.1
+ *
+ * This file contains additional functions related to the \a Array structure.
+ */
+
 #ifndef ARRAY_FUNCS_H
 #define ARRAY_FUNCS_H
 
@@ -14,6 +22,9 @@
  * \note Function pointers casts usually cause undefined behavior, but if one
  *       knows what he's doing, a cast to \c void* will not cause undefined
  *       behaviour.
+ *
+ * \param[in,out] array    The array to free recursively
+ * \param[in]     freeitem The function to use to free each item
  */
 void afreer(Array *array, void (*freeitem)(data*));
 
@@ -24,7 +35,7 @@ void afreer(Array *array, void (*freeitem)(data*));
  * \param[in,out] array The array
  * \param[in]     item  The item to remove
  *
- * Returns \c true iff the element was found and removed.
+ * \return \c true \a iff the element was found and removed.
  */
 bool aremove(Array *array, const data *item);
 
