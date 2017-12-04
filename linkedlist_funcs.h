@@ -8,7 +8,7 @@
 /**
  * Frees a linked list and frees its elements with given function.
  */
-void lfreer(LinkedList llist, void (*freeitems)(data));
+void lfreer(LinkedList *llist, void (*freeitems)(data*));
 
 
 /*
@@ -16,7 +16,7 @@ void lfreer(LinkedList llist, void (*freeitems)(data));
  *
  * Returns TRUE if the element was found -- and removed.
  */
-bool lremove(const LinkedList a, const data item);
+bool lremove(LinkedList *a, const data *item);
 
 
 #endif /* LINKEDLIST_FUNCS_H */

@@ -15,7 +15,7 @@ void printint(void *const data) {
  */
 int main(const int argc, char *const argv[]) {
 
-	LinkedList l = newlinkedlist();
+	LinkedList *l = newlinkedlist();
 
 	const int ints[] = {42, 3, 7, 13};
 	const unsigned int N = 4;

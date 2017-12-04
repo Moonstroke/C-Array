@@ -4,19 +4,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
+typedef struct node Node;
 struct node {
 	void *data;
-	struct node *next;
+	Node *next;
 };
 
 struct llist {
 	size_t len;
-	struct node *head;
+	Node *head;
 };
 
-struct llist *newlinkedlist(void) {
-	struct llist *const l = malloc(sizeof(struct llist));
+LinkedList *newlinkedlist(void) {
+	LinkedList *const l = malloc(sizeof(LinkedList));
 	if(l == NULL)
 		return NULL;
 	l->len = 0;
@@ -24,19 +24,19 @@ struct llist *newlinkedlist(void) {
 	return l;
 }
 
-static inline struct node *newnode(void *const data, struct node *const next) {
-	struct node *const item = malloc(sizeof(struct node));
-	if(item == NULL) {
+static inline Node *newnode(data *const d, Node *const next) {
+	Node *const node = malloc(sizeof(Node));
+	if(node == NULL) {
 		return NULL;
 	}
-	item->data = data;
-	item->next = next;
-	return item;
+	node->data = d;
+	node->next = next;
+	return node;
 }
 
-void lfree(struct llist *const l, void (*f)(void*)) {
+void lfree(LinkedList *const l, void (*const f)(data*)) {
 	if(l->head) {
-		struct node *item = l->head, *next;
+		Node *item = l->head, *next;
 		if(f != NULL)
 			for(next = l->head->next; next != NULL; item = next, next = next->next) {
 				f(item->data);
@@ -50,12 +50,12 @@ void lfree(struct llist *const l, void (*f)(void*)) {
 }
 
 
-size_t llen(const struct llist *const l) {
+size_t llen(const LinkedList *const l) {
 	return l->len;
 }
 
 
-static inline ssize_t valid(const struct llist *const l, const ssize_t i) {
+static inline ssize_t valid(const LinkedList *const l, const ssize_t i) {
 	const size_t n = l->len;
 	if(0 <= i && i < (signed)n) {
 		return i;
@@ -66,8 +66,8 @@ static inline ssize_t valid(const struct llist *const l, const ssize_t i) {
 	}
 }
 
-static inline struct node *lgoto(const struct llist *const l, const size_t n) {
-	struct node *item = l->head;
+static inline Node *lgoto(const LinkedList *const l, const size_t n) {
+	Node *item = l->head;
 	size_t i;
 	for(i = 0; i < n && item != NULL; ++i) {
 		item = item->next;
@@ -76,7 +76,7 @@ static inline struct node *lgoto(const struct llist *const l, const size_t n) {
 }
 
 
-void *lget(const struct llist *const l, const ssize_t index) {
+data *lget(const LinkedList *const l, const ssize_t index) {
 	ssize_t i = valid(l, index);
 	if(i < 0) {
 		return NULL;
@@ -84,19 +84,19 @@ void *lget(const struct llist *const l, const ssize_t index) {
 	return lgoto(l, i)->data;
 }
 
-void *lset(struct llist *const l, const ssize_t index, void *const data) {
+data *lset(LinkedList *const l, const ssize_t index, data *const d) {
 	ssize_t i = valid(l, index);
 	if(i < 0) {
 		return NULL;
 	}
-	struct node *const item = lgoto(l, i);
-	void *const former = item->data;
-	item->data = data;
+	Node *const item = lgoto(l, i);
+	data *const former = item->data;
+	item->data = d;
 	return former;
 }
 
-ssize_t ladd(struct llist *const l, const ssize_t index, void *const data) {
-	struct node *item = newnode(data, NULL);
+ssize_t ladd(LinkedList *const l, const ssize_t index, void *const d) {
+	Node *item = newnode(d, NULL);
 	if(item == NULL) {
 		return -1;
 	}
@@ -105,35 +105,35 @@ ssize_t ladd(struct llist *const l, const ssize_t index, void *const data) {
 	if(i == 0) {
 		l->head = item;
 	} else {
-		struct node *prev = lgoto(l, i - 1);
+		Node *const prev = lgoto(l, i - 1);
 		item->next = prev->next;
 		prev->next = item;
 	}
 	l->len++;
-	return index;
+	return i;
 }
-extern inline ssize_t lappend(struct llist *l, void *data);
+extern inline ssize_t lappend(LinkedList *l, data *data);
 
-void *ldrop(struct llist *const l, const ssize_t index) { // TODO refactor
+void *ldrop(LinkedList *const l, const ssize_t index) { // TODO refactor
 	const ssize_t i = valid(l, index);
 	if(i < 0) {
 		return NULL;
 	}
 	else if(i == 0) {
-		void *const data = l->head->data;
+		data *const d = l->head->data;
 		l->head = l->head->next;
-		return data;
+		return d;
 	}
-	struct node *prev = lgoto(l, i - 1), *item;
+	Node *prev = lgoto(l, i - 1), *item;
 	if(prev == NULL || (item = prev->next) == NULL)
 		return NULL;
-	void *const data = item->data;
+	data *const d = item->data;
 	prev->next = item->next;
 	free(item);
-	return data;
+	return d;
 }
 
-void lprintf(const struct llist *const l, void (*f)(void*)) {
+void lprintf(const LinkedList *const l, void (*f)(void*)) {
 	const size_t n = l->len;
 	printf("(");
 	if(n > 0) {
@@ -142,7 +142,7 @@ void lprintf(const struct llist *const l, void (*f)(void*)) {
 		else
 			printf("%p", l->head->data);
 	}
-	struct node *item;
+	Node *item;
 	for(item = l->head->next; item; item = item->next) {
 		if(f) {
 			printf(", ");
