@@ -19,6 +19,8 @@
  *
  * \param[in,out] list      The linked list
  * \param[in]     freeitems The function to pass each item to free
+ *
+ * \relates LinkedList
  */
 void lfreer(LinkedList *list, void (*freeitems)(data*));
 
@@ -30,6 +32,8 @@ void lfreer(LinkedList *list, void (*freeitems)(data*));
  * \param[in]     item The item to find and remove
  *
  * \return \c true if the element could be found, and was removed.
+ *
+ * \relates LinkedList
  */
 bool lremove(LinkedList *list, const data *item);
 

@@ -48,6 +48,8 @@ void lfree(LinkedList *self, void (*freeitem)(data*));
 
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Returns the length of the linked list.
  *
  * \param[in] self The linked list
@@ -58,6 +60,8 @@ size_t llen(const LinkedList *self);
 
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Retrieves an element of the linked list by its position.
  *
  * \param[in,out] self  The linked list
@@ -68,6 +72,8 @@ size_t llen(const LinkedList *self);
 data *lget(const LinkedList *self, ssize_t index);
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Updates an element of the list.
  *
  * \param[in,out] self  The linked list
@@ -80,6 +86,8 @@ data *lset(LinkedList *self, ssize_t index, data *item);
 
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Inserts an element to the linked list before given \a index (index
  *        starts at \c 0).
  *
@@ -92,6 +100,8 @@ data *lset(LinkedList *self, ssize_t index, data *item);
 ssize_t ladd(LinkedList *self, ssize_t index, data *item);
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Appends an element to the end of the linked list.
  *
  * \param[in,out] self The linked list
@@ -105,6 +115,8 @@ inline ssize_t lappend(LinkedList *self, data *item) {
 
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Removes an element of the list.
  *
  * \param[in,out] self  The linked list
@@ -117,6 +129,8 @@ data *ldrop(LinkedList *self, ssize_t index);
 
 
 /**
+ * \memberof LinkedList
+ *
  * \brief Prints a linked list on \a stdin, each element separated with a comma
  * and a space, enclosed in round brackets.
  *
