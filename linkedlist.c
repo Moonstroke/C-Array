@@ -57,9 +57,9 @@ size_t llen(const struct llist *const l) {
 
 static inline ssize_t valid(const struct llist *const l, const ssize_t i) {
 	const size_t n = l->len;
-	if(0 <= i && i < n) {
+	if(0 <= i && i < (signed)n) {
 		return i;
-	} else if(-n <= i && i < 0) {
+	} else if(-(signed)n <= i && i < 0) {
 		return n + i;
 	} else {
 		return -1;
@@ -101,14 +101,11 @@ ssize_t ladd(struct llist *const l, const ssize_t index, void *const data) {
 		return -1;
 	}
 	// here `l->len` is a valid index ( <=> append)
-	ssize_t i = (index == l->len) ? index : valid(l, index);
+	const ssize_t i = (index == (signed)l->len) ? index : valid(l, index);
 	if(i == 0) {
 		l->head = item;
 	} else {
-		struct node *prev = lgoto(l, i - 1);/*l->head;
-		while(i-- && prev->next != NULL) {
-			prev = prev->next;
-		}*/
+		struct node *prev = lgoto(l, i - 1);
 		item->next = prev->next;
 		prev->next = item;
 	}
@@ -154,17 +151,4 @@ void lprintf(const struct llist *const l, void (*f)(void*)) {
 			printf(", %p", item->data);
 	}
 	printf(")\n");
-}
-
-// debugging function
-static void ldump(const struct llist *l) {
-	printf("LinkedList {\n");
-	printf("    len = %ld,\n", l->len);
-	printf("    items = ");
-	struct node *item = l->head;
-	while(item != NULL) {
-		printf("%p, ", item);
-		item = item->next;
-	}
-	printf("\n}\n");
 }
