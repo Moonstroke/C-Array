@@ -111,7 +111,7 @@ ssize_t aadd(Array *self, ssize_t index, data *newitem);
  * \sa aadd
  */
 inline ssize_t aappend(Array *self, data *item) {
-	aadd(self, asize(self), item);
+	return aadd(self, asize(self), item);
 }
 
 

@@ -15,6 +15,7 @@ bool aremove(Array *const a, const data *const item) {
 			return adrop(a, i) != NULL;
 		}
 	}
+	return false;
 }
 
 void aeach(Array *const a, void (*f)(data*)) {

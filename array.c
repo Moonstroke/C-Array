@@ -68,7 +68,7 @@ data *aget(const Array *const a, const ssize_t index) {
 }
 
 data *aset(Array *const a, const ssize_t index, data *const e) {
-	const size_t i = valid(a, index);
+	const ssize_t i = valid(a, index);
 	if(i < 0)
 		return NULL;
 	void *const former = a->items[i];
