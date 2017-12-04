@@ -114,7 +114,7 @@ ssize_t ladd(LinkedList *const l, const ssize_t index, void *const d) {
 }
 extern inline ssize_t lappend(LinkedList *l, data *data);
 
-void *ldrop(LinkedList *const l, const ssize_t index) { // TODO refactor
+void *ldrop(LinkedList *const l, const ssize_t index) {
 	const ssize_t i = valid(l, index);
 	if(i < 0) {
 		return NULL;
