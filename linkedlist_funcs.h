@@ -1,3 +1,12 @@
+/**
+ * \file "linkedlist_funcs.h"
+ * \author joH1
+ * \version 0.1
+ *
+ *\brief This module contains additional functions for the LinkedList structure.
+ *
+ */
+
 #ifndef LINKEDLIST_FUNCS_H
 #define LINKEDLIST_FUNCS_H
 
@@ -6,17 +15,23 @@
 #include <stdbool.h>
 
 /**
- * Frees a linked list and frees its elements with given function.
- */
-void lfreer(LinkedList *llist, void (*freeitems)(data*));
-
-
-/*
- * Removes an element of the linked list
+ * \brief Frees a linked list and frees its elements with given function.
  *
- * Returns TRUE if the element was found -- and removed.
+ * \param[in,out] list      The linked list
+ * \param[in]     freeitems The function to pass each item to free
  */
-bool lremove(LinkedList *a, const data *item);
+void lfreer(LinkedList *list, void (*freeitems)(data*));
+
+
+/**
+ * \brief Removes an element of the linked list.
+ *
+ * \param[in,out] list The linked list
+ * \param[in]     item The item to find and remove
+ *
+ * \return \c true if the element could be found, and was removed.
+ */
+bool lremove(LinkedList *list, const data *item);
 
 
 #endif /* LINKEDLIST_FUNCS_H */
