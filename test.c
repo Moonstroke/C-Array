@@ -20,37 +20,46 @@ bool equals42(const void *const e) {
 	return *((int*)e) == 42;
 }
 
+bool equals1024(const void *const e) {
+	return *((int*)e) == 1024;
+}
+
 
 int main(const int argc, const char *argv[]) {
 	// 10 integers array
 	Array *a = newarray(INT_ARRAY_SIZE);
 
 	int ints[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
-	unsigned int i;
+	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5]");
 
 	info("test append");
-	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5]");
-	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
-		ssize_t expected, got;
-		expected = i;
-		verbose("aappend(a, %d)", ints[i]);
-		verbose("expected: %ld", expected);
-		got = aappend(a, &ints[i]);
-		verbose("got     : %ld", got);
-		assert(expected == got);
+	{
+		unsigned int i;
+		for(i = 0; i < INT_ARRAY_SIZE; ++i) {
+			ssize_t expected, got;
+			expected = i;
+			verbose("aappend(a, %d)", ints[i]);
+			verbose("expected: %ld", expected);
+			got = aappend(a, &ints[i]);
+			verbose("got     : %ld", got);
+			assert(expected == got);
+		}
 	}
 	aprintf(a, *printint);
 	info("OK\n");
 
 	info("tests get");
-	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
-		int expected, got;
-		expected = ints[i];
-		verbose("aget(a, %d)", i);
-		verbose("expected: %d", expected);
-		got = *((int*)aget(a, i));
-		verbose("got     : %d", got);
-		assert(got == expected);
+	{
+		unsigned int i;
+		for(i = 0; i < INT_ARRAY_SIZE; ++i) {
+			int expected, got;
+			expected = ints[i];
+			verbose("aget(a, %d)", i);
+			verbose("expected: %d", expected);
+			got = *((int*)aget(a, i));
+			verbose("got     : %d", got);
+			assert(got == expected);
+		}
 	}
 	aprintf(a, *printint);
 	info("OK\n");
@@ -73,7 +82,7 @@ int main(const int argc, const char *argv[]) {
 	{
 		int extra = 777;
 		int expected, got;
-		i = 2;
+		unsigned int i = 2;
 		expected = ints[i];
 		verbose("aset(a, %u, %d)", i, extra);
 		verbose("expected: %ld", expected);
@@ -81,6 +90,7 @@ int main(const int argc, const char *argv[]) {
 		verbose("got     : %ld", got);
 		assert(expected == got);
 	}
+	aprintf(a, *printint);
 	info("OK\n");
 
 	info("test acond");
@@ -91,6 +101,18 @@ int main(const int argc, const char *argv[]) {
 		verbose("expected = %d", expected);
 		got = *(int*)acond(a, equals42);
 		verbose("got      = %d", got);
+		assert(expected == got);
+	}
+	info("OK\n");
+
+	info("test acond - not found");
+	{
+		int *expected, *got;
+		expected = NULL;
+		verbose("acond(a, %s)", "(int i) -> (i == 1024)");
+		verbose("expected = %p", expected);
+		got = (int*)acond(a, equals1024);
+		verbose("got      = %p", got);
 		assert(expected == got);
 	}
 	info("OK\n");
