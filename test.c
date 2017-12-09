@@ -25,7 +25,7 @@ bool equals1024(const void *const e) {
 }
 
 
-int main(const int argc, const char *argv[]) {
+int main(void) {
 	// 10 integers array
 	Array *a = newarray(INT_ARRAY_SIZE);
 
