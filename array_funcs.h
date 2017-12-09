@@ -9,7 +9,11 @@
 #ifndef ARRAY_FUNCS_H
 #define ARRAY_FUNCS_H
 
+
+#include <stdbool.h>
+
 #include "array.h"
+
 
 
 /**
@@ -47,5 +51,17 @@ bool aremove(Array *array, const data *item);
  */
 void aeach(Array *array, void (*apply)(data*));
 
+/**
+ * \brief Retrieves an element of the array according to the condition.
+ *
+ * Each element of the array is passed to the \a predicate, and the first
+ * element to return \c true is returned.
+ *
+ * \param[in] array     The array
+ * \param[in] predicate The condition function to use
+ *
+ * \return The first element to satisfy the condition, or \c NULL if none is found
+ */
+data *acond(const Array *array, bool (*predicate)(const data*));
 
 #endif /* ARRAY_FUNCS_H */

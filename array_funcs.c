@@ -25,3 +25,15 @@ void aeach(Array *const a, void (*f)(data*)) {
 		f(aget(a, i));
 	}
 }
+
+data *acond(const Array *a, bool (*f)(const data*)) {
+	const size_t l = asize(a);
+	data *item;
+	size_t i;
+	for(i = 0; i < l; ++i) {
+		item = aget(a, i);
+		if(f(item))
+			return item;
+	}
+	return NULL;
+}

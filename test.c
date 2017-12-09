@@ -16,6 +16,10 @@ void printint(const void *i) {
 		printf("%d", *(int*)i);
 }
 
+bool equals42(const void *const e) {
+	return *((int*)e) == 42;
+}
+
 
 int main(const int argc, const char *argv[]) {
 	// 10 integers array
@@ -71,6 +75,17 @@ int main(const int argc, const char *argv[]) {
 		verbose("expected: %ld", expected);
 		got = *(int*)aset(a, i, &extra);
 		verbose("got     : %ld", got);
+		assert(expected == got);
+		info("OK");
+	}
+
+	info("\ntest acond");
+	{
+		int expected, got;
+		expected = 42;
+		verbose("expected = %d", expected);
+		got = *(int*)acond(a, equals42);
+		verbose("got      = %d", got);
 		assert(expected == got);
 		info("OK");
 	}
