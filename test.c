@@ -28,8 +28,8 @@ int main(const int argc, const char *argv[]) {
 	int ints[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 	unsigned int i;
 
-	info("\ntest append");
-	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5]\n");
+	info("test append");
+	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5]");
 	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
 		ssize_t expected, got;
 		expected = i;
@@ -37,11 +37,11 @@ int main(const int argc, const char *argv[]) {
 		got = aappend(a, &ints[i]);
 		verbose("got     : %ld", got);
 		assert(expected == got);
-		info("OK");
-		aprintf(a, *printint);
 	}
+	aprintf(a, *printint);
+	info("OK\n");
 
-	info("\ntests get\n");
+	info("tests get");
 	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
 		int expected, got;
 		expected = ints[i];
@@ -49,11 +49,11 @@ int main(const int argc, const char *argv[]) {
 		got = *((int*)aget(a, i));
 		verbose("got     : %d", got);
 		assert(got == expected);
-		info("OK");
 	}
 	aprintf(a, *printint);
+	info("OK\n");
 
-	info("\ntest append - overflow size (=> realloc)\n");
+	info("test append - overflow size (=> realloc)");
 	{
 		int extra = 73;
 		ssize_t expected, got;
@@ -62,11 +62,11 @@ int main(const int argc, const char *argv[]) {
 		got = aappend(a, &extra);
 		verbose("got     : %ld", got);
 		assert(expected == got);
-		info("OK");
 	}
 	aprintf(a, *printint);
+	info("OK\n");
 
-	info("\ntest set");
+	info("test set");
 	{
 		int extra = 777;
 		int expected, got;
@@ -76,10 +76,10 @@ int main(const int argc, const char *argv[]) {
 		got = *(int*)aset(a, i, &extra);
 		verbose("got     : %ld", got);
 		assert(expected == got);
-		info("OK");
 	}
+	info("OK\n");
 
-	info("\ntest acond");
+	info("test acond");
 	{
 		int expected, got;
 		expected = 42;
@@ -87,12 +87,12 @@ int main(const int argc, const char *argv[]) {
 		got = *(int*)acond(a, equals42);
 		verbose("got      = %d", got);
 		assert(expected == got);
-		info("OK");
 	}
+	info("OK\n");
 
-	info("\ntest free");
+	info("test free");
 	afree(a);
-	info("OK");
+	info("OK\n");
 
 	return 0;
 }
