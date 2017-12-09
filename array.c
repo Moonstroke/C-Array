@@ -1,9 +1,5 @@
 #include "array.h"
 
-
-#include <string.h>
-#include <stdio.h>
-
 #include "log.h"
 
 
@@ -119,24 +115,4 @@ data *adrop(Array *a, const ssize_t index) {
 		a->items[i] = a->items[i + 1];
 	a->size--;
 	return it;
-}
-
-void aprintf(const Array *a, void (*f)(const data*)) {
-	const size_t n = a->size;
-	printf("[");
-	if(n > 0) {
-		if(f)
-			f(a->items[0]);
-		else
-			printf("%p", a->items[0]);
-	}
-	size_t i;
-	for(i = 1; i < n; ++i) {
-		if(f) {
-			printf(", ");
-			f(a->items[i]);
-		} else
-			printf(", %p", a->items[i]);
-	}
-	printf("]\n");
 }

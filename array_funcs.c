@@ -1,5 +1,7 @@
 #include "array_funcs.h"
 
+#include <stdio.h>
+
 
 void afreer(Array *a, void(*f)(data*)) {
 	if(f)
@@ -36,4 +38,24 @@ data *acond(const Array *a, bool (*f)(const data*)) {
 			return item;
 	}
 	return NULL;
+}
+
+void aprintf(const Array *a, void (*f)(const data*)) {
+	const size_t n = asize(a);
+	printf("[");
+	if(n > 0) {
+		if(f)
+			f(aget(a, 0));
+		else
+			printf("%p", aget(a, 0));
+	}
+	size_t i;
+	for(i = 1; i < n; ++i) {
+		if(f) {
+			printf(", ");
+			f(aget(a, i));
+		} else
+			printf(", %p", aget(a, i));
+	}
+	printf("]\n");
 }

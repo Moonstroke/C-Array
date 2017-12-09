@@ -11,7 +11,6 @@
 #define ARRAY_H
 
 #include <stdlib.h>
-#include <stdbool.h>
 
 
 typedef void data; /**< A more eloquent name for the type of the elements */
@@ -125,22 +124,4 @@ inline ssize_t aappend(Array *self, data *item) {
  */
 data *adrop(Array *self, ssize_t index);
 
-
-/**
- * \brief Prints an array on stdin, with each element printed with provided
- *        function.
- *
- * \note The function must only output the element, no whitespace or separating
- *       characters are needed (commas, brackets).
- * \note The function should check the pointer element's value before
- *       dereferencing it, it is not guaranteed that the value will not be
- *       \c NULL.
- *
- * If the item function is \c NULL, the function will output the pointer
- * addresses of the elements in \c printf's "%p" format.
- *
- * \param[in,out] self      The array
- * \param[in]     printitem The function to print each element with
- */
-void aprintf(const Array *self, void (*printitem)(const data*));
 #endif /* ARRAY_H */

@@ -64,4 +64,23 @@ void aeach(Array *array, void (*apply)(data*));
  */
 data *acond(const Array *array, bool (*predicate)(const data*));
 
+/**
+ * \brief Prints an array on \a stdin, with each element printed with provided
+ *        function.
+ *
+ * \note The function must only output the element, no whitespace or separating
+ *       characters are needed (commas, brackets).
+ * \note The function should check the pointer element's value before
+ *       dereferencing it, it is not guaranteed that the value will not be
+ *       \c NULL.
+ *
+ * If the item function is \c NULL, the function will output the pointer
+ * addresses of the elements in \c printf's "%p" format.
+ *
+ * \param[in,out] self      The array
+ * \param[in]     printitem The function to print each element with
+ */
+void aprintf(const Array *self, void (*printitem)(const data*));
+
+
 #endif /* ARRAY_FUNCS_H */
