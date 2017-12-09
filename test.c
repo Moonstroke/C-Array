@@ -33,6 +33,7 @@ int main(const int argc, const char *argv[]) {
 	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
 		ssize_t expected, got;
 		expected = i;
+		verbose("aappend(a, %d)", ints[i]);
 		verbose("expected: %ld", expected);
 		got = aappend(a, &ints[i]);
 		verbose("got     : %ld", got);
@@ -45,6 +46,7 @@ int main(const int argc, const char *argv[]) {
 	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
 		int expected, got;
 		expected = ints[i];
+		verbose("aget(a, %d)", i);
 		verbose("expected: %d", expected);
 		got = *((int*)aget(a, i));
 		verbose("got     : %d", got);
@@ -58,6 +60,7 @@ int main(const int argc, const char *argv[]) {
 		int extra = 73;
 		ssize_t expected, got;
 		expected = INT_ARRAY_SIZE;
+		verbose("aappend(a, %d)", extra);
 		verbose("expected: %ld", expected);
 		got = aappend(a, &extra);
 		verbose("got     : %ld", got);
@@ -72,6 +75,7 @@ int main(const int argc, const char *argv[]) {
 		int expected, got;
 		i = 2;
 		expected = ints[i];
+		verbose("aset(a, %u, %d)", i, extra);
 		verbose("expected: %ld", expected);
 		got = *(int*)aset(a, i, &extra);
 		verbose("got     : %ld", got);
@@ -83,6 +87,7 @@ int main(const int argc, const char *argv[]) {
 	{
 		int expected, got;
 		expected = 42;
+		verbose("acond(a, %s)", "(int i) -> (i == 42)"); // string repr of the equals42() func
 		verbose("expected = %d", expected);
 		got = *(int*)acond(a, equals42);
 		verbose("got      = %d", got);
@@ -90,7 +95,8 @@ int main(const int argc, const char *argv[]) {
 	}
 	info("OK\n");
 
-	info("test free");
+	info("test afree");
+	verbose("afree(a)");
 	afree(a);
 	info("OK\n");
 
