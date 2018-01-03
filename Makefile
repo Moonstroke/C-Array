@@ -29,6 +29,9 @@ DOC_CFG := Doxyfile
 DOC_DIR := doc
 
 
+# Installation directory
+PREFIX_DIR := /usr/local
+
 # Compilation flags
 CC := gcc
 CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded
@@ -70,3 +73,7 @@ test: $(TEST_OBJ) $(OBJ)
 
 testclean:
 	rm -rf $(TEST_OBJ) $(TEST_EXEC)
+
+install: all
+	mv --update --target-directory=$(PREFIX_DIR)/include $(INC_DIR)
+	mv --update --target-directory=$(PREFIX_DIR)/lib $(LIB)
