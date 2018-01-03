@@ -17,11 +17,11 @@ static void printint(const void *i) {
 }
 
 static bool equals42(const void *const e) {
-	return *((int*)e) == 42;
+	return e && *((int*)e) == 42;
 }
 
 static bool equals1024(const void *const e) {
-	return *((int*)e) == 1024;
+	return e && *((int*)e) == 1024;
 }
 
 
