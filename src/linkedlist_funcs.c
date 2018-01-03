@@ -1,6 +1,7 @@
 #include "linkedlist_funcs.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 
 
@@ -40,22 +41,21 @@ data *lcond(const LinkedList *const l, bool (*const f)(const data*)) {
 }
 
 
-void lprintf(const LinkedList *const l, void (*const f)(const data*)) {
+static void printitem_default(const data *item) {
+	printf("%p", item);
+}
+
+void lprintf(const LinkedList *const l, void (*f)(const data*)) {
 	printf("(");
-	if(llen(l) > 0) {
-		if(f)
-			f(lget(l, 0));
-		else
-			printf("%p", lget(l, 0));
-	}
+	if(!f)
+		f = printitem_default;
+	if(llen(l) > 0)
+		f(lget(l, 0));
 	data *item;
 	unsigned int i;
-	for(i = 0; item = lget(l, i); ++i) {
-		if(f) {
+	for(i = 1; item = lget(l, i); ++i) {
 			printf(", ");
 			f(item);
-		} else
-			printf(", %p", item);
 	}
 	printf(")\n");
 }
