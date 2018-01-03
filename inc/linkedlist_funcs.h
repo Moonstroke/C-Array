@@ -42,8 +42,8 @@ bool lremove(LinkedList *list, const data *item);
  * \brief Prints a linked list on \a stdin, each element separated with a comma
  * and a space, enclosed in round brackets.
  *
- * \param[in,out] self      The linked list
- * \param[in]     printitem The function to print each element with
+ * \param[in] list      The linked list
+ * \param[in] printitem The function to print each element with
  *
  * \note If \a printitem is \c NULL, the elements' addresses will be output in
  *       \a printf 's \c "%p" format.
