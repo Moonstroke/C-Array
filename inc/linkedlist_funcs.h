@@ -48,6 +48,18 @@ void leach(LinkedList *list, void (*apply)(data*));
 
 
 /**
+ * \brief Retrieve the first item in the linked list to match a given
+ *        predicate.
+ *
+ * \param[in] list The linked list
+ * \param[in] pred The predicate function to apply
+ *
+ * \return The first matching element, or \c NULL if none was found.
+ */
+data *lcond(const LinkedList *list, bool (*pred)(data*));
+
+
+/**
  * \brief Prints a linked list on \a stdin, each element separated with a comma
  * and a space, enclosed in round brackets.
  *

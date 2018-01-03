@@ -33,6 +33,13 @@ void leach(LinkedList *const l, void (*const f)(data*)) {
 }
 
 
+data *lcond(const LinkedList *const l, bool (*const f)(const data*)) {
+	const data *item;
+	for(unsigned int i = 0; (item = lget(l, i)) && f(item); ++i);
+	return item;
+}
+
+
 void lprintf(const LinkedList *const l, void (*const f)(const data*)) {
 	printf("(");
 	if(llen(l) > 0) {
