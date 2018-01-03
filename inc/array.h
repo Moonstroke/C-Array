@@ -11,6 +11,8 @@
 #define ARRAY_H
 
 #include <stdlib.h>
+#include <unistd.h>
+
 
 
 typedef void data; /**< A more eloquent name for the type of the elements */

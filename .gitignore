@@ -1,5 +1,5 @@
-a.out
-*.o
+obj/
+test_array
 libarray.a
 
 # Documentation directory
