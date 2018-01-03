@@ -1,3 +1,9 @@
-a.out
-*.o
+# Compiled files
+test_llist
+obj/
+
+# Library archive
 liblinkedlist.a
+
+# Documentation directory
+doc/
