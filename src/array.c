@@ -51,16 +51,6 @@ data *aget(const Array *const a, const int index) {
 	if(i < 0)
 		return NULL;
 	return a->items[i];
-	//return i < 0 ? a->items[a->size + i] : i < a->size ? a->items[i] : NULL;
-	/* ungolfed:
-	if(i < 0) {
-		i = a->size + i;
-	}
-	// here, necessarily index < a->size
-	if(i < 0)
-		return NULL;
-	return items[i];
-	*/
 }
 
 data *aset(Array *const a, const int index, data *const e) {
@@ -70,19 +60,18 @@ data *aset(Array *const a, const int index, data *const e) {
 	void *const former = a->items[i];
 	a->items[i] = e;
 	return former;
-	// TODO
 }
 
 
 int aadd(Array *const a, const int index, data *const e) {
 	const int i = (index == (signed)a->size) ? index : valid(a, index);
-		// not just `i = valid(index)` because `a->size` is a valid value (=> append)
+	/* not just `i = valid(index)` because `a->size` is a valid value (=> append) */
 	if(i < 0)
 		return -1;
 	const unsigned int n = a->size,
 	             c = a->capacity;
 	if(n == c) {
-		const unsigned int capa = c + (c / 2 + c % 2); // capacity * 1.5
+		const unsigned int capa = c + (c / 2 + c % 2); /* capacity * 1.5 */
 		data *const items = realloc(a->items, capa * sizeof(void*));
 		if(items == NULL) {
 			return -1;
@@ -109,7 +98,7 @@ data *adrop(Array *a, const int index) {
 	data *const it = a->items[n];
 	a->items[n] = NULL;
 
-	// displace the elements to shrink the space
+	/* displace the elements to shrink the space */
 	unsigned int i;
 	for(i = n; i < l - 1; ++i)
 		a->items[i] = a->items[i + 1];
