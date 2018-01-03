@@ -77,3 +77,7 @@ testclean:
 install: all
 	cp --update --target-directory=$(PREFIX_DIR)/include $(INC_DIR)/*
 	cp --update --target-directory=$(PREFIX_DIR)/lib $(LIB)
+
+uninstall:
+	rm -f $(patsubst $(INC_DIR)/%,$(PREFIX_DIR)/include/%,$(wildcard $(INC_DIR)/*))
+	rm -f $(PREFIX_DIR)/lib/$(LIB)
