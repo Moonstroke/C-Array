@@ -25,7 +25,7 @@ int main(const int argc, char *const argv[]) {
 		unsigned int i;
 		for(i = 0; i < N; ++i) {
 			int v = ints[i];
-			ssize_t got, expected;
+			int got, expected;
 
 			info("lappend(l, %d)", v);
 			expected = i;

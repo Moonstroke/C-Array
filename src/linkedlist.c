@@ -11,7 +11,7 @@ struct node {
 };
 
 struct llist {
-	size_t len;
+	unsigned int len;
 	Node *head;
 };
 
@@ -50,13 +50,13 @@ void lfree(LinkedList *const l, void (*const f)(data*)) {
 }
 
 
-size_t llen(const LinkedList *const l) {
+unsigned int llen(const LinkedList *const l) {
 	return l->len;
 }
 
 
-static inline ssize_t valid(const LinkedList *const l, const ssize_t i) {
-	const size_t n = l->len;
+static inline int valid(const LinkedList *const l, const int i) {
+	const unsigned int n = l->len;
 	if(0 <= i && i < (signed)n) {
 		return i;
 	} else if(-(signed)n <= i && i < 0) {
@@ -66,9 +66,9 @@ static inline ssize_t valid(const LinkedList *const l, const ssize_t i) {
 	}
 }
 
-static inline Node *lgoto(const LinkedList *const l, const size_t n) {
+static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
 	Node *item = l->head;
-	size_t i;
+	unsigned int i;
 	for(i = 0; i < n && item != NULL; ++i) {
 		item = item->next;
 	}
@@ -76,16 +76,16 @@ static inline Node *lgoto(const LinkedList *const l, const size_t n) {
 }
 
 
-data *lget(const LinkedList *const l, const ssize_t index) {
-	ssize_t i = valid(l, index);
+data *lget(const LinkedList *const l, const int index) {
+	int i = valid(l, index);
 	if(i < 0) {
 		return NULL;
 	}
 	return lgoto(l, i)->data;
 }
 
-data *lset(LinkedList *const l, const ssize_t index, data *const d) {
-	ssize_t i = valid(l, index);
+data *lset(LinkedList *const l, const int index, data *const d) {
+	int i = valid(l, index);
 	if(i < 0) {
 		return NULL;
 	}
@@ -95,13 +95,13 @@ data *lset(LinkedList *const l, const ssize_t index, data *const d) {
 	return former;
 }
 
-ssize_t ladd(LinkedList *const l, const ssize_t index, void *const d) {
+int ladd(LinkedList *const l, const int index, void *const d) {
 	Node *item = newnode(d, NULL);
 	if(item == NULL) {
 		return -1;
 	}
 	// here `l->len` is a valid index ( <=> append)
-	const ssize_t i = (index == (signed)l->len) ? index : valid(l, index);
+	const int i = (index == (signed)l->len) ? index : valid(l, index);
 	if(i == 0) {
 		l->head = item;
 	} else {
@@ -112,10 +112,10 @@ ssize_t ladd(LinkedList *const l, const ssize_t index, void *const d) {
 	l->len++;
 	return i;
 }
-extern inline ssize_t lappend(LinkedList *l, data *data);
+extern inline int lappend(LinkedList *l, data *data);
 
-void *ldrop(LinkedList *const l, const ssize_t index) {
-	const ssize_t i = valid(l, index);
+void *ldrop(LinkedList *const l, const int index) {
+	const int i = valid(l, index);
 	if(i < 0) {
 		return NULL;
 	}
@@ -134,7 +134,7 @@ void *ldrop(LinkedList *const l, const ssize_t index) {
 }
 
 void lprintf(const LinkedList *const l, void (*f)(void*)) {
-	const size_t n = l->len;
+	const unsigned int n = l->len;
 	printf("(");
 	if(n > 0) {
 		if(f)

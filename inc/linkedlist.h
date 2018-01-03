@@ -14,7 +14,6 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include <stdlib.h>
 
 
 typedef void data; /**< A more eloquent name for the type of the elements */
@@ -56,7 +55,7 @@ void lfree(LinkedList *self, void (*freeitem)(data*));
  *
  * \return The number of elements in the list.
  */
-size_t llen(const LinkedList *self);
+unsigned int llen(const LinkedList *self);
 
 
 /**
@@ -69,7 +68,7 @@ size_t llen(const LinkedList *self);
  *
  * \return The \a index 'th element in the list.
  */
-data *lget(const LinkedList *self, ssize_t index);
+data *lget(const LinkedList *self, int index);
 
 /**
  * \memberof LinkedList
@@ -82,7 +81,7 @@ data *lget(const LinkedList *self, ssize_t index);
  *
  * \return The former element at \a index 'th position.
  */
-data *lset(LinkedList *self, ssize_t index, data *item);
+data *lset(LinkedList *self, int index, data *item);
 
 
 /**
@@ -97,7 +96,7 @@ data *lset(LinkedList *self, ssize_t index, data *item);
  * \return The index of the element, or \c -1 in case of error: memory
  *         allocation failed, or the \a index is invalid
  */
-ssize_t ladd(LinkedList *self, ssize_t index, data *item);
+int ladd(LinkedList *self, int index, data *item);
 
 /**
  * \memberof LinkedList
@@ -109,7 +108,7 @@ ssize_t ladd(LinkedList *self, ssize_t index, data *item);
  *
  * \return The index of the element, or \c -1 on error.
  */
-inline ssize_t lappend(LinkedList *self, data *item) {
+inline int lappend(LinkedList *self, data *item) {
 	return ladd(self, llen(self), item);
 }
 
@@ -125,7 +124,7 @@ inline ssize_t lappend(LinkedList *self, data *item) {
  * \return The removed element, of NULL if no element was removed (\a i.e.
  *         \a index has an invalid value)
  */
-data *ldrop(LinkedList *self, ssize_t index);
+data *ldrop(LinkedList *self, int index);
 
 
 /**
