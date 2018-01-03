@@ -8,12 +8,12 @@ PROJECT_NAME           = "C / LinkedList"
 PROJECT_NUMBER         = 0.1
 PROJECT_BRIEF          = "An implementation of the linked list data structure in C"
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       = "doc"
+OUTPUT_DIRECTORY       = doc
 CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 OUTPUT_LANGUAGE        = English
 BRIEF_MEMBER_DESC      = YES
-REPEAT_BRIEF           = NO
+REPEAT_BRIEF           = YES
 ABBREVIATE_BRIEF       = "The $name class" \
                          "The $name widget" \
                          "The $name file" \
@@ -27,7 +27,7 @@ ABBREVIATE_BRIEF       = "The $name class" \
                          the
 ALWAYS_DETAILED_SEC    = NO
 INLINE_INHERITED_MEMB  = NO
-FULL_PATH_NAMES        = YES
+FULL_PATH_NAMES        = NO
 STRIP_FROM_PATH        =
 STRIP_FROM_INC_PATH    =
 SHORT_NAMES            = NO
@@ -56,7 +56,7 @@ GROUP_NESTED_COMPOUNDS = NO
 SUBGROUPING            = YES
 INLINE_GROUPED_CLASSES = NO
 INLINE_SIMPLE_STRUCTS  = NO
-TYPEDEF_HIDES_STRUCT   = NO
+TYPEDEF_HIDES_STRUCT   = YES
 LOOKUP_CACHE_SIZE      = 0
 #---------------------------------------------------------------------------
 # Build related configuration options
@@ -80,7 +80,7 @@ SHOW_INCLUDE_FILES     = YES
 SHOW_GROUPED_MEMB_INC  = NO
 FORCE_LOCAL_INCLUDES   = NO
 INLINE_INFO            = YES
-SORT_MEMBER_DOCS       = YES
+SORT_MEMBER_DOCS       = NO
 SORT_BRIEF_DOCS        = NO
 SORT_MEMBERS_CTORS_1ST = YES
 SORT_GROUP_NAMES       = NO
@@ -112,7 +112,7 @@ WARN_LOGFILE           =
 #---------------------------------------------------------------------------
 # Configuration options related to the input files
 #---------------------------------------------------------------------------
-INPUT                  =
+INPUT                  = README.md inc
 INPUT_ENCODING         = UTF-8
 FILE_PATTERNS          = *.h
 RECURSIVE              = NO
@@ -128,7 +128,7 @@ INPUT_FILTER           =
 FILTER_PATTERNS        =
 FILTER_SOURCE_FILES    = NO
 FILTER_SOURCE_PATTERNS =
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = README.md
 #---------------------------------------------------------------------------
 # Configuration options related to source browsing
 #---------------------------------------------------------------------------
