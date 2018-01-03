@@ -9,18 +9,18 @@
 
 #define INT_ARRAY_SIZE 10
 
-void printint(const void *i) {
+static void printint(const void *i) {
 	if(i == NULL)
 		printf("(nil)");
 	else
 		printf("%d", *(int*)i);
 }
 
-bool equals42(const void *const e) {
+static bool equals42(const void *const e) {
 	return *((int*)e) == 42;
 }
 
-bool equals1024(const void *const e) {
+static bool equals1024(const void *const e) {
 	return *((int*)e) == 1024;
 }
 
