@@ -10,8 +10,8 @@ void afreer(Array *a, void(*f)(data*)) {
 }
 
 bool aremove(Array *const a, const data *const item) {
-	size_t i;
-	const size_t l = asize(a);
+	unsigned int i;
+	const unsigned int l = asize(a);
 	for(i = 0; i < l; ++i) {
 		if(aget(a, i) == item) {
 			return adrop(a, i) != NULL;
@@ -21,17 +21,17 @@ bool aremove(Array *const a, const data *const item) {
 }
 
 void aeach(Array *const a, void (*f)(data*)) {
-	size_t i;
-	const size_t l = asize(a);
+	unsigned int i;
+	const unsigned int l = asize(a);
 	for(i = 0; i < l; ++i) {
 		f(aget(a, i));
 	}
 }
 
 data *acond(const Array *a, bool (*f)(const data*)) {
-	const size_t l = asize(a);
+	const unsigned int l = asize(a);
 	data *item;
-	size_t i;
+	unsigned int i;
 	for(i = 0; i < l; ++i) {
 		item = aget(a, i);
 		if(f(item))
@@ -41,7 +41,7 @@ data *acond(const Array *a, bool (*f)(const data*)) {
 }
 
 void aprintf(const Array *a, void (*f)(const data*)) {
-	const size_t n = asize(a);
+	const unsigned int n = asize(a);
 	printf("[");
 	if(n > 0) {
 		if(f)
@@ -49,7 +49,7 @@ void aprintf(const Array *a, void (*f)(const data*)) {
 		else
 			printf("%p", aget(a, 0));
 	}
-	size_t i;
+	unsigned int i;
 	for(i = 1; i < n; ++i) {
 		if(f) {
 			printf(", ");

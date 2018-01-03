@@ -4,13 +4,13 @@
 
 
 struct array {
-	size_t capacity;
-	size_t size;
+	unsigned int capacity;
+	unsigned int size;
 	void **items;
 };
 
 
-Array *newarray(const size_t s) {
+Array *newarray(const unsigned int s) {
 	Array *const a = malloc(sizeof(Array));
 	if(a == NULL)
 		return NULL;
@@ -31,12 +31,12 @@ void afree(Array *const a) {
 }
 
 
-size_t asize(const Array *const a) {
+unsigned int asize(const Array *const a) {
 	return a->size;
 }
 
-static inline ssize_t valid(const Array *const a, const ssize_t i) {
-	const ssize_t n = a->size;
+static inline int valid(const Array *const a, const int i) {
+	const int n = a->size;
 	if(0 <= i && i < n) {
 		return i;
 	} else if(-n <= i && i < 0) {
@@ -46,8 +46,8 @@ static inline ssize_t valid(const Array *const a, const ssize_t i) {
 	}
 }
 
-data *aget(const Array *const a, const ssize_t index) {
-	const ssize_t i = valid(a, index);
+data *aget(const Array *const a, const int index) {
+	const int i = valid(a, index);
 	if(i < 0)
 		return NULL;
 	return a->items[i];
@@ -63,8 +63,8 @@ data *aget(const Array *const a, const ssize_t index) {
 	*/
 }
 
-data *aset(Array *const a, const ssize_t index, data *const e) {
-	const ssize_t i = valid(a, index);
+data *aset(Array *const a, const int index, data *const e) {
+	const int i = valid(a, index);
 	if(i < 0)
 		return NULL;
 	void *const former = a->items[i];
@@ -74,15 +74,15 @@ data *aset(Array *const a, const ssize_t index, data *const e) {
 }
 
 
-ssize_t aadd(Array *const a, const ssize_t index, data *const e) {
-	const ssize_t i = (index == (signed)a->size) ? index : valid(a, index);
+int aadd(Array *const a, const int index, data *const e) {
+	const int i = (index == (signed)a->size) ? index : valid(a, index);
 		// not just `i = valid(index)` because `a->size` is a valid value (=> append)
 	if(i < 0)
 		return -1;
-	const size_t n = a->size,
+	const unsigned int n = a->size,
 	             c = a->capacity;
 	if(n == c) {
-		const size_t capa = c + (c / 2 + c % 2); // capacity * 1.5
+		const unsigned int capa = c + (c / 2 + c % 2); // capacity * 1.5
 		data *const items = realloc(a->items, capa * sizeof(void*));
 		if(items == NULL) {
 			return -1;
@@ -98,11 +98,11 @@ ssize_t aadd(Array *const a, const ssize_t index, data *const e) {
 	a->size++;
 	return i;
 }
-extern inline ssize_t aappend(Array *a, data *e);
+extern inline int aappend(Array *a, data *e);
 
-data *adrop(Array *a, const ssize_t index) {
-	const size_t l = a->size;
-	const ssize_t n = valid(a, index);
+data *adrop(Array *a, const int index) {
+	const unsigned int l = a->size;
+	const int n = valid(a, index);
 
 	if(n < 0)
 		return NULL;
@@ -110,7 +110,7 @@ data *adrop(Array *a, const ssize_t index) {
 	a->items[n] = NULL;
 
 	// displace the elements to shrink the space
-	size_t i;
+	unsigned int i;
 	for(i = n; i < l - 1; ++i)
 		a->items[i] = a->items[i + 1];
 	a->size--;

@@ -36,7 +36,7 @@ int main(void) {
 	{
 		unsigned int i;
 		for(i = 0; i < INT_ARRAY_SIZE; ++i) {
-			ssize_t expected, got;
+			int expected, got;
 			expected = i;
 			verbose("aappend(a, %d)", ints[i]);
 			verbose("expected: %ld", expected);
@@ -67,7 +67,7 @@ int main(void) {
 	info("test append - overflow size (=> realloc)");
 	{
 		int extra = 73;
-		ssize_t expected, got;
+		int expected, got;
 		expected = INT_ARRAY_SIZE;
 		verbose("aappend(a, %d)", extra);
 		verbose("expected: %ld", expected);

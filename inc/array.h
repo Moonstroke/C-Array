@@ -10,9 +10,6 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#include <stdlib.h>
-#include <unistd.h>
-
 
 
 typedef void data; /**< A more eloquent name for the type of the elements */
@@ -41,7 +38,7 @@ typedef struct array Array;
  *
  * \return A new instance of \a Array, with \a size elements slots.
  */
-Array *newarray(size_t size);
+Array *newarray(unsigned int size);
 
 /**
  * \brief Deallocates an array.
@@ -58,7 +55,7 @@ void afree(Array *self);
  *
  * \return The number of elements in the array
  */
-size_t asize(const Array *self);
+unsigned int asize(const Array *self);
 
 
 /**
@@ -75,7 +72,7 @@ size_t asize(const Array *self);
  * \return The \a index 'th element in the array, or \c NULL if the index is
  *         invalid
  */
-data *aget(const Array *self, ssize_t index);
+data *aget(const Array *self, int index);
 
 /**
  *\brief Replaces an element of the array.
@@ -87,7 +84,7 @@ data *aget(const Array *self, ssize_t index);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid
  */
-data *aset(Array *self, ssize_t index, data *newitem);
+data *aset(Array *self, int index, data *newitem);
 
 
 /**
@@ -99,7 +96,7 @@ data *aset(Array *self, ssize_t index, data *newitem);
  * \return The new size of the array or \c -1 if an error occurred (index is
  *         invalid or memory allocation failed)
  */
-ssize_t aadd(Array *self, ssize_t index, data *newitem);
+int aadd(Array *self, int index, data *newitem);
 
 /**
  * \brief Adds an item to the end of the array.
@@ -111,7 +108,7 @@ ssize_t aadd(Array *self, ssize_t index, data *newitem);
  *
  * \sa aadd
  */
-inline ssize_t aappend(Array *self, data *item) {
+inline int aappend(Array *self, data *item) {
 	return aadd(self, asize(self), item);
 }
 
@@ -124,6 +121,6 @@ inline ssize_t aappend(Array *self, data *item) {
  *
  * \return The element just removed, or NULL if an error occurred (invalid index)
  */
-data *adrop(Array *self, ssize_t index);
+data *adrop(Array *self, int index);
 
 #endif /* ARRAY_H */
