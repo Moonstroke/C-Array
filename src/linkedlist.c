@@ -132,23 +132,3 @@ void *ldrop(LinkedList *const l, const int index) {
 	free(item);
 	return d;
 }
-
-void lprintf(const LinkedList *const l, void (*f)(void*)) {
-	const unsigned int n = l->len;
-	printf("(");
-	if(n > 0) {
-		if(f)
-			f(l->head->data);
-		else
-			printf("%p", l->head->data);
-	}
-	Node *item;
-	for(item = l->head->next; item; item = item->next) {
-		if(f) {
-			printf(", ");
-			f(item->data);
-		} else
-			printf(", %p", item->data);
-	}
-	printf(")\n");
-}

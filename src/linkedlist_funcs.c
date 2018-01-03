@@ -24,3 +24,22 @@ bool lremove(LinkedList *const l, const data *const d) {
 	return false;
 }
 
+void lprintf(const LinkedList *const l, void (*const f)(const data*)) {
+	printf("(");
+	if(llen(l) > 0) {
+		if(f)
+			f(lget(l, 0));
+		else
+			printf("%p", lget(l, 0));
+	}
+	data *item;
+	unsigned int i;
+	for(i = 0; item = lget(l, i); ++i) {
+		if(f) {
+			printf(", ");
+			f(item);
+		} else
+			printf(", %p", item);
+	}
+	printf(")\n");
+}

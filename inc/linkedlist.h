@@ -127,23 +127,4 @@ inline int lappend(LinkedList *self, data *item) {
 data *ldrop(LinkedList *self, int index);
 
 
-/**
- * \memberof LinkedList
- *
- * \brief Prints a linked list on \a stdin, each element separated with a comma
- * and a space, enclosed in round brackets.
- *
- * \param[in,out] self      The linked list
- * \param[in]     printitem The function to print each element with
- *
- * \note If \a printitem is \c NULL, the elements' addresses will be output in
- *       \a printf 's \c "%p" format.
- *
- * If the list contains the real numbers \c 42.3, \c 6.0, \c 19.5, and
- * \a printitem prints a \c float in \a printf 's \c "%f" format, the
- * output will be:
- * \verbatim (42.3, 6.0, 19.5) \endverbatim
- */
-void lprintf(const LinkedList *self, void (*printitem)(data*));
-
 #endif /* LINKEDLIST_H */
