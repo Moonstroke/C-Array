@@ -1,3 +1,6 @@
 a.out
 *.o
 libarray.a
+
+# Documentation directory
+doc/
