@@ -75,5 +75,5 @@ testclean:
 	rm -rf $(TEST_OBJ) $(TEST_EXEC)
 
 install: all
-	mv --update --target-directory=$(PREFIX_DIR)/include $(INC_DIR)
-	mv --update --target-directory=$(PREFIX_DIR)/lib $(LIB)
+	cp --update --target-directory=$(PREFIX_DIR)/include $(INC_DIR)/*
+	cp --update --target-directory=$(PREFIX_DIR)/lib $(LIB)
