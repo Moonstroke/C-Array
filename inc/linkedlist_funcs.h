@@ -39,6 +39,15 @@ bool lremove(LinkedList *list, const data *item);
 
 
 /**
+ * \brief Applies a function to each element of the structure.
+ *
+ * \param[in,out] list  The linked list
+ * \param[in]     apply The function to apply
+ */
+void leach(LinkedList *list, void (*apply)(data*));
+
+
+/**
  * \brief Prints a linked list on \a stdin, each element separated with a comma
  * and a space, enclosed in round brackets.
  *

@@ -24,6 +24,15 @@ bool lremove(LinkedList *const l, const data *const d) {
 	return false;
 }
 
+
+void leach(LinkedList *const l, void (*const f)(const data*)) {
+	data *item;
+	for(unsigned int i = 0; item = lget(l, i); ++i) {
+		f(item);
+	}
+}
+
+
 void lprintf(const LinkedList *const l, void (*const f)(const data*)) {
 	printf("(");
 	if(llen(l) > 0) {
