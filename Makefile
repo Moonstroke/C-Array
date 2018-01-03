@@ -55,13 +55,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	rm -rf $(OBJ_DIR)
 
-distclean: clean
-	rm -rf $(TEST_EXEC)
+distclean: clean docclean testclean
 	rm -rf $(LIB)
-	rm -rf $(DOC_DIR)
 
 doc:
 	$(DOC_PRG) $(DOC_CFG)
+
+docclean: clean
+	rm -rf $(DOC_DIR)
 
 test: $(TEST_OBJ) $(OBJ)
 	$(CC) -o$(TEST_EXEC) $^ $(LDLIBS)
