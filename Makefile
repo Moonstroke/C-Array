@@ -30,7 +30,7 @@ DOC_DIR := doc
 
 
 # Installation directory
-PREFIX_DIR := /usr/local
+INST_DIR := /usr/local
 
 # Compilation flags
 CC := gcc
@@ -75,9 +75,9 @@ testclean:
 	rm -rf $(TEST_OBJ) $(TEST_EXEC)
 
 install: all
-	cp --update --target-directory=$(PREFIX_DIR)/include $(INC_DIR)/*
-	cp --update --target-directory=$(PREFIX_DIR)/lib $(LIB)
+	cp --update --target-directory=$(INST_DIR)/include $(INC_DIR)/*
+	cp --update --target-directory=$(INST_DIR)/lib $(LIB)
 
 uninstall:
-	rm -f $(patsubst $(INC_DIR)/%,$(PREFIX_DIR)/include/%,$(wildcard $(INC_DIR)/*))
-	rm -f $(PREFIX_DIR)/lib/$(LIB)
+	rm -f $(patsubst $(INC_DIR)/%,$(INST_DIR)/include/%,$(wildcard $(INC_DIR)/*))
+	rm -f $(INST_DIR)/lib/$(LIB)
