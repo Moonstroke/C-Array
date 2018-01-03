@@ -25,7 +25,7 @@ bool lremove(LinkedList *const l, const data *const d) {
 }
 
 
-void leach(LinkedList *const l, void (*const f)(const data*)) {
+void leach(LinkedList *const l, void (*const f)(data*)) {
 	data *item;
 	for(unsigned int i = 0; item = lget(l, i); ++i) {
 		f(item);
