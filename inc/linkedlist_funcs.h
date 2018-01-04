@@ -76,7 +76,7 @@ data *lcond(const LinkedList *list, bool (*pred)(const data*));
  * output will be:
  * \verbatim (42.3, 6.0, 19.5) \endverbatim
  */
-void lprintf(const LinkedList *self, void (*printitem)(const data*));
+void lprintf(const LinkedList *list, void (*printitem)(const data*));
 
 
 #endif /* LINKEDLIST_FUNCS_H */

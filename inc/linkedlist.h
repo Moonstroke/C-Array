@@ -31,6 +31,8 @@ typedef struct llist LinkedList;
  *
  * \note No parameters are needed because the memory for the elements will be
  * allocated on the fly upon adding -- that's the very concept of a linked list.
+ *
+ * \return A newly-allocated linked list.
  */
 LinkedList *newlinkedlist(void);
 
