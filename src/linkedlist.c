@@ -114,7 +114,7 @@ int ladd(LinkedList *const l, const int index, void *const d) {
 	l->len++;
 	return i;
 }
-extern inline int lappend(LinkedList *l, data *data);
+extern int lappend(LinkedList *l, data *data);
 
 data *ldrop(LinkedList *const l, const int index) {
 	const int i = valid(l, index);
