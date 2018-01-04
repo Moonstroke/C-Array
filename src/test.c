@@ -1,9 +1,11 @@
-#include <stdio.h>
 #include <assert.h>
+#include "log.h"
+#include <stdio.h>
 
 #include "linkedlist.h"
 #include "linkedlist_funcs.h"
-#include "log.h"
+
+
 
 void printint(const void *const data) {
 	printf("%d", *((int*)data));

@@ -14,6 +14,8 @@
 
 #include <stdbool.h>
 
+
+
 /**
  * \brief Frees a linked list and frees its elements with given function.
  *

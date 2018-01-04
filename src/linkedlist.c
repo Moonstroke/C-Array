@@ -1,8 +1,9 @@
 #include "linkedlist.h"
 
-
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+
 
 typedef struct node Node;
 struct node {
