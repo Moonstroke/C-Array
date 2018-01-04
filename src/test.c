@@ -89,7 +89,7 @@ int main(void) {
 	{
 		unsigned int i = 0;
 		int expected, got;
-		expected = ints[0];
+		expected = ints[i];
 		verbose("expected: %d", expected);
 		got = *((int*)ldrop(l, i));
 		verbose("got     : %d", got);
