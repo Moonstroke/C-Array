@@ -1,6 +1,8 @@
 #include "array.h"
 
 #include "log.h"
+#include <stdlib.h>
+
 
 
 struct array {
@@ -63,13 +65,15 @@ data *aset(Array *const a, const int index, data *const e) {
 }
 
 
-int aadd(Array *const a, const int index, data *const e) {
-	const int i = (index == (signed)a->size) ? index : valid(a, index);
+int aadd(Array *const a, int index, data *const e) {
+	if(index < (signed)a->size)
+		index = valid(a, index);
 	/* not just `i = valid(index)` because `a->size` is a valid value (=> append) */
-	if(i < 0)
+	if(index < 0)
 		return -1;
-	const unsigned int n = a->size,
-	             c = a->capacity;
+	const unsigned int i = (unsigned)index,
+	                   n = a->size,
+	                   c = a->capacity;
 	if(n == c) {
 		const unsigned int capa = c + (c / 2 + c % 2); /* capacity * 1.5 */
 		data *const items = realloc(a->items, capa * sizeof(void*));
