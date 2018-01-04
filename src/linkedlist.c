@@ -121,16 +121,21 @@ data *ldrop(LinkedList *const l, const int index) {
 	if(i < 0) {
 		return NULL;
 	}
-	else if(i == 0) {
-		data *const d = l->head->data;
-		l->head = l->head->next;
-		return d;
+	data *d = NULL;
+	Node *item, **plug = NULL;
+	if(i == 0) {
+		plug = &l->head;
+	} else {
+		item = lgoto(l, i - 1);
+		if(item == NULL || item->next == NULL) {
+			return NULL;
+		}
+		plug = &item->next;
 	}
-	Node *prev = lgoto(l, i - 1), *item;
-	if(prev == NULL || (item = prev->next) == NULL)
-		return NULL;
-	data *const d = item->data;
-	prev->next = item->next;
+	item = *plug;
+	d = item->data;
+	*plug = item->next;
+	--l->len;
 	free(item);
 	return d;
 }
