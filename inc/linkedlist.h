@@ -49,8 +49,6 @@ void lfree(LinkedList *self, void (*freeitem)(data*));
 
 
 /**
- * \memberof LinkedList
- *
  * \brief Returns the length of the linked list.
  *
  * \param[in] self The linked list
@@ -61,8 +59,6 @@ unsigned int llen(const LinkedList *self);
 
 
 /**
- * \memberof LinkedList
- *
  * \brief Retrieves an element of the linked list by its position.
  *
  * \param[in,out] self  The linked list
@@ -73,8 +69,6 @@ unsigned int llen(const LinkedList *self);
 data *lget(const LinkedList *self, int index);
 
 /**
- * \memberof LinkedList
- *
  * \brief Updates an element of the list.
  *
  * \param[in,out] self  The linked list
@@ -87,8 +81,6 @@ data *lset(LinkedList *self, int index, data *item);
 
 
 /**
- * \memberof LinkedList
- *
  * \brief Inserts an element to the linked list before given \a index (index
  *        starts at \c 0).
  *
@@ -101,8 +93,6 @@ data *lset(LinkedList *self, int index, data *item);
 int ladd(LinkedList *self, int index, data *item);
 
 /**
- * \memberof LinkedList
- *
  * \brief Appends an element to the end of the linked list.
  *
  * \param[in,out] self The linked list
@@ -116,8 +106,6 @@ inline int lappend(LinkedList *self, data *item) {
 
 
 /**
- * \memberof LinkedList
- *
  * \brief Removes an element of the list.
  *
  * \param[in,out] self  The linked list
