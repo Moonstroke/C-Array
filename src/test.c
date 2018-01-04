@@ -17,11 +17,13 @@ static void printint(const void *i) {
 }
 
 static bool equals42(const void *const e) {
-	return e && *((int*)e) == 42;
+	assert(e != NULL);
+	return *((int*)e) == 42;
 }
 
 static bool equals1024(const void *const e) {
-	return e && *((int*)e) == 1024;
+	assert(e != NULL);
+	return *((int*)e) == 1024;
 }
 
 
@@ -30,7 +32,7 @@ int main(void) {
 	Array *a = newarray(INT_ARRAY_SIZE);
 
 	int ints[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
-	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5]");
+	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
 
 	info("test append");
 	{
