@@ -1,5 +1,8 @@
 # Compilation parameters
+# y/n, debugging
 DEBUG := n
+# 0/s/1/2/3/n, optimisation level at compilation (n => no optimisation)
+OPTIM_LVL := 2
 
 
 # Directories
@@ -37,6 +40,9 @@ CC := gcc
 CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded
 ifeq ($(DEBUG), y)
 	CFLAGS += -g
+endif
+ifneq ($(OPTIM_LVL), n)
+	CFLAGS += -O$(OPTIM_LVL)
 endif
 LDLIBS := -llog
 LDFLAGS := -I$(INC_DIR)
