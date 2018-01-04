@@ -40,22 +40,22 @@ data *acond(const Array *a, bool (*f)(const data*)) {
 	return NULL;
 }
 
-void aprintf(const Array *a, void (*f)(const data*)) {
+static void printitem_default(const data *item) {
+	printf("%p", item);
+}
+
+void aprintf(const Array *a, void (*print)(const data*)) {
 	const unsigned int n = asize(a);
 	printf("[");
+	if(!print)
+		print = printitem_default;
 	if(n > 0) {
-		if(f)
-			f(aget(a, 0));
-		else
-			printf("%p", aget(a, 0));
+		print(aget(a, 0));
 	}
 	unsigned int i;
 	for(i = 1; i < n; ++i) {
-		if(f) {
-			printf(", ");
-			f(aget(a, i));
-		} else
-			printf(", %p", aget(a, i));
+		printf(", ");
+		print(aget(a, i));
 	}
 	printf("]\n");
 }
