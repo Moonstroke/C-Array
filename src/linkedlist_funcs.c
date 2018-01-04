@@ -28,14 +28,14 @@ bool lremove(LinkedList *const l, const data *const d) {
 
 void leach(LinkedList *const l, void (*const f)(data*)) {
 	data *item;
-	for(unsigned int i = 0; item = lget(l, i); ++i) {
+	for(unsigned int i = 0; (item = lget(l, i)); ++i) {
 		f(item);
 	}
 }
 
 
 data *lcond(const LinkedList *const l, bool (*const f)(const data*)) {
-	const data *item;
+	data *item;
 	for(unsigned int i = 0; (item = lget(l, i)) && f(item); ++i);
 	return item;
 }
@@ -53,7 +53,7 @@ void lprintf(const LinkedList *const l, void (*f)(const data*)) {
 		f(lget(l, 0));
 	data *item;
 	unsigned int i;
-	for(i = 1; item = lget(l, i); ++i) {
+	for(i = 1; (item = lget(l, i)); ++i) {
 			printf(", ");
 			f(item);
 	}

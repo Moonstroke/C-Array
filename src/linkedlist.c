@@ -11,8 +11,9 @@ struct node {
 };
 
 struct llist {
-	unsigned int len;
 	Node *head;
+	unsigned int len;
+	char _padding[4];
 };
 
 LinkedList *newlinkedlist(void) {

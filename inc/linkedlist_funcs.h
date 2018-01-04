@@ -56,7 +56,7 @@ void leach(LinkedList *list, void (*apply)(data*));
  *
  * \return The first matching element, or \c NULL if none was found.
  */
-data *lcond(const LinkedList *list, bool (*pred)(data*));
+data *lcond(const LinkedList *list, bool (*pred)(const data*));
 
 
 /**
