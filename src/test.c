@@ -5,7 +5,7 @@
 #include "linkedlist_funcs.h"
 #include "log.h"
 
-void printint(void *const data) {
+void printint(const void *const data) {
 	printf("%d", *((int*)data));
 }
 
@@ -13,7 +13,7 @@ void printint(void *const data) {
 /**
  * Tests for the functions for the LinkedList structure
  */
-int main(const int argc, char *const argv[]) {
+int main(void) {
 
 	LinkedList *l = newlinkedlist();
 
