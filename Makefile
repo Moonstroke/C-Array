@@ -70,7 +70,7 @@ distclean: clean docclean testclean
 doc:
 	$(DOC_PRG) $(DOC_CFG)
 
-docclean: clean
+docclean:
 	rm -rf $(DOC_DIR)
 
 test: $(TEST_OBJ) $(OBJ)
