@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "log.h"
+#include <log.h>
 #include <stdio.h>
 
 #include "linkedlist.h"
