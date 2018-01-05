@@ -1,0 +1,15 @@
+language: c
+compiler: gcc
+
+# We need to be root to install the dependencies
+sudo: true
+
+
+install:
+ # Install dependencies from the bash script
+ - ./install_deps.sh
+
+
+script:
+ - make
+ - make test
