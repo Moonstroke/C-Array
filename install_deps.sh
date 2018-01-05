@@ -17,5 +17,5 @@ function clean_git_repo() {
 }
 
 
-install_git_repo log 'https://github.com/Moonstroke/C-log.h'
+install_git_repo log 'https://github.com/Moonstroke/C-log.git'
 clean_git_repo log
