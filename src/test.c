@@ -1,10 +1,9 @@
 #include "array.h"
 #include "array_funcs.h"
 
-#include <stdio.h>
 #include <assert.h>
-
-#include "log.h"
+#include <log.h>
+#include <stdio.h>
 
 
 #define INT_ARRAY_SIZE 10

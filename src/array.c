@@ -1,6 +1,6 @@
 #include "array.h"
 
-#include "log.h"
+#include <log.h>
 #include <stdlib.h>
 
 
