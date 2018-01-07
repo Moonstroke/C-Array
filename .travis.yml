@@ -7,7 +7,7 @@ sudo: true
 
 install:
  # Install dependencies from the bash script
- - ./install_deps.sh
+ - sudo ./install_deps.sh
 
 
 script:
