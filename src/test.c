@@ -24,13 +24,13 @@ int main(void) {
 
 	/* Variables used in tests */
 	unsigned int i;
+	int got, expected;
 	int extra_add, extra_set;
 
 	info("tests lappend");
 	{
 		for(i = 0; i < N; ++i) {
 			int v = ints[i];
-			int got, expected;
 			info("lappend(l, %d)", v);
 			expected = i;
 			verbose("expected: %d", expected);
@@ -47,7 +47,6 @@ int main(void) {
 	info("\ntests get");
 	{
 		for(i = 0; i < N; ++i) {
-			int got, expected;
 			expected = ints[i];
 			verbose("expected: %d", expected);
 			got = *((int*)lget(l, i));
@@ -59,8 +58,8 @@ int main(void) {
 
 	info("\ntests add");
 	{
-		int got, expected = i;
 		i = 3;
+		expected = i;
 		extra_add = 8;
 		verbose("expected: %d", expected);
 		got = ladd(l, i, &extra_add);
@@ -73,7 +72,6 @@ int main(void) {
 
 	info("\ntests set");
 	{
-		int got, expected;
 		i = 2;
 		extra_set = -32;
 		expected = ints[i];
@@ -89,7 +87,6 @@ int main(void) {
 
 	info("\ntests drop");
 	{
-		int expected, got;
 		i = 0;
 		expected = ints[i];
 		verbose("expected: %d", expected);
