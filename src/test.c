@@ -33,9 +33,9 @@ int main(void) {
 			int got, expected;
 			info("lappend(l, %d)", v);
 			expected = i;
-			verbose("expected: %ld", expected);
+			verbose("expected: %d", expected);
 			got = lappend(l, (void*)&ints[i]);
-			verbose("got     : %ld", got);
+			verbose("got     : %d", got);
 			assert(got == expected);
 			info("OK");
 		}
