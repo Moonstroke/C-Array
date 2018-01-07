@@ -3,10 +3,10 @@
 # Function declared with round parens is exectued in a subshell
 function install_git_repo() (
 	# Fetch the project
-	git clone -v "$2" "$1"
-	cd "$1"
+	git clone -v "$2" "$1" &&
+	cd "$1" &&
 	# Build
-	make
+	make &&
 	# Install
 	make install
 )
