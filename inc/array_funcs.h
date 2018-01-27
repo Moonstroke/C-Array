@@ -30,7 +30,7 @@
  * \param[in,out] array    The array to free recursively
  * \param[in]     freeitem The function to use to free each item
  */
-void afreer(Array *array, void (*freeitem)(data*));
+void a_freer(Array *array, void (*freeitem)(data*));
 
 /**
  * \brief Removes an element from the array, found not by index but by the
@@ -41,7 +41,7 @@ void afreer(Array *array, void (*freeitem)(data*));
  *
  * \return \c true \a iff the element was found and removed.
  */
-bool aremove(Array *array, const data *item);
+bool a_remove(Array *array, const data *item);
 
 /**
  * \brief Applies a function to each element.
@@ -49,7 +49,7 @@ bool aremove(Array *array, const data *item);
  * \param[in,out] array The array to iterate over
  * \param[in]     apply The function to apply to each element
  */
-void aeach(Array *array, void (*apply)(data*));
+void a_each(Array *array, void (*apply)(data*));
 
 /**
  * \brief Retrieves an element of the array according to the condition.
@@ -62,7 +62,7 @@ void aeach(Array *array, void (*apply)(data*));
  *
  * \return The first element to satisfy the condition, or \c NULL if none is found
  */
-data *acond(const Array *array, bool (*predicate)(const data*));
+data *a_cond(const Array *array, bool (*predicate)(const data*));
 
 /**
  * \brief Prints an array on \a stdin, with each element printed with provided
@@ -80,10 +80,10 @@ data *acond(const Array *array, bool (*predicate)(const data*));
  * \param[in,out] self      The array
  * \param[in]     printitem The function to print each element with
  */
-void aprintf(const Array *self, void (*printitem)(const data*));
+void a_printf(const Array *self, void (*printitem)(const data*));
 
 
-Array *amake(unsigned int n, data *const elements[static n]);
+Array *a_make(unsigned int n, data *const elements[static n]);
 
 
 #endif /* ARRAY_FUNCS_H */

@@ -38,14 +38,14 @@ typedef struct array Array;
  *
  * \return A new instance of \a Array, with \a size elements slots.
  */
-Array *newarray(unsigned int size);
+Array *a_new(unsigned int size);
 
 /**
  * \brief Deallocates an array.
  *
  * \param[in,out] self The array to free
  */
-void afree(Array *self);
+void a_free(Array *self);
 
 
 /**
@@ -55,7 +55,7 @@ void afree(Array *self);
  *
  * \return The number of elements in the array
  */
-unsigned int asize(const Array *self);
+unsigned int a_size(const Array *self);
 
 
 /**
@@ -72,7 +72,7 @@ unsigned int asize(const Array *self);
  * \return The \a index 'th element in the array, or \c NULL if the index is
  *         invalid
  */
-data *aget(const Array *self, int index);
+data *a_get(const Array *self, int index);
 
 /**
  *\brief Replaces an element of the array.
@@ -84,7 +84,7 @@ data *aget(const Array *self, int index);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid
  */
-data *aset(Array *self, int index, data *newitem);
+data *a_set(Array *self, int index, data *newitem);
 
 
 /**
@@ -96,7 +96,7 @@ data *aset(Array *self, int index, data *newitem);
  * \return The new size of the array or \c -1 if an error occurred (index is
  *         invalid or memory allocation failed)
  */
-int aadd(Array *self, int index, data *newitem);
+int a_add(Array *self, int index, data *newitem);
 
 /**
  * \brief Adds an item to the end of the array.
@@ -106,10 +106,10 @@ int aadd(Array *self, int index, data *newitem);
  *
  * \return The index of the array, or \c -1 if an error occurred.
  *
- * \sa aadd
+ * \sa a_add
  */
-inline int aappend(Array *self, data *item) {
-	return aadd(self, asize(self), item);
+inline int a_append(Array *self, data *item) {
+	return a_add(self, a_size(self), item);
 }
 
 
@@ -121,6 +121,6 @@ inline int aappend(Array *self, data *item) {
  *
  * \return The element just removed, or NULL if an error occurred (invalid index)
  */
-data *adrop(Array *self, int index);
+data *a_drop(Array *self, int index);
 
 #endif /* ARRAY_H */

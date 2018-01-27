@@ -28,7 +28,7 @@ static bool equals1024(const void *const e) {
 
 void test_array(void) {
 	// 10 integers array
-	Array *a = newarray(INT_ARRAY_SIZE);
+	Array *a = a_new(INT_ARRAY_SIZE);
 
 	int ints[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
@@ -39,14 +39,14 @@ void test_array(void) {
 		for(i = 0; i < INT_ARRAY_SIZE; ++i) {
 			int expected, got;
 			expected = i;
-			verbose("aappend(a, %d)", ints[i]);
+			verbose("a_append(a, %d)", ints[i]);
 			verbose("expected: %ld", expected);
-			got = aappend(a, &ints[i]);
+			got = a_append(a, &ints[i]);
 			verbose("got     : %ld", got);
 			assert(expected == got);
 		}
 	}
-	aprintf(a, *printint);
+	a_printf(a, *printint);
 	info("OK\n");
 
 	info("tests get");
@@ -55,14 +55,14 @@ void test_array(void) {
 		for(i = 0; i < INT_ARRAY_SIZE; ++i) {
 			int expected, got;
 			expected = ints[i];
-			verbose("aget(a, %d)", i);
+			verbose("a_get(a, %d)", i);
 			verbose("expected: %d", expected);
-			got = *((int*)aget(a, i));
+			got = *((int*)a_get(a, i));
 			verbose("got     : %d", got);
 			assert(got == expected);
 		}
 	}
-	aprintf(a, *printint);
+	a_printf(a, *printint);
 	info("OK\n");
 
 	info("test append - overflow size (=> realloc)");
@@ -70,13 +70,13 @@ void test_array(void) {
 		int extra = 73;
 		int expected, got;
 		expected = INT_ARRAY_SIZE;
-		verbose("aappend(a, %d)", extra);
+		verbose("a_append(a, %d)", extra);
 		verbose("expected: %ld", expected);
-		got = aappend(a, &extra);
+		got = a_append(a, &extra);
 		verbose("got     : %ld", got);
 		assert(expected == got);
 	}
-	aprintf(a, *printint);
+	a_printf(a, *printint);
 	info("OK\n");
 
 	info("test set");
@@ -85,41 +85,41 @@ void test_array(void) {
 		int expected, got;
 		unsigned int i = 2;
 		expected = ints[i];
-		verbose("aset(a, %u, %d)", i, extra);
+		verbose("a_set(a, %u, %d)", i, extra);
 		verbose("expected: %ld", expected);
-		got = *(int*)aset(a, i, &extra);
+		got = *(int*)a_set(a, i, &extra);
 		verbose("got     : %ld", got);
 		assert(expected == got);
 	}
-	aprintf(a, *printint);
+	a_printf(a, *printint);
 	info("OK\n");
 
-	info("test acond");
+	info("test a_cond");
 	{
 		int expected, got;
 		expected = 42;
 		verbose("acond(a, %s)", "(int i) -> (i == 42)"); // string repr of the equals42() func
 		verbose("expected = %d", expected);
-		got = *(int*)acond(a, equals42);
+		got = *(int*)a_cond(a, equals42);
 		verbose("got      = %d", got);
 		assert(expected == got);
 	}
 	info("OK\n");
 
-	info("test acond - not found");
+	info("test a_cond - not found");
 	{
 		int *expected, *got;
 		expected = NULL;
-		verbose("acond(a, %s)", "(int i) -> (i == 1024)");
+		verbose("a_cond(a, %s)", "(int i) -> (i == 1024)");
 		verbose("expected = %p", expected);
-		got = (int*)acond(a, equals1024);
+		got = (int*)a_cond(a, equals1024);
 		verbose("got      = %p", got);
 		assert(expected == got);
 	}
 	info("OK\n");
 
-	info("test afree");
-	verbose("afree(a)");
-	afree(a);
+	info("test a_free");
+	verbose("a_free(a)");
+	a_free(a);
 	info("OK\n");
 }

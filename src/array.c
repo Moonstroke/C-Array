@@ -12,7 +12,7 @@ struct array {
 };
 
 
-Array *newarray(const unsigned int s) {
+Array *a_new(const unsigned int s) {
 	Array *const a = malloc(sizeof(Array));
 	if(a == NULL)
 		return NULL;
@@ -27,13 +27,13 @@ Array *newarray(const unsigned int s) {
 	return a;
 }
 
-void afree(Array *const a) {
+void a_free(Array *const a) {
 	free(a->items);
 	free(a);
 }
 
 
-unsigned int asize(const Array *const a) {
+unsigned int a_size(const Array *const a) {
 	return a->size;
 }
 
@@ -48,14 +48,14 @@ static inline int valid(const Array *const a, const int i) {
 	}
 }
 
-data *aget(const Array *const a, const int index) {
+data *a_get(const Array *const a, const int index) {
 	const int i = valid(a, index);
 	if(i < 0)
 		return NULL;
 	return a->items[i];
 }
 
-data *aset(Array *const a, const int index, data *const e) {
+data *a_set(Array *const a, const int index, data *const e) {
 	const int i = valid(a, index);
 	if(i < 0)
 		return NULL;
@@ -65,7 +65,7 @@ data *aset(Array *const a, const int index, data *const e) {
 }
 
 
-int aadd(Array *const a, int index, data *const e) {
+int a_add(Array *const a, int index, data *const e) {
 	if(index < (signed)a->size)
 		index = valid(a, index);
 	/* not just `i = valid(index)` because `a->size` is a valid value (=> append) */
@@ -91,9 +91,9 @@ int aadd(Array *const a, int index, data *const e) {
 	a->size++;
 	return i;
 }
-extern int aappend(Array*, data*);
+extern int a_append(Array*, data*);
 
-data *adrop(Array *a, const int index) {
+data *a_drop(Array *a, const int index) {
 	const unsigned int l = a->size;
 	const int n = valid(a, index);
 
