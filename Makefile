@@ -11,7 +11,7 @@ SRC_DIR := src
 OBJ_DIR := obj
 
 # Executables
-TEST_EXEC := test_array
+TEST_EXEC := test_arrays
 
 
 # Tests files
@@ -23,7 +23,7 @@ SRC := $(filter-out $(TEST_SRC), $(wildcard $(SRC_DIR)/*.c))
 OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Library archive
-LIB := libarray.a
+LIB := libarrays.a
 
 
 # Documentation
