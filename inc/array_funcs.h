@@ -64,6 +64,21 @@ void a_each(Array *array, void (*apply)(data*));
  */
 data *a_cond(const Array *array, bool (*predicate)(const data*));
 
+
+/**
+ * \brief Constructs an Array and fills it with the elements in the given array.
+ *
+ * \note The \c static in the declaration of \a elements means that the array
+ *       must contain <i>at least</i> \a n elements.
+ * \param[in] n        The number of elements in the array
+ * \param[in] elements The elements to fill the Array with
+ *
+ * \return An \a Array filled with the given items, or \c NULL if an error
+ *         occured.
+ */
+Array *a_make(unsigned int n, data *const elements[static n]);
+
+
 /**
  * \brief Prints an array on \a stdin, with each element printed with provided
  *        function.
@@ -81,9 +96,6 @@ data *a_cond(const Array *array, bool (*predicate)(const data*));
  * \param[in]     printitem The function to print each element with
  */
 void a_printf(const Array *self, void (*printitem)(const data*));
-
-
-Array *a_make(unsigned int n, data *const elements[static n]);
 
 
 #endif /* ARRAY_FUNCS_H */
