@@ -83,4 +83,7 @@ data *acond(const Array *array, bool (*predicate)(const data*));
 void aprintf(const Array *self, void (*printitem)(const data*));
 
 
+Array *amake(unsigned int n, data *const elements[static n]);
+
+
 #endif /* ARRAY_FUNCS_H */

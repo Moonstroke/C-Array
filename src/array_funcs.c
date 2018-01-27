@@ -59,3 +59,14 @@ void aprintf(const Array *a, void (*print)(const data*)) {
 	}
 	printf("]\n");
 }
+
+Array *amake(const unsigned int n, data *const elements[static n]) {
+	Array *arr = newarray(n);
+	if(!arr) {
+		return NULL;
+	}
+	for(unsigned int i = 0; i < n; ++i) {
+		aappend(arr, elements[i]);
+	}
+	return arr;
+}
