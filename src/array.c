@@ -91,7 +91,7 @@ int aadd(Array *const a, int index, data *const e) {
 	a->size++;
 	return i;
 }
-extern int aappend(Array *a, data *e);
+extern int aappend(Array*, data*);
 
 data *adrop(Array *a, const int index) {
 	const unsigned int l = a->size;
