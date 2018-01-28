@@ -30,6 +30,8 @@ void fa_each(FixedArray *farray, void (*func)(data*));
 
 void fa_neach(FixedArray *farray, void (*func)(data*));
 
+void fa_iter(const FixedArray *farray, void (*func)(const data*));
+
 
 void fa_printf(const FixedArray *farray, void (*print_item)(const data*));
 
