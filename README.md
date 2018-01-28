@@ -34,6 +34,16 @@ designed for this specific case.
 The module **array_funcs** defines some additional functions (more or less
 useful) to manipulate the structure.
 
+#### FixedArray
+
+The module **fixedarray** contains a definition for an array of fixed size,
+precisely called *FixedArray*. The array contains a number of elements that does
+not evolve during the lifetime of the object; the elements in the array may --
+and most likely will -- be `NULL` at some time.
+
+In the same manner than for *Array*, the module **fixedarray_funcs** defines
+some extra functions for *FixedArray*.
+
 
 ### Test modules
 
