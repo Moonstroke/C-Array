@@ -10,9 +10,8 @@ void a_freer(Array *a, void(*f)(data*)) {
 }
 
 bool a_remove(Array *const a, const data *const item) {
-	unsigned int i;
 	const unsigned int l = a_size(a);
-	for(i = 0; i < l; ++i) {
+	for(unsigned int i = 0; i < l; ++i) {
 		if(a_get(a, i) == item) {
 			return a_drop(a, i) != NULL;
 		}
@@ -21,9 +20,8 @@ bool a_remove(Array *const a, const data *const item) {
 }
 
 void a_each(Array *const a, void (*f)(data*)) {
-	unsigned int i;
 	const unsigned int l = a_size(a);
-	for(i = 0; i < l; ++i) {
+	for(unsigned int i = 0; i < l; ++i) {
 		f(a_get(a, i));
 	}
 }
@@ -31,8 +29,7 @@ void a_each(Array *const a, void (*f)(data*)) {
 data *a_cond(const Array *a, bool (*f)(const data*)) {
 	const unsigned int l = a_size(a);
 	data *item;
-	unsigned int i;
-	for(i = 0; i < l; ++i) {
+	for(unsigned int i = 0; i < l; ++i) {
 		item = a_get(a, i);
 		if(f(item))
 			return item;
@@ -65,8 +62,7 @@ void a_printf(const Array *a, void (*print)(const data*)) {
 	if(n > 0) {
 		print(a_get(a, 0));
 	}
-	unsigned int i;
-	for(i = 1; i < n; ++i) {
+	for(unsigned int i = 1; i < n; ++i) {
 		printf(", ");
 		print(a_get(a, i));
 	}
