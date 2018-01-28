@@ -47,7 +47,7 @@ static void printitem_default(const data *item) {
 Array *a_make(const unsigned int n, data *const elements[static n]) {
 	if(n == 0)
 		return NULL;
-	Array *arr = a_new(n);
+	Array *const arr = a_new(n);
 	if(!arr) {
 		return NULL;
 	}
