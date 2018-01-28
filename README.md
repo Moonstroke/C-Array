@@ -52,3 +52,6 @@ over the module functions, each module having its own set:
 
 The file `test_array.c` contains a set of tests to check the running of the
 functions concerning the structure *Array*.
+
+The file `test_fixedarray.c` contains a set of tests for the structure
+*FixedArray*.
