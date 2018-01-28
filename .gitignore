@@ -1,6 +1,6 @@
 obj/
-test_array
-libarray.a
+test_arrays
+libarrays.a
 
 # Documentation directory
 doc/
