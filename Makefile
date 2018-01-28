@@ -57,7 +57,7 @@ $(LIB): $(OBJ)
 	$(AR) rcs $(LIB) $(OBJ_DIR)/*.o
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 	$(CC) -c $< -o$@ $(LDFLAGS) $(CFLAGS)
 
 
