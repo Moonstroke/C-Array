@@ -1,5 +1,6 @@
 #include "fixedarray.h"
 
+#include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for NULL, malloc(), calloc(), free() */
 
 
@@ -7,7 +8,7 @@
 struct fixedarray {
 	data **items;
 	unsigned int size;
-	char _padding[4];
+	uint8_t _padding[4];
 };
 
 
