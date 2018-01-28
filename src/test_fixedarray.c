@@ -9,7 +9,7 @@
 
 static FixedArray *farray;
 static const unsigned int test_farray_size = 8;
-static const int values[] = {1, 42, 6, 3, 27, 9, 55, 700};
+static int values[] = {1, 42, 6, 3, 27, 9, 55, 700};
 
 
 void test_fixedarray(void) {
@@ -47,7 +47,7 @@ void test_fixedarray(void) {
 	{
 		info("tests fa_set");
 		for(unsigned int i = 0; i < test_farray_size; ++i) {
-			data *const val = (data*)&values[i];
+			data *const val = &values[i];
 			verbose("fa_set(%u, %p)", i, val);
 			fa_set(farray, i, val);
 		}
