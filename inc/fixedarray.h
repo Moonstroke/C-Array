@@ -18,7 +18,7 @@ unsigned int fa_size(const FixedArray *self);
 
 data *fa_get(const FixedArray *self, unsigned int index);
 
-data *fa_set(FixedArray *self, unsigned int index, data *element);
+void fa_set(FixedArray *self, unsigned int index, data *element);
 
 
 # endif /* FIXEDARRAY_H */
