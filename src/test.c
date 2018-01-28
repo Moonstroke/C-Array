@@ -1,5 +1,5 @@
 #include <log.h>
-#include <stdio.h> /* for EXIT_SUCCESS */
+#include <stdlib.h> /* for EXIT_SUCCESS */
 
 /* Declarations of the tests suites */
 extern void test_array(void);
