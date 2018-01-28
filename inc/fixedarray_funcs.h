@@ -26,7 +26,7 @@ inline data *fa_unset(FixedArray *const farray, const unsigned int index) {
 }
 
 
-void fa_each(FixedArray *farray, void (*func)(data**));
+void fa_each(FixedArray *farray, void (*func)(data*));
 
 void fa_iter(const FixedArray *farray, void (*func)(const data*));
 
