@@ -37,9 +37,6 @@ data *a_cond(const Array *a, bool (*f)(const data*)) {
 	return NULL;
 }
 
-static void printitem_default(const data *item) {
-	printf("%p", item);
-}
 
 Array *a_make(const unsigned int n, data *const elements[static n]) {
 	if(n == 0)
@@ -54,17 +51,20 @@ Array *a_make(const unsigned int n, data *const elements[static n]) {
 	return arr;
 }
 
+static void printitem_default(const data *item) {
+	printf("%p", item);
+}
 void a_printf(const Array *a, void (*print)(const data*)) {
 	const unsigned int n = a_size(a);
 	printf("[");
-	if(!print)
-		print = printitem_default;
-	if(n > 0) {
+	if(n) {
+		if(!print)
+			print = printitem_default;
 		print(a_get(a, 0));
-	}
-	for(unsigned int i = 1; i < n; ++i) {
-		printf(", ");
-		print(a_get(a, i));
+		for(unsigned int i = 1; i < n; ++i) {
+			printf(", ");
+			print(a_get(a, i));
+		}
 	}
 	printf("]\n");
 }
