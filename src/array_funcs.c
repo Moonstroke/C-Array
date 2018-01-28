@@ -44,6 +44,17 @@ static void printitem_default(const data *item) {
 	printf("%p", item);
 }
 
+Array *a_make(const unsigned int n, data *const elements[static n]) {
+	Array *arr = a_new(n);
+	if(!arr) {
+		return NULL;
+	}
+	for(unsigned int i = 0; i < n; ++i) {
+		a_append(arr, elements[i]);
+	}
+	return arr;
+}
+
 void a_printf(const Array *a, void (*print)(const data*)) {
 	const unsigned int n = a_size(a);
 	printf("[");
@@ -58,15 +69,4 @@ void a_printf(const Array *a, void (*print)(const data*)) {
 		print(a_get(a, i));
 	}
 	printf("]\n");
-}
-
-Array *a_make(const unsigned int n, data *const elements[static n]) {
-	Array *arr = a_new(n);
-	if(!arr) {
-		return NULL;
-	}
-	for(unsigned int i = 0; i < n; ++i) {
-		a_append(arr, elements[i]);
-	}
-	return arr;
 }
