@@ -74,7 +74,7 @@ data *a_cond(const Array *array, bool (*predicate)(const data*));
  * \param[in] elements The elements to fill the Array with
  *
  * \return An \a Array filled with the given items, or \c NULL if an error
- *         occured.
+ *         occured, or \a n equals \c 0.
  */
 Array *a_make(unsigned int n, data *const elements[static n]);
 
