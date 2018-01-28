@@ -92,10 +92,10 @@ Array *a_make(unsigned int n, data *const elements[static n]);
  * If the item function is \c NULL, the function will output the pointer
  * addresses of the elements in \c printf's "%p" format.
  *
- * \param[in,out] self      The array
+ * \param[in,out] array     The array
  * \param[in]     printitem The function to print each element with
  */
-void a_printf(const Array *self, void (*printitem)(const data*));
+void a_printf(const Array *array, void (*printitem)(const data*));
 
 
 #endif /* ARRAY_FUNCS_H */
