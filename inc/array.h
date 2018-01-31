@@ -108,7 +108,7 @@ int a_add(Array *self, int index, data *newitem);
  *
  * \sa a_add
  */
-inline int a_append(Array *self, data *item) {
+inline int a_append(Array *const self, data *const item) {
 	return a_add(self, a_size(self), item);
 }
 
