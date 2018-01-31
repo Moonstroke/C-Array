@@ -4,9 +4,9 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "C / Array"
+PROJECT_NAME           = "C / Arrays"
 PROJECT_NUMBER         = 0.1
-PROJECT_BRIEF          = "A simple dynamic array implementation in C"
+PROJECT_BRIEF          = "Dynamic array types implemented in C"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = doc
 CREATE_SUBDIRS         = NO
