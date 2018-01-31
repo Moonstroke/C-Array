@@ -19,8 +19,10 @@ Array *a_new(const unsigned int s) {
 	// Using calloc() instead of malloc() here is preferred, as the array might
 	// be left only half-full for some time
 	data *items = calloc(s, sizeof(data*));
-	if(items == NULL)
+	if(items == NULL) {
+		free(a);
 		return NULL;
+	}
 	a->items = items;
 	a->capacity = s;
 	a->size = 0;
