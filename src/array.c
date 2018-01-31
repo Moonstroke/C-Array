@@ -41,19 +41,17 @@ unsigned int a_size(const Array *const a) {
 	return a->size;
 }
 
-static inline int valid(const Array *const a, const int i) {
-	const int n = a->size;
-	if(0 <= i && i < n) {
+static inline int valid(const int s, const int i) {
+	if(-s <= i && i < 0)
+		return s + i;
+	else if(i < s)
 		return i;
-	} else if(-n <= i && i < 0) {
-		return n + i;
-	} else {
+	else
 		return -1;
-	}
 }
 
 data *a_get(const Array *const a, const int index) {
-	const int i = valid(a, index);
+	const int i = valid(a->size, index);
 	if(i < 0)
 		return NULL;
 	return fa_get(a->items, i);
@@ -79,7 +77,7 @@ static bool a_resize(Array *const a, const unsigned int c) {
 
 int a_add(Array *const a, int index, data *const e) {
 	if(index < (signed)a->size)
-		index = valid(a, index);
+		index = valid(a->size, index);
 	/* not just `i = valid(index)` because `a->size` is a valid value (=> append) */
 	if(index < 0)
 		return -1;
@@ -104,7 +102,7 @@ extern int a_append(Array*, data*);
 
 data *a_drop(Array *a, const int index) {
 	const unsigned int l = a->size;
-	const int n = valid(a, index);
+	const int n = valid(l, index);
 
 	if(n < 0)
 		return NULL;
