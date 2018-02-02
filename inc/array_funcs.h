@@ -70,6 +70,7 @@ data *a_cond(const Array *array, bool (*predicate)(const data*));
  *
  * \note The \c static in the declaration of \a elements means that the array
  *       must contain <i>at least</i> \a n elements.
+ *
  * \param[in] n        The number of elements in the array
  * \param[in] elements The elements to fill the Array with
  *
