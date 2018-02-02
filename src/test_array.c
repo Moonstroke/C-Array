@@ -113,7 +113,7 @@ static void test_a_cond__not_found(void) {
 }
 
 
-static void printint(const void *const i) {
+static void print_as_int(const void *const i) {
 	if(i == NULL)
 		printf("(nil)");
 	else
@@ -124,15 +124,15 @@ void test_array(void) {
 	init();
 
 	test_a_append();
-	a_printf(array, *printint);
+	a_printf(array, *print_as_int);
 
 	test_a_get();
 
 	test_a_append__overflow();
-	a_printf(array, *printint);
+	a_printf(array, *print_as_int);
 
 	test_a_set();
-	a_printf(array, *printint);
+	a_printf(array, *print_as_int);
 
 	test_a_cond();
 
