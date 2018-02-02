@@ -5,8 +5,8 @@
 
 This repo defines structures for dynamically-allocated arrays.
 
-I needed one for the big project I'm working on, [A Point & Click library in plain C]
-(https://github.com/Moonstroke/C-SDL-Point-Click), using the SDL version 2.
+I needed one for the big project I'm working on, [A Point & Click library in
+plain C](https://github.com/Moonstroke/C-SDL-Point-Click), using the SDL v2.
 
 
 ## Usage
