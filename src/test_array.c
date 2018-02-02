@@ -94,19 +94,6 @@ static void test_a_get__invalid(void) {
 	info("OK\n");
 }
 
-static void test_a_append__overflow(void) {
-	static int extra = 73;
-	int expected, got;
-	info("test a_append -- overflow size (=> realloc)");
-	expected = INT_ARRAY_SIZE;
-	verbose("a_append(array, %d)", extra);
-	verbose("expected: %ld", expected);
-	got = a_append(array, &extra);
-	verbose("got     : %ld", got);
-	assert(got == expected);
-	info("OK\n");
-}
-
 void test_a_set__valid(void) {
 	static int extra = 777;
 	int expected, got;
@@ -138,6 +125,19 @@ static void test_a_set__invalid(void) {
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
+	info("OK\n");
+}
+
+static void test_a_append__overflow(void) {
+	static int extra = 73;
+	int expected, got;
+	info("test a_append -- overflow size (=> realloc)");
+	expected = INT_ARRAY_SIZE;
+	verbose("a_append(array, %d)", extra);
+	verbose("expected: %ld", expected);
+	got = a_append(array, &extra);
+	verbose("got     : %ld", got);
+	assert(got == expected);
 	info("OK\n");
 }
 
@@ -199,13 +199,13 @@ void test_array(void) {
 
 	test_a_get__invalid();
 
-	test_a_append__overflow();
-	a_printf(array, *print_as_int);
-
 	test_a_set__valid();
 	a_printf(array, *print_as_int);
 
 	test_a_set__invalid();
+
+	test_a_append__overflow();
+	a_printf(array, *print_as_int);
 
 	test_a_cond();
 
