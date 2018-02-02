@@ -78,7 +78,7 @@ static bool a_resize(Array *const a, const unsigned int c) {
 int a_add(Array *const a, int index, data *const e) {
 	if(index < (signed)a->size)
 		index = valid(a->size, index);
-	/* not just `i = valid(index)` because `a->size` is a valid value (=> append) */
+	/* not just i = valid(index) because a->size is a valid value (=> append) */
 	if(index < 0)
 		return -1;
 	const unsigned int i = (unsigned)index,
@@ -87,12 +87,9 @@ int a_add(Array *const a, int index, data *const e) {
 	if(n == c) {
 		if(!a_resize(a, c + (c / 2 + c % 2) /* capacity * 1.5 */)) {
 			return -1;
-		} else {
-			a->size = c;
 		}
 	}
-	unsigned int k;
-	for(k = n + 1; k > i; --k)
+	for(unsigned int k = n + 1; k > i; --k)
 		fa_set(a->items, k, fa_get(a->items, k - 1));
 	fa_set(a->items, i, e);
 	a->size++;
