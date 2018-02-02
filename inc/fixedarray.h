@@ -3,7 +3,7 @@
 * \author joH1
 * \version 0.1
 *
-* \brief This file contains the declaration of a type of array of fixed size.
+* \brief Declaration of an array type of fixed size.
 *
 * The type FixedArray is to be instantiated with a certain size that is not
 * modified for the lifetime of the object. Elements can be added at any index
