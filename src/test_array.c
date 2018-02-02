@@ -119,7 +119,7 @@ static void test_a_set__invalid(void) {
 	for(unsigned int i = 0; i < 3; ++i) {
 		data *expected, *got;
 		expected = NULL;
-		verbose("a_set(array, %u, %p)", invalid_indices[i]);
+		verbose("a_set(array, %u, %p)", invalid_indices[i], &value);
 		verbose("expected: %p", expected);
 		got = a_set(array, invalid_indices[i], &value);
 		verbose("got     : %d", got);
