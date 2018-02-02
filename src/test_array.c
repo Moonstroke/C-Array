@@ -23,6 +23,17 @@ static void cleanup(void) {
 }
 
 
+static void test_a_size__empty(void) {
+	unsigned int expected, got;
+	info("test a_size -- empty array");
+	expected = 0;
+	verbose("Expected: %u", expected);
+	got = a_size(array);
+	verbose("Got     : %u", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
 static void test_a_append(void) {
 	unsigned int i;
 	info("test a_append");
@@ -36,6 +47,17 @@ static void test_a_append(void) {
 		verbose("got     : %ld", got);
 		assert(got == expected);
 	}
+	info("OK\n");
+}
+
+static void test_a_size__full(void) {
+	unsigned int expected, got;
+	info("test a_size -- array full");
+	expected = INT_ARRAY_SIZE;
+	verbose("Expected: %u", expected);
+	got = a_size(array);
+	verbose("Got     : %u", got);
+	assert(got == expected);
 	info("OK\n");
 }
 
@@ -127,8 +149,12 @@ void test_array(void) {
 
 	init();
 
+	test_a_size__empty();
+
 	test_a_append();
 	a_printf(array, *print_as_int);
+
+	test_a_size__full();
 
 	test_a_get();
 
