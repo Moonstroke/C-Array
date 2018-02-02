@@ -42,7 +42,7 @@ void fa_clear(FixedArray *farray, void (*free_item)(data*));
 
 
 /**
- * \brief Caluclates the number of non-\c NULL elements.
+ * \brief Calculates the number of non-\c NULL elements.
  *
  * \param[in,out] farray The fixed array
  *
