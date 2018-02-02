@@ -97,7 +97,7 @@ static void test_a_get__invalid(void) {
 static void test_a_append__overflow(void) {
 	static int extra = 73;
 	int expected, got;
-	info("test a_append - overflow size (=> realloc)");
+	info("test a_append -- overflow size (=> realloc)");
 	expected = INT_ARRAY_SIZE;
 	verbose("a_append(array, %d)", extra);
 	verbose("expected: %ld", expected);
@@ -165,7 +165,7 @@ static bool equals1024(const void *const e) {
 static const char equals1024_repr[] = "(int i) -> (i == 1024)";
 static void test_a_cond__not_found(void) {
 	int *expected, *got;
-	info("test a_cond - not found");
+	info("test a_cond -- not found");
 	expected = NULL;
 	verbose("a_cond(array, %s)", equals1024_repr);
 	verbose("expected = %p", expected);
