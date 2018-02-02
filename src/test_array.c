@@ -42,9 +42,9 @@ static void test_a_append(void) {
 		int expected, got;
 		expected = i;
 		verbose("a_append(array, %d)", values[i]);
-		verbose("expected: %ld", expected);
+		verbose("expected: %d", expected);
 		got = a_append(array, &values[i]);
-		verbose("got     : %ld", got);
+		verbose("got     : %d", got);
 		assert(got == expected);
 	}
 	info("OK\n");
@@ -88,7 +88,7 @@ static void test_a_get__invalid(void) {
 		verbose("a_get(array, %u)", invalid_indices[i]);
 		verbose("expected: %p", expected);
 		got = a_get(array, invalid_indices[i]);
-		verbose("got     : %d", got);
+		verbose("got     : %p", got);
 		assert(got == expected);
 	}
 	info("OK\n");
@@ -101,9 +101,9 @@ void test_a_set__valid(void) {
 	info("test a_set -- valid indices");
 	expected = values[i];
 	verbose("a_set(array, %u, %d)", i, extra);
-	verbose("expected: %ld", expected);
+	verbose("expected: %d", expected);
 	got = *(int*)a_set(array, i, &extra);
-	verbose("got     : %ld", got);
+	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -122,7 +122,7 @@ static void test_a_set__invalid(void) {
 		verbose("a_set(array, %u, %p)", invalid_indices[i], &value);
 		verbose("expected: %p", expected);
 		got = a_set(array, invalid_indices[i], &value);
-		verbose("got     : %d", got);
+		verbose("got     : %p", got);
 		assert(got == expected);
 	}
 	info("OK\n");
@@ -134,9 +134,9 @@ static void test_a_append__overflow(void) {
 	info("test a_append -- overflow size (=> realloc)");
 	expected = INT_ARRAY_SIZE;
 	verbose("a_append(array, %d)", extra);
-	verbose("expected: %ld", expected);
+	verbose("expected: %d", expected);
 	got = a_append(array, &extra);
-	verbose("got     : %ld", got);
+	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
 }
