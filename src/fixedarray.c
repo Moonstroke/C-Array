@@ -38,5 +38,7 @@ data *fa_get(const FixedArray *const fa, const unsigned int i) {
 }
 
 void fa_set(FixedArray *const fa, const unsigned int i, data *const d) {
-	if(i < fa->size) fa->items[i] = d;
+	if(i < fa->size) {
+		fa->items[i] = d;
+	}
 }
