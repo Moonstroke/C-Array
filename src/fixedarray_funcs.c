@@ -32,10 +32,14 @@ int fa_put(FixedArray *const fa, data *const item) {
 }
 
 
-data *fa_swap(FixedArray *const fa, const unsigned int i, data *const d) {
-	data *const _d = fa_get(fa, i);
-	fa_set(fa, i, d);
-	return _d;
+data *fa_swap(FixedArray *const fa, const unsigned int i, data *const e) {
+	if(i < fa_size(fa)) {
+		data *const d = fa_get(fa, i);
+		fa_set(fa, i, e);
+		return d;
+	} else {
+		return NULL;
+	}
 }
 
 extern data *fa_unset(FixedArray*, unsigned int);
