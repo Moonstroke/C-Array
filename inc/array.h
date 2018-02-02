@@ -3,8 +3,11 @@
  * \author joH1
  * \version 0.1
  *
- * This file contains the definition of an \a Array, a dynamic container for
- * any elements.
+ * \brief Declaration of the dynamic array type.
+ *
+ * The Array type is a dynamic container for any type of elements. It is
+ * allocated an initial size, but in the contrary of FixedArray, its size can
+ * dynamically increase over time when further elements are added to it.
  */
 
 #ifndef ARRAY_H
@@ -22,11 +25,11 @@ typedef void data; /**< A more eloquent name for the type of the elements */
  *
  * An instance of this structure will increase its capacity whenever needed,
  * without explicit user management. The type of the elements is not checked --
- * this means it is user's responsibility to manage carefully their \a arrays to
- * avoid undefined behavior!
+ * this means it is user's responsibility to manipulate their \a Arrays with
+ * care to avoid undefined behavior!
  *
  * \note This structure is only able to contain pointed types, not primitive
- *       types (unless you try to interpret the addresses as integers)...
+ *       types (unless you try to interpret the addresses as integers).
  */
 typedef struct array Array;
 

@@ -3,6 +3,8 @@
  * \author joH1
  * \version 0.1
  *
+ * \brief Declaration of extra functions for Array.
+ *
  * This file contains additional functions related to the \a Array structure.
  */
 
