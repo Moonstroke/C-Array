@@ -84,11 +84,12 @@ static bool equals42(const void *const e) {
 	assert(e != NULL);
 	return *((int*)e) == 42;
 }
+static const char equals42_repr[] = "(int i) -> (i == 42)";
 static void test_a_cond(void) {
 	int expected, got;
 	info("test a_cond");
 	expected = 42;
-	verbose("acond(array, %s)", "(int i) -> (i == 42)"); // string repr of the equals42() func
+	verbose("acond(array, %s)", equals42_repr);
 	verbose("expected = %d", expected);
 	got = *(int*)a_cond(array, equals42);
 	verbose("got      = %d", got);
@@ -100,11 +101,12 @@ static bool equals1024(const void *const e) {
 	assert(e != NULL);
 	return *((int*)e) == 1024;
 }
+static const char equals1024_repr[] = "(int i) -> (i == 1024)";
 static void test_a_cond__not_found(void) {
 	int *expected, *got;
 	info("test a_cond - not found");
 	expected = NULL;
-	verbose("a_cond(array, %s)", "(int i) -> (i == 1024)");
+	verbose("a_cond(array, %s)", equals1024_repr);
 	verbose("expected = %p", expected);
 	got = (int*)a_cond(array, equals1024);
 	verbose("got      = %p", got);
