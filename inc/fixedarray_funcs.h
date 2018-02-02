@@ -71,7 +71,8 @@ int fa_put(FixedArray *farray, data *item);
  * \param[in]     index  The index where to change the values
  * \param[in]     item   The new value to put
  *
- * \return The former element of the array at given index.
+ * \return The former element of the array at given index, or \c NULL if the
+ *         provided index is invalid.
  */
 data *fa_swap(FixedArray *farray, unsigned int index, data *item);
 
@@ -81,7 +82,7 @@ data *fa_swap(FixedArray *farray, unsigned int index, data *item);
  * \param[in,out] farray The fixed array
  * \param[in]     index  The index of the element
  *
- * \return The element just unset.
+ * \return The element just unset, or \c NULL if the index is invalid.
  */
 inline data *fa_unset(FixedArray *const farray, const unsigned int index) {
 	return fa_swap(farray, index, NULL);
