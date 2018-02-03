@@ -26,6 +26,7 @@ static void cleanup(void) {
 static void test_a_size__empty(void) {
 	unsigned int expected, got;
 	info("test a_size -- empty array");
+	info("a_size(array)");
 	expected = 0;
 	verbose("Expected: %u", expected);
 	got = a_size(array);
@@ -35,15 +36,16 @@ static void test_a_size__empty(void) {
 }
 
 static void test_a_append(void) {
-	unsigned int i;
+	data *param;
+	int expected, got;
 	info("test a_append");
 	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
-	for(i = 0; i < INT_ARRAY_SIZE; ++i) {
-		int expected, got;
-		expected = i;
-		verbose("a_append(array, %d)", values[i]);
+	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
+		param = values + index;
+		info("a_append(array, %p)", param);
+		expected = index;
 		verbose("expected: %d", expected);
-		got = a_append(array, &values[i]);
+		got = a_append(array, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
@@ -53,23 +55,24 @@ static void test_a_append(void) {
 static void test_a_size__full(void) {
 	unsigned int expected, got;
 	info("test a_size -- array full");
+	info("a_size(array)");
 	expected = INT_ARRAY_SIZE;
-	verbose("Expected: %u", expected);
+	verbose("expected: %u", expected);
 	got = a_size(array);
-	verbose("Got     : %u", got);
+	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
 }
 
 static void test_a_get__valid(void) {
+	data *expected, *got;
 	info("tests a_get -- valid indices");
-	for(unsigned int i = 0; i < INT_ARRAY_SIZE; ++i) {
-		int expected, got;
-		expected = values[i];
-		verbose("a_get(array, %d)", i);
-		verbose("expected: %d", expected);
-		got = *((int*)a_get(array, i));
-		verbose("got     : %d", got);
+	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
+		info("a_get(array, %p)", index);
+		expected = values + index;
+		verbose("expected: %p", expected);
+		got = a_get(array, index);
+		verbose("got     : %p", got);
 		assert(got == expected);
 	}
 	info("OK\n");
@@ -81,13 +84,15 @@ static void test_a_get__invalid(void) {
 		a_size(array) + 1,
 		73 /* big "arbitrary" value */
 	};
+	unsigned int index;
+	data *expected, *got;
 	info("tests a_get -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
-		data *expected, *got;
+		index = invalid_indices[i];
+		info("a_get(array, %u)", index);
 		expected = NULL;
-		verbose("a_get(array, %u)", invalid_indices[i]);
 		verbose("expected: %p", expected);
-		got = a_get(array, invalid_indices[i]);
+		got = a_get(array, index);
 		verbose("got     : %p", got);
 		assert(got == expected);
 	}
@@ -96,32 +101,37 @@ static void test_a_get__invalid(void) {
 
 void test_a_set__valid(void) {
 	static int extra = 777;
+	data *const param = &extra;
 	int expected, got;
-	unsigned int i = 2;
+	unsigned int index;
 	info("test a_set -- valid indices");
-	expected = values[i];
-	verbose("a_set(array, %u, %d)", i, extra);
+	index = 2;
+	info("a_set(array, %u, %p)", index, param);
+	expected = values[index];
 	verbose("expected: %d", expected);
-	got = *(int*)a_set(array, i, &extra);
+	got = *(int*)a_set(array, index, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
 }
 
 static void test_a_set__invalid(void) {
+	static int value = 42;
 	const unsigned int invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
 		73
 	};
-	static int value = 42;
+	data *const param = &value;
+	unsigned int index;
+	data *expected, *got;
 	info("tests a_set -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
-		data *expected, *got;
+		index = invalid_indices[i];
+		info("a_set(array, %u, %p)", index, param);
 		expected = NULL;
-		verbose("a_set(array, %u, %p)", invalid_indices[i], &value);
 		verbose("expected: %p", expected);
-		got = a_set(array, invalid_indices[i], &value);
+		got = a_set(array, index, param);
 		verbose("got     : %p", got);
 		assert(got == expected);
 	}
@@ -129,19 +139,22 @@ static void test_a_set__invalid(void) {
 }
 
 static void test_a_add__invalid(void) {
+	static int value = 42;
 	const unsigned int invalid_indices[3] = {
 		a_size(array) + 1,
 		a_size(array) + 2,
 		73
 	};
-	static int value = 42;
+	int expected, got;
+	data *const param = &value;
+	unsigned int index;
 	info("tests a_add -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
-		int expected, got;
+		index = invalid_indices[i];
 		expected = -1;
-		verbose("a_add(array, %i, %p)", invalid_indices[i], &value);
+		info("a_add(array, %i, %p)", index, param);
 		verbose("expected: %d", expected);
-		got = a_add(array, invalid_indices[i], &value);
+		got = a_add(array, index, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
@@ -151,11 +164,12 @@ static void test_a_add__invalid(void) {
 static void test_a_append__overflow(void) {
 	static int extra = 73;
 	int expected, got;
+	data *const param = &extra;
 	info("test a_append -- overflow size (=> realloc)");
+	info("a_append(array, %p)", param);
 	expected = INT_ARRAY_SIZE;
-	verbose("a_append(array, %d)", extra);
 	verbose("expected: %d", expected);
-	got = a_append(array, &extra);
+	got = a_append(array, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
@@ -163,8 +177,9 @@ static void test_a_append__overflow(void) {
 
 static void test_a_drop__valid(void) {
 	const unsigned int index = 4;
-	int *expected, *got;
+	data *expected, *got;
 	info("test a_drop -- valid index");
+	info("a_drop(array, %u)", index);
 	expected = values + index;
 	verbose("expected: %p", expected);
 	got = a_drop(array, index);
@@ -180,46 +195,49 @@ static void test_a_drop__invalid(void) {
 		73
 	};
 	data *expected, *got;
+	unsigned int index;
 	info("test a_drop -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("a_drop(array, %u)", index);
 		expected = NULL;
 		verbose("expected: %p", expected);
-		got = a_drop(array, invalid_indices[i]);
+		got = a_drop(array, index);
 		verbose("got     : %p", got);
 		assert(got == expected);
 	}
 	info("OK\n");
 }
 
-static bool equals42(const void *const e) {
+static bool equals42(const data *const e) {
 	assert(e != NULL);
 	return *((int*)e) == 42;
 }
 static const char equals42_repr[] = "(int i) -> (i == 42)";
 static void test_a_cond(void) {
-	int expected, got;
-	info("test a_cond");
-	expected = 42;
-	verbose("acond(array, %s)", equals42_repr);
-	verbose("expected = %d", expected);
-	got = *(int*)a_cond(array, equals42);
-	verbose("got      = %d", got);
+	data *expected, *got;
+	info("test a_cond -- found");
+	expected = values + 1;
+	info("a_cond(array, %s)", equals42_repr);
+	verbose("expected = %p", expected);
+	got = a_cond(array, equals42);
+	verbose("got      = %p", got);
 	assert(got == expected);
 	info("OK\n");
 }
 
-static bool equals1024(const void *const e) {
+static bool equals1024(const data *const e) {
 	assert(e != NULL);
 	return *((int*)e) == 1024;
 }
 static const char equals1024_repr[] = "(int i) -> (i == 1024)";
 static void test_a_cond__not_found(void) {
-	int *expected, *got;
+	data *expected, *got;
 	info("test a_cond -- not found");
 	expected = NULL;
-	verbose("a_cond(array, %s)", equals1024_repr);
+	info("a_cond(array, %s)", equals1024_repr);
 	verbose("expected = %p", expected);
-	got = (int*)a_cond(array, equals1024);
+	got = a_cond(array, equals1024);
 	verbose("got      = %p", got);
 	assert(got == expected);
 	info("OK\n");
