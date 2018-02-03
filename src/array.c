@@ -44,10 +44,13 @@ unsigned int a_size(const Array *const a) {
 
 static inline int valid(const int s, const int i) {
 	if(-s <= i && i < 0) {
+		//debug("-%d <= %d < 0", s, i);
 		return s + i;
 	} else if(i < s) {
+		//debug("0 <= %d < %d", i, s);
 		return i;
 	} else {
+		//debug("%d < -%d || %d > %d", i, s, i, s);
 		return -1;
 	}
 }
@@ -77,7 +80,7 @@ static bool a_resize(Array *const a, const unsigned int c) {
 	return true;
 }
 int a_add(Array *const a, int index, data *const e) {
-	if(index < (signed)a->size)
+	if(index != (signed)a->size)
 		index = valid(a->size, index);
 	/* not just i = valid(index) because a->size is a valid value (=> append) */
 	if(index < 0)
