@@ -128,6 +128,26 @@ static void test_a_set__invalid(void) {
 	info("OK\n");
 }
 
+static void test_a_add__invalid(void) {
+	const unsigned int invalid_indices[3] = {
+		a_size(array) + 1,
+		a_size(array) + 2,
+		73
+	};
+	static int value = 42;
+	info("tests a_add -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		int expected, got;
+		expected = -1;
+		verbose("a_add(array, %i, %p)", invalid_indices[i], &value);
+		verbose("expected: %d", expected);
+		got = a_add(array, invalid_indices[i], &value);
+		verbose("got     : %d", got);
+		assert(got == expected);
+	}
+	info("OK\n");
+}
+
 static void test_a_append__overflow(void) {
 	static int extra = 73;
 	int expected, got;
@@ -203,6 +223,8 @@ void test_array(void) {
 	a_printf(array, *print_as_int);
 
 	test_a_set__invalid();
+
+	test_a_add__invalid();
 
 	test_a_append__overflow();
 	a_printf(array, *print_as_int);
