@@ -97,7 +97,7 @@ static void test_fa_count(void) {
 	info("OK\n");
 }
 
-static void test_fa_put(void) {
+static void test_fa_put__valid(void) {
 	static int extra_value = 33;
 	unsigned int expected, got;
 	info("test fa_put(%d)", extra_value);
@@ -105,6 +105,20 @@ static void test_fa_put(void) {
 	verbose("expected: %u", expected);
 	got = fa_put(farray, &extra_value);
 	verbose("got     : %u", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
+static void test_fa_put__invalid(void) {
+	static int extra = 7;
+	data *const param = &extra;
+	int expected, got;
+	info("test fa_put -- invalid (array is full)");
+	info("fa_put(farray, %p)", param);
+	expected = -1;
+	verbose("expected: %d", expected);
+	got = fa_put(farray, param);
+	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -155,8 +169,10 @@ void test_fixedarray(void) {
 
 	test_fa_count();
 
-	test_fa_put();
+	test_fa_put__valid();
 	fa_printf(farray, print_as_int);
+
+	test_fa_put__invalid();
 
 	test_fa_each();
 	fa_printf(farray, print_as_int);
