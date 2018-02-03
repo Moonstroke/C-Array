@@ -8,99 +8,122 @@
 
 
 
-void printint(const void *const data) {
-	printf("%d", *((int*)data));
+static LinkedList *llist;
+
+
+static int values[] = {42, 3, 7, 13};
+static const unsigned int N = 4;
+
+
+static void init(void) {
+	info("llist = newlinkedlist(%u)", N);
+	llist = newlinkedlist();
+	assert(llist != NULL);
+	info("OK\n");
+}
+
+static void cleanup(void) {
+	info("lfree(llist)");
+	lfree(llist, NULL);
+	info("OK\n");
 }
 
 
-int test_linkedlist(void) {
-
-	LinkedList *l = newlinkedlist();
-
-	const int ints[] = {42, 3, 7, 13};
-	const unsigned int N = 4;
-
-	/* Variables used in tests */
-	unsigned int i;
-	int got, expected;
-	int extra_add, extra_set;
-
+static void test_lappend(void) {
+	int expected, got;
+	data *param;
 	info("tests lappend");
-	{
-		for(i = 0; i < N; ++i) {
-			int v = ints[i];
-			info("lappend(l, %d)", v);
-			expected = i;
-			verbose("expected: %d", expected);
-			got = lappend(l, (void*)&ints[i]);
-			verbose("got     : %d", got);
-			assert(got == expected);
-			info("OK");
-		}
-
-		printf("list = ");
-		lprintf(l, &printint);
-	}
-
-	info("\ntests get");
-	{
-		for(i = 0; i < N; ++i) {
-			expected = ints[i];
-			verbose("expected: %d", expected);
-			got = *((int*)lget(l, i));
-			verbose("got     : %d", got);
-			assert(got == expected);
-			info("OK");
-		}
-	}
-
-	info("\ntests add");
-	{
-		i = 3;
-		expected = i;
-		extra_add = 8;
+	for(unsigned int n = 0; n < N; ++n) {
+		param = values + n;
+		info("lappend(llist, %p)", param);
+		expected = n;
 		verbose("expected: %d", expected);
-		got = ladd(l, i, &extra_add);
+		got = lappend(llist, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
-		info("OK");
-		printf("list = ");
-		lprintf(l, &printint);
 	}
+	info("OK\n");
+}
 
-	info("\ntests set");
-	{
-		i = 2;
-		extra_set = -32;
-		expected = ints[i];
+static void test_lget__valid(void) {
+	data *expected, *got;
+	info("test lget -- valid indices");
+	for(unsigned int index = 0; index < N; ++index) {
+		info("lget(llist, %u)", index);
+		expected = values + index;
 		verbose("expected: %d", expected);
-		got = *((int*)lset(l, i, &extra_set));
+		got = lget(llist, index);
 		verbose("got     : %d", got);
 		assert(got == expected);
-		info("OK");
-
-		printf("list = ");
-		lprintf(l, &printint);
+		info("OK\n");
 	}
+}
 
-	info("\ntests drop");
-	{
-		i = 0;
-		expected = ints[i];
-		verbose("expected: %d", expected);
-		got = *((int*)ldrop(l, i));
-		verbose("got     : %d", got);
-		assert(got == expected);
-		info("OK");
+static void test_lset__valid(void) {
+	static int extra = -32;
+	data *const param = &extra;
+	const unsigned int index = 2;
+	data *expected, *got;
+	info("test lset -- valid index");
+	info("lset(llist, %u, %p)", index, param);
+	expected = values + index;
+	verbose("expected: %d", expected);
+	got = lset(llist, index, param);
+	verbose("got     : %d", got);
+	assert(got == expected);
+	info("OK\n");
+}
 
-		printf("list = ");
-		lprintf(l, &printint);
-	}
+static void test_ladd__valid(void) {
+	static int extra = 8;
+	data *const param = &extra;
+	int expected, got;
+	const unsigned int index = 3;
+	info("test ladd -- valid index");
+	info("ladd(llist, %u, %p)", index, param);
+	expected = (signed)index;
+	verbose("expected: %d", expected);
+	got = ladd(llist, index, param);
+	verbose("got     : %d", got);
+	assert(got == expected);
+	info("OK\n");
+}
 
-	info("\n test free");
-	lfree(l, NULL);
-	info("OK");
+static void test_ldrop__valid(void) {
+	data *expected, *got;
+	const unsigned int index = 0;
+	info("test ldrop -- valid index");
+	info("ldrop(llist, %u)", index);
+	expected = values + index;
+	verbose("expected: %p", expected);
+	got = ldrop(llist, index);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	info("OK\n");
+}
 
-	info("\nend tests");
-	return 0;
+
+static void printint(const void *const data) {
+	assert(data != NULL);
+	printf("%d", *((int*)data));
+}
+void test_linkedlist(void) {
+
+	init();
+
+	test_lappend();
+	lprintf(llist, printint);
+
+	test_lget__valid();
+
+	test_ladd__valid();
+	lprintf(llist, printint);
+
+	test_lset__valid();
+	lprintf(llist, printint);
+
+	test_ldrop__valid();
+	lprintf(llist, printint);
+
+	cleanup();
 }
