@@ -12,11 +12,11 @@ static LinkedList *llist;
 
 
 static int values[] = {42, 3, 7, 13};
-static const unsigned int N = 4;
+static const unsigned int INT_LINKED_LIST_SIZE = 4;
 
 
 static void init(void) {
-	info("llist = newlinkedlist(%u)", N);
+	info("llist = newlinkedlist(%u)", INT_LINKED_LIST_SIZE);
 	llist = newlinkedlist();
 	assert(llist != NULL);
 	info("OK\n");
@@ -33,7 +33,7 @@ static void test_lappend(void) {
 	int expected, got;
 	data *param;
 	info("tests lappend");
-	for(unsigned int n = 0; n < N; ++n) {
+	for(unsigned int n = 0; n < INT_LINKED_LIST_SIZE; ++n) {
 		param = values + n;
 		info("lappend(llist, %p)", param);
 		expected = n;
@@ -48,7 +48,7 @@ static void test_lappend(void) {
 static void test_lget__valid(void) {
 	data *expected, *got;
 	info("test lget -- valid indices");
-	for(unsigned int index = 0; index < N; ++index) {
+	for(unsigned int index = 0; index < INT_LINKED_LIST_SIZE; ++index) {
 		info("lget(llist, %u)", index);
 		expected = values + index;
 		verbose("expected: %d", expected);
