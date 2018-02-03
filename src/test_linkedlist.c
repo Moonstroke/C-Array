@@ -103,27 +103,29 @@ static void test_ldrop__valid(void) {
 }
 
 
-static void printint(const void *const data) {
-	assert(data != NULL);
-	printf("%d", *((int*)data));
+static void print_as_int(const data *const e) {
+	if(e)
+		printf("%d", *(int*)e);
+	else
+		printf("(null)");
 }
 void test_linkedlist(void) {
 
 	init();
 
 	test_lappend();
-	lprintf(llist, printint);
+	lprintf(llist, print_as_int);
 
 	test_lget__valid();
 
 	test_ladd__valid();
-	lprintf(llist, printint);
+	lprintf(llist, print_as_int);
 
 	test_lset__valid();
-	lprintf(llist, printint);
+	lprintf(llist, print_as_int);
 
 	test_ldrop__valid();
-	lprintf(llist, printint);
+	lprintf(llist, print_as_int);
 
 	cleanup();
 }

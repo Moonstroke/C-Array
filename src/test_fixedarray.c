@@ -149,9 +149,9 @@ static void test_fa_each(void) {
 }
 
 
-static void print_as_int(const data *const v) {
-	if(v)
-		printf("%d", *(int*)v);
+static void print_as_int(const data *const e) {
+	if(e)
+		printf("%d", *(int*)e);
 	else
 		printf("(null)");
 }

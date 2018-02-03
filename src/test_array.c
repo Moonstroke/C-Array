@@ -245,11 +245,11 @@ static void test_a_cond__not_found(void) {
 }
 
 
-static void print_as_int(const void *const i) {
-	if(i == NULL)
-		printf("(nil)");
+static void print_as_int(const data *const e) {
+	if(e)
+		printf("%d", *(int*)e);
 	else
-		printf("%d", *(int*)i);
+		printf("(null)");
 }
 void test_array(void) {
 
