@@ -15,8 +15,10 @@ static int values[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
 
 static void init(void) {
-	info("Initialization of array of %u items", INT_ARRAY_SIZE);
+	info("array = a_new(%u)", INT_ARRAY_SIZE);
 	array = a_new(INT_ARRAY_SIZE);
+	assert(array != NULL);
+	info("OK\n");
 }
 
 static void cleanup(void) {

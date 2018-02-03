@@ -19,8 +19,7 @@ static const unsigned int unset_index = 3;
 
 
 static void init(void) {
-	info("construct a FixedArray");
-	info("fa_new(%u)", INT_FIXED_ARRAY_SIZE);
+	info("farray = fa_new(%u)", INT_FIXED_ARRAY_SIZE);
 	farray = fa_new(INT_FIXED_ARRAY_SIZE);
 	assert(farray != NULL);
 	info("OK\n");
