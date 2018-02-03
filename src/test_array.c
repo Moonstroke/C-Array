@@ -161,6 +161,36 @@ static void test_a_append__overflow(void) {
 	info("OK\n");
 }
 
+static void test_a_drop__valid(void) {
+	const unsigned int index = 4;
+	int *expected, *got;
+	info("test a_drop -- valid index");
+	expected = values + index;
+	verbose("expected: %p", expected);
+	got = a_drop(array, index);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
+static void test_a_drop__invalid(void) {
+	const unsigned int invalid_indices[3] = {
+		a_size(array),
+		a_size(array) + 1,
+		73
+	};
+	data *expected, *got;
+	info("test a_drop -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		expected = NULL;
+		verbose("expected: %p", expected);
+		got = a_drop(array, invalid_indices[i]);
+		verbose("got     : %p", got);
+		assert(got == expected);
+	}
+	info("OK\n");
+}
+
 static bool equals42(const void *const e) {
 	assert(e != NULL);
 	return *((int*)e) == 42;
@@ -228,6 +258,10 @@ void test_array(void) {
 
 	test_a_append__overflow();
 	a_printf(array, *print_as_int);
+
+	test_a_drop__valid();
+
+	test_a_drop__invalid();
 
 	test_a_cond();
 
