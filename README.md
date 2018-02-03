@@ -1,7 +1,11 @@
 # C / Arrays
 
-
 ## Dynamic array types implemented in C
+
+
+[![Build Status](https://travis-ci.org/Moonstroke/C-Arrays.svg?branch=master)
+](https://travis-ci.org/Moonstroke/C-Arrays)
+
 
 This repo defines structures for dynamically-allocated arrays.
 
@@ -9,11 +13,13 @@ I needed one for the big project I'm working on, [A Point & Click library in
 plain C](https://github.com/Moonstroke/C-SDL-Point-Click), using the SDL v2.
 
 
-## Usage
 
+
+## Usage
 
 These implementations can not contain primitive types, only pointers, including
 pointers to primitive types, though.
+
 
 
 
@@ -21,7 +27,6 @@ pointers to primitive types, though.
 
 
 ### Type modules
-
 
 #### Array
 
@@ -34,6 +39,7 @@ designed for this specific case.
 The module **array_funcs** defines some additional functions (more or less
 useful) to manipulate the structure.
 
+
 #### FixedArray
 
 The module **fixedarray** contains a definition for an array of fixed size,
@@ -44,6 +50,7 @@ and most likely will -- be `NULL` at some time.
 In the same manner than for *Array*, the module **fixedarray_funcs** defines
 some extra functions for *FixedArray*.
 
+
 #### LinkedList
 
 The module **linkedlist** declares a structure of elements that are stored not
@@ -53,6 +60,7 @@ data insertion / deletion as those operations are `O(1)`; however element
 retrieval is `O(n)`.
 
 There is once again a module of supplementary functions, **linkedlist_funcs**.
+
 
 
 ### Test modules
