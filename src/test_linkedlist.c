@@ -1,9 +1,10 @@
-#include <assert.h>
-#include <log.h>
-#include <stdio.h>
-
 #include "linkedlist.h"
 #include "linkedlist_funcs.h"
+
+#include <assert.h>
+#include <log.h> /* for info(), verbose() */
+#include <stdio.h> /* for printf() */
+#include <stdlib.h> /* for NULL */
 
 
 
@@ -12,9 +13,6 @@ void printint(const void *const data) {
 }
 
 
-/**
- * Tests for the functions for the LinkedList structure
- */
 int test_linkedlist(void) {
 
 	LinkedList *l = newlinkedlist();

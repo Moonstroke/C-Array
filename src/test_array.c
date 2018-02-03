@@ -2,8 +2,9 @@
 #include "array_funcs.h"
 
 #include <assert.h>
-#include <log.h>
-#include <stdio.h>
+#include <log.h> /* for info(), verbose(), log_setfilter() */
+#include <stdio.h> /* for printf() */
+#include <stdlib.h> /* for NULL */
 
 
 
