@@ -33,9 +33,9 @@ static void test_fa_new__0_null(void) {
 	FixedArray *expected, *got;
 	info("test fa_new(%u)", 0);
 	expected = NULL;
-	verbose("Expected: %p", expected);
+	verbose("expected: %p", expected);
 	got = fa_new(0);
-	verbose("Got     : %p", got);
+	verbose("got     : %p", got);
 	assert(fa_new(0) == NULL);
 	info("OK\n");
 }
@@ -44,9 +44,9 @@ static void test_fa_size(void) {
 	unsigned int expected, got;
 	info("test fa_size()");
 	expected = INT_FIXED_ARRAY_SIZE;
-	verbose("Expected: %u", expected);
+	verbose("expected: %u", expected);
 	got = fa_size(farray);
-	verbose("Got     : %u", got);
+	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -67,9 +67,9 @@ static void test_fa_get(void) {
 		int expected, got;
 		verbose("fa_get(%u)", i);
 		expected = values[i];
-		verbose("Expected: %d", expected);
+		verbose("expected: %d", expected);
 		got = *(int*)fa_get(farray, i);
-		verbose("Got     : %d", got);
+		verbose("got     : %d", got);
 		assert(got == expected);
 	}
 	info("OK\n");
@@ -79,9 +79,9 @@ static void test_fa_unset(void) {
 	int expected, got;
 	info("test fa_unset(%u)", unset_index);
 	expected = values[unset_index];
-	verbose("Expected: %d", expected);
+	verbose("expected: %d", expected);
 	got = *(int*)fa_unset(farray, unset_index);
-	verbose("Got     : %d", got);
+	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -90,9 +90,9 @@ static void test_fa_count(void) {
 	unsigned int expected, got;
 	info("test fa_count()");
 	expected = INT_FIXED_ARRAY_SIZE - 1;
-	verbose("Expected: %u", expected);
+	verbose("expected: %u", expected);
 	got = fa_count(farray);
-	verbose("Got     : %u", got);
+	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -102,9 +102,9 @@ static void test_fa_put(void) {
 	unsigned int expected, got;
 	info("test fa_put(%d)", extra_value);
 	expected = unset_index;
-	verbose("Expected: %u", expected);
+	verbose("expected: %u", expected);
 	got = fa_put(farray, &extra_value);
-	verbose("Got     : %u", got);
+	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
 }

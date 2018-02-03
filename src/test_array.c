@@ -28,9 +28,9 @@ static void test_a_size__empty(void) {
 	info("test a_size -- empty array");
 	info("a_size(array)");
 	expected = 0;
-	verbose("Expected: %u", expected);
+	verbose("expected: %u", expected);
 	got = a_size(array);
-	verbose("Got     : %u", got);
+	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -152,7 +152,7 @@ static void test_a_add__invalid(void) {
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
 		expected = -1;
-		info("a_add(array, %i, %p)", index, param);
+		info("a_add(array, %u, %p)", index, param);
 		verbose("expected: %d", expected);
 		got = a_add(array, index, param);
 		verbose("got     : %d", got);
@@ -219,9 +219,9 @@ static void test_a_cond(void) {
 	info("test a_cond -- found");
 	expected = values + 1;
 	info("a_cond(array, %s)", equals42_repr);
-	verbose("expected = %p", expected);
+	verbose("expected: %p", expected);
 	got = a_cond(array, equals42);
-	verbose("got      = %p", got);
+	verbose("got     : %p", got);
 	assert(got == expected);
 	info("OK\n");
 }
@@ -236,9 +236,9 @@ static void test_a_cond__not_found(void) {
 	info("test a_cond -- not found");
 	expected = NULL;
 	info("a_cond(array, %s)", equals1024_repr);
-	verbose("expected = %p", expected);
+	verbose("expected: %p", expected);
 	got = a_cond(array, equals1024);
-	verbose("got      = %p", got);
+	verbose("got     : %p", got);
 	assert(got == expected);
 	info("OK\n");
 }
