@@ -42,12 +42,13 @@ unsigned int a_size(const Array *const a) {
 }
 
 static inline int valid(const int s, const int i) {
-	if(-s <= i && i < 0)
+	if(-s <= i && i < 0) {
 		return s + i;
-	else if(i < s)
+	} else if(i < s) {
 		return i;
-	else
+	} else {
 		return -1;
+	}
 }
 
 data *a_get(const Array *const a, const int index) {
