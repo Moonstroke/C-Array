@@ -41,6 +41,7 @@ unsigned int a_size(const Array *const a) {
 	return a->size;
 }
 
+
 static inline int valid(const int s, const int i) {
 	if(-s <= i && i < 0) {
 		return s + i;
@@ -50,7 +51,6 @@ static inline int valid(const int s, const int i) {
 		return -1;
 	}
 }
-
 data *a_get(const Array *const a, const int index) {
 	const int i = valid(a->size, index);
 	if(i < 0)
@@ -61,6 +61,7 @@ data *a_get(const Array *const a, const int index) {
 data *a_set(Array *const a, const int i, data *const e) {
 	return fa_swap(a->items, i, e);
 }
+
 
 static bool a_resize(Array *const a, const unsigned int c) {
 	const unsigned int s = fa_size(a->items);
@@ -75,7 +76,6 @@ static bool a_resize(Array *const a, const unsigned int c) {
 	a->items = items;
 	return true;
 }
-
 int a_add(Array *const a, int index, data *const e) {
 	if(index < (signed)a->size)
 		index = valid(a->size, index);
@@ -97,6 +97,7 @@ int a_add(Array *const a, int index, data *const e) {
 	return i;
 }
 extern int a_append(Array*, data*);
+
 
 data *a_drop(Array *a, const int index) {
 	const unsigned int l = a->size;
