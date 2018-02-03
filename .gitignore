@@ -1,5 +1,8 @@
-obj/
+# Compiled files
 test_arrays
+obj/
+
+# Library archive
 libarrays.a
 
 # Documentation directory

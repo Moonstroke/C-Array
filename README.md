@@ -44,6 +44,16 @@ and most likely will -- be `NULL` at some time.
 In the same manner than for *Array*, the module **fixedarray_funcs** defines
 some extra functions for *FixedArray*.
 
+#### LinkedList
+
+The module **linkedlist** declares a structure of elements that are stored not
+necessarily in contiguous blocks on memory; each element contains the
+information to find the next element. It is more suited than *Array* for random
+data insertion / deletion as those operations are `O(1)`; however element
+retrieval is `O(n)`.
+
+There is once again a module of supplementary functions, **linkedlist_funcs**.
+
 
 ### Test modules
 
