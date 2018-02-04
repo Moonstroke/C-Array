@@ -12,9 +12,9 @@
 
 
 #define validate(index, size, include_top_size, return_value) {\
-	if(-(signed)size <= index && index < 0) {\
-		index +=  size;\
-	} else if(index >= ((signed)size + include_top_size) || index < -(signed)size) {\
+	if(-size <= index && index < 0) {\
+		index += size;\
+	} else if(index >= (size + include_top_size) || index < -size) {\
 		return return_value;\
 	}\
 }
@@ -52,7 +52,7 @@ unsigned int a_size(const Array *const a) {
 
 
 data *a_get(const Array *const a, int i) {
-	validate(i, a->size, false, NULL);
+	validate(i, (signed)a->size, false, NULL);
 	return fa_get(a->items, i);
 }
 
@@ -75,7 +75,7 @@ static bool a_resize(Array *const a, const unsigned int c) {
 	return true;
 }
 int a_add(Array *const a, int i, data *const e) {
-	validate(i, a->size, true, -1);
+	validate(i, (signed)a->size, true, -1);
 	const unsigned int index = (unsigned)i,
 	                   capa = fa_size(a->items),
 	                   size = a->size;
@@ -94,7 +94,7 @@ extern int a_append(Array*, data*);
 
 data *a_drop(Array *a, int index) {
 	const unsigned int l = a->size;
-	validate(index, l, false, NULL);
+	validate(index, (signed)l, false, NULL);
 	data *const it = fa_get(a->items, index);
 	fa_set(a->items, index, NULL);
 
