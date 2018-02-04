@@ -98,20 +98,23 @@ data *lset(LinkedList *const l, const int index, data *const d) {
 }
 
 int ladd(LinkedList *const l, const int index, void *const d) {
-	Node *item = newnode(d, NULL);
-	if(item == NULL) {
+	const int i = (index == (signed)l->len) ? index : valid(l, index);
+	if(i < 0) {
 		return -1;
 	}
-	// here `l->len` is a valid index ( <=> append)
-	const int i = (index == (signed)l->len) ? index : valid(l, index);
-	if(i == 0) {
+	Node *const item = newnode(d, NULL);
+	if(!item) {
+		return -1;
+	}
+	if(!i) {
+		item->next = l->head;
 		l->head = item;
 	} else {
 		Node *const prev = lgoto(l, i - 1);
 		item->next = prev->next;
 		prev->next = item;
 	}
-	l->len++;
+	++l->len;
 	return i;
 }
 extern int lappend(LinkedList*, data*);
