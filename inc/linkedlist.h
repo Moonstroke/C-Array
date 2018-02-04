@@ -32,7 +32,7 @@ typedef struct llist LinkedList;
  * \note No parameters are needed because the memory for the elements will be
  * allocated on the fly upon adding -- that's the very concept of a linked list.
  *
- * \return A newly-allocated linked list.
+ * \return A newly allocated linked list.
  */
 LinkedList *newlinkedlist(void);
 
@@ -64,7 +64,8 @@ unsigned int llen(const LinkedList *self);
  * \param[in,out] self  The linked list
  * \param[in]     index The index
  *
- * \return The \a index 'th element in the list.
+ * \return The \a index 'th element in the list, or \c NULL if the index is
+ *         invalid.
  */
 data *lget(const LinkedList *self, int index);
 
@@ -75,7 +76,8 @@ data *lget(const LinkedList *self, int index);
  * \param[in]     index The index where to update the element
  * \param[in]     item  The element to set
  *
- * \return The former element at \a index 'th position.
+ * \return The former element at \a index 'th position, or \c NULL if the index
+ *         is invalid.
  */
 data *lset(LinkedList *self, int index, data *item);
 
@@ -88,7 +90,7 @@ data *lset(LinkedList *self, int index, data *item);
  * \param[in]     index The index where to add the element
  * \param[in]     item  The item to insert
  * \return The index of the element, or \c -1 in case of error: memory
- *         allocation failed, or the \a index is invalid
+ *         allocation failed, or the \a index is invalid.
  */
 int ladd(LinkedList *self, int index, data *item);
 
@@ -112,7 +114,7 @@ inline int lappend(LinkedList *self, data *item) {
  * \param[in]     index The index where to delete the element
  *
  * \return The removed element, of NULL if no element was removed (\a i.e.
- *         \a index has an invalid value)
+ *         \a index has an invalid value).
  */
 data *ldrop(LinkedList *self, int index);
 
