@@ -17,14 +17,22 @@
 
 
 /**
- * \brief Removes an element of the linked list.
+ * \brief Removes an element of the linked list, found by comparing each element
+ *        with a given value and a speciied comparision function.
  *
- * \param[in,out] list The linked list
- * \param[in]     item The item to find and remove
+ * \note If \a eq_func is \c NULL, the default behaviour is to compare the
+ *       addresses of the elements.
  *
- * \return \c true if the element could be found, and was removed.
+ * \note If more than one element matches, only the first in the order of the
+ *       list is returned.
+ *
+ * \param[in,out] list    The linked list
+ * \param[in]     item    The item to find and remove
+ * \param[in]     eq_func The comparison function
+ *
+ * \return The removed element, or \c NULL if none matched.
  */
-bool ll_remove(LinkedList *list, const data *item);
+data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*, const data*));
 
 
 /**

@@ -9,14 +9,20 @@ void a_freer(Array *a, void(*f)(data*)) {
 	a_free(a);
 }
 
-bool a_remove(Array *const a, const data *const item) {
+static bool eq_func__default(const data *const e1, const data *const e2) {
+	return e1 == e2;
+}
+data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const data*)) {
+	if(!f) {
+		f = eq_func__default;
+	}
 	const unsigned int l = a_size(a);
 	for(unsigned int i = 0; i < l; ++i) {
-		if(a_get(a, i) == item) {
-			return a_drop(a, i) != NULL;
+		if(f(a_get(a, i), e)) {
+			return a_drop(a, i);
 		}
 	}
-	return false;
+	return NULL;
 }
 
 void a_each(Array *const a, void (*f)(data*)) {

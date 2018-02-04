@@ -5,14 +5,20 @@
 
 
 
-bool ll_remove(LinkedList *const l, const data *const d) {
-	unsigned int i = ll_len(l);
-	while(i--) {
-		if(ll_get(l, i) == d) {
-			return ll_drop(l, i) != NULL;
+static bool eq_func__default(const data *const e1, const data* const e2) {
+	return e1 == e2;
+}
+data *ll_remove(LinkedList *const l, const data *const e, bool (*f)(const data*, const data*)) {
+	if(!f) {
+		f = eq_func__default;
+	}
+	const unsigned int s = ll_len(l);
+	for(unsigned int i = 0; i < s; ++i) {
+		if(f(ll_get(l, i), e)) {
+			return ll_drop(l, i);
 		}
 	}
-	return false;
+	return NULL;
 }
 
 

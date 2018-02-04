@@ -35,15 +35,22 @@
 void a_freer(Array *array, void (*freeitem)(data*));
 
 /**
- * \brief Removes an element from the array, found not by index but by the
- *        element directly.
+ * \brief Removes an element from the array, found not by index but by comparing
+ *        each element with a provided value.
  *
- * \param[in,out] array The array
- * \param[in]     item  The item to remove
+ * \note The comparison function can be \c NULL, in which case the default
+ *       behaviour is to compare the elements' addresses.
  *
- * \return \c true \a iff the element was found and removed.
+ * \note If more than one element matches, only the first in the order of the
+ *       array is returned.
+ *
+ * \param[in,out] array   The array
+ * \param[in]     item    The value to compare
+ * \param[in]     eq_func The function to pass each item and the value
+ *
+ * \return The removed element, or \c NULL if none matched.
  */
-bool a_remove(Array *array, const data *item);
+data *a_remove(Array *array, const data *item, bool (*eq_func)(const data*, const data*));
 
 /**
  * \brief Applies a function to each element.
