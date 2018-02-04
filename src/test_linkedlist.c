@@ -192,13 +192,13 @@ void test_linkedlist(void) {
 
 	test_lget__invalid();
 
-	test_ladd__valid();
-	lprintf(llist, print_as_int);
-
 	test_lset__valid();
 	lprintf(llist, print_as_int);
 
 	test_lset__invalid();
+
+	test_ladd__valid();
+	lprintf(llist, print_as_int);
 
 	test_ldrop__valid();
 	lprintf(llist, print_as_int);
