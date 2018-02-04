@@ -86,7 +86,7 @@ int a_add(Array *const a, int i, data *const e) {
 		fa_set(a->items, k + 1, fa_get(a->items, k));
 	}
 	fa_set(a->items, index, e);
-	a->size++;
+	++a->size;
 	return index;
 }
 extern int a_append(Array*, data*);
@@ -101,6 +101,6 @@ data *a_drop(Array *a, int index) {
 	/* move the elements to shrink the empty slots */
 	for(unsigned int i = index; i < l - 1; ++i)
 		fa_set(a->items, i, fa_get(a->items, i + 1));
-	a->size--;
+	--a->size;
 	return it;
 }
