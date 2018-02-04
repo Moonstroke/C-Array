@@ -92,6 +92,8 @@ inline data *fa_unset(FixedArray *const farray, const unsigned int index) {
 /**
  * \brief Applies a function to each element of the array, possibly changing it.
  *
+ * \note If \a apply is \c NULL, the function is a no-op.
+ *
  * \param[in,out] farray The array
  * \param[in]     func   The function to apply
  */

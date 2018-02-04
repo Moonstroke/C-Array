@@ -26,9 +26,11 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 }
 
 void a_each(Array *const a, void (*f)(data*)) {
-	const unsigned int l = a_size(a);
-	for(unsigned int i = 0; i < l; ++i) {
-		f(a_get(a, i));
+	if(f) {
+		const unsigned int l = a_size(a);
+		for(unsigned int i = 0; i < l; ++i) {
+			f(a_get(a, i));
+		}
 	}
 }
 

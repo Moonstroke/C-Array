@@ -38,6 +38,8 @@ data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*,
 /**
  * \brief Applies a function to each element of the structure.
  *
+ * \note If \a apply is \c NULL, the function is a no-op.
+ *
  * \param[in,out] list  The linked list
  * \param[in]     apply The function to apply
  */

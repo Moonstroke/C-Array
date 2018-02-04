@@ -55,6 +55,8 @@ data *a_remove(Array *array, const data *item, bool (*eq_func)(const data*, cons
 /**
  * \brief Applies a function to each element.
  *
+ * \note If \a apply is \c NULL, the function is a no-op.
+ *
  * \param[in,out] array The array to iterate over
  * \param[in]     apply The function to apply to each element
  */

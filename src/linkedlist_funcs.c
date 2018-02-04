@@ -23,9 +23,11 @@ data *ll_remove(LinkedList *const l, const data *const e, bool (*f)(const data*,
 
 
 void ll_each(LinkedList *const l, void (*const f)(data*)) {
-	data *item;
-	for(unsigned int i = 0; (item = ll_get(l, i)); ++i) {
-		f(item);
+	if(f) {
+		data *item;
+		for(unsigned int i = 0; (item = ll_get(l, i)); ++i) {
+			f(item);
+		}
 	}
 }
 

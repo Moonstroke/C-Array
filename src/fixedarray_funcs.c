@@ -46,11 +46,13 @@ extern data *fa_unset(FixedArray*, unsigned int);
 
 
 void fa_each(FixedArray *const fa, void (*const f)(data*)) {
-	const unsigned int s = fa_size(fa);
-	for(unsigned int i = 0; i < s; ++i) {
-		data *const item = fa_get(fa, i);
-		if(item)
+	if(f) {
+		const unsigned int s = fa_size(fa);
+		for(unsigned int i = 0; i < s; ++i) {
+			data *const item = fa_get(fa, i);
+			if(item)
 			f(item);
+		}
 	}
 }
 
