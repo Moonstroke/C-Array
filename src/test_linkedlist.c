@@ -119,6 +119,28 @@ static void test_lset__valid(void) {
 	info("OK\n");
 }
 
+static void test_lset__invalid(void) {
+	static int extra = 4;
+	data *const param = &extra;
+	const unsigned int invalid_indices[3] = {
+		llen(llist),
+		llen(llist) + 1,
+		13
+	};
+	data *expected, *got;
+	unsigned int index;
+	info("test lset -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("lset(llist, %u, %p)", index, param);
+		expected = NULL;
+		verbose("expected: %p", expected);
+		got = lset(llist, index, param);
+		assert(got == expected);
+	}
+	info("OK\n");
+}
+
 static void test_ladd__valid(void) {
 	static int extra = 8;
 	data *const param = &extra;
@@ -174,6 +196,8 @@ void test_linkedlist(void) {
 
 	test_lset__valid();
 	lprintf(llist, print_as_int);
+
+	test_lset__invalid();
 
 	test_ldrop__valid();
 	lprintf(llist, print_as_int);
