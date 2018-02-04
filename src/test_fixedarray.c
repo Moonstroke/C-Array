@@ -156,8 +156,6 @@ static void print_as_int(const data *const e) {
 }
 void test_fixedarray(void) {
 
-	log_setfilter(LOG_VERBOSE);
-
 	init();
 
 

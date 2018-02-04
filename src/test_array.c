@@ -255,8 +255,6 @@ static void print_as_int(const data *const e) {
 }
 void test_array(void) {
 
-	log_setfilter(LOG_VERBOSE);
-
 	init();
 
 	test_a_size__empty();
