@@ -26,6 +26,20 @@ static void cleanup(void) {
 }
 
 
+static void test_a_new__0_null(void) {
+	unsigned int index;
+	Array *expected, *got;
+	info("test a_new -- size 0 => NULL array");
+	index = 0;
+	info("a_new(%u)", index);
+	expected = NULL;
+	verbose("expected: %p", expected);
+	got = a_new(index);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
 static void test_a_size__empty(void) {
 	unsigned int expected, got;
 	info("test a_size -- empty array");
@@ -289,6 +303,8 @@ static void print_as_int(const data *const e) {
 void test_array(void) {
 
 	init();
+
+	test_a_new__0_null();
 
 	test_a_size__empty();
 
