@@ -157,6 +157,29 @@ static void test_ladd__valid(void) {
 	info("OK\n");
 }
 
+static void test_ladd__invalid(void) {
+	static int extra = 9;
+	data *const param = &extra;
+	const unsigned int invalid_indices[3] = {
+		llen(llist) + 1,
+		llen(llist) + 2,
+		668
+	};
+	int expected, got;
+	unsigned int index;
+	info("test ladd -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("ladd(llist, %u, %p)", index, param);
+		expected = -1;
+		verbose("expected: %d", expected);
+		got = ladd(llist, index, param);
+		verbose("got     : %d", got);
+		assert(got == expected);
+	}
+	info("OK\n");
+}
+
 static void test_ldrop__valid(void) {
 	data *expected, *got;
 	const unsigned int index = 0;
@@ -199,6 +222,8 @@ void test_linkedlist(void) {
 
 	test_ladd__valid();
 	lprintf(llist, print_as_int);
+
+	test_ladd__invalid();
 
 	test_ldrop__valid();
 	lprintf(llist, print_as_int);
