@@ -5,38 +5,38 @@
 
 
 
-void lfreer(LinkedList *const l, void (*const f)(data*)) {
+void ll_freer(LinkedList *const l, void (*const f)(data*)) {
 	// TODO
 	unsigned int i;
 	void *data;
-	for(i = 0; (data = lget(l, i)); ++i) {
+	for(i = 0; (data = ll_get(l, i)); ++i) {
 		f(data);
 	}
 }
 
 
-bool lremove(LinkedList *const l, const data *const d) {
-	unsigned int i = llen(l);
+bool ll_remove(LinkedList *const l, const data *const d) {
+	unsigned int i = ll_len(l);
 	while(i--) {
-		if(lget(l, i) == d) {
-			return ldrop(l, i) != NULL;
+		if(ll_get(l, i) == d) {
+			return ll_drop(l, i) != NULL;
 		}
 	}
 	return false;
 }
 
 
-void leach(LinkedList *const l, void (*const f)(data*)) {
+void ll_each(LinkedList *const l, void (*const f)(data*)) {
 	data *item;
-	for(unsigned int i = 0; (item = lget(l, i)); ++i) {
+	for(unsigned int i = 0; (item = ll_get(l, i)); ++i) {
 		f(item);
 	}
 }
 
 
-data *lcond(const LinkedList *const l, bool (*const f)(const data*)) {
+data *ll_cond(const LinkedList *const l, bool (*const f)(const data*)) {
 	data *item;
-	for(unsigned int i = 0; (item = lget(l, i)) && f(item); ++i);
+	for(unsigned int i = 0; (item = ll_get(l, i)) && f(item); ++i);
 	return item;
 }
 
@@ -45,15 +45,15 @@ static void printitem_default(const data *item) {
 	printf("%p", item);
 }
 
-void lprintf(const LinkedList *const l, void (*f)(const data*)) {
+void ll_printf(const LinkedList *const l, void (*f)(const data*)) {
 	printf("(");
 	if(!f)
 		f = printitem_default;
-	if(llen(l) > 0)
-		f(lget(l, 0));
+	if(ll_len(l) > 0)
+		f(ll_get(l, 0));
 	data *item;
 	unsigned int i;
-	for(i = 1; (item = lget(l, i)); ++i) {
+	for(i = 1; (item = ll_get(l, i)); ++i) {
 			printf(", ");
 			f(item);
 	}

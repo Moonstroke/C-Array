@@ -22,7 +22,7 @@
  * \param[in,out] list      The linked list
  * \param[in]     freeitems The function to pass each item to free
  */
-void lfreer(LinkedList *list, void (*freeitems)(data*));
+void ll_freer(LinkedList *list, void (*freeitems)(data*));
 
 
 /**
@@ -33,7 +33,7 @@ void lfreer(LinkedList *list, void (*freeitems)(data*));
  *
  * \return \c true if the element could be found, and was removed.
  */
-bool lremove(LinkedList *list, const data *item);
+bool ll_remove(LinkedList *list, const data *item);
 
 
 /**
@@ -42,7 +42,7 @@ bool lremove(LinkedList *list, const data *item);
  * \param[in,out] list  The linked list
  * \param[in]     apply The function to apply
  */
-void leach(LinkedList *list, void (*apply)(data*));
+void ll_each(LinkedList *list, void (*apply)(data*));
 
 
 /**
@@ -54,7 +54,7 @@ void leach(LinkedList *list, void (*apply)(data*));
  *
  * \return The first matching element, or \c NULL if none was found.
  */
-data *lcond(const LinkedList *list, bool (*pred)(const data*));
+data *ll_cond(const LinkedList *list, bool (*pred)(const data*));
 
 
 /**
@@ -72,7 +72,7 @@ data *lcond(const LinkedList *list, bool (*pred)(const data*));
  * output will be:
  * \verbatim (42.3, 6.0, 19.5) \endverbatim
  */
-void lprintf(const LinkedList *list, void (*printitem)(const data*));
+void ll_printf(const LinkedList *list, void (*printitem)(const data*));
 
 
 #endif /* LINKEDLIST_FUNCS_H */

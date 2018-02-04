@@ -34,7 +34,7 @@ typedef struct llist LinkedList;
  *
  * \return A newly allocated linked list.
  */
-LinkedList *newlinkedlist(void);
+LinkedList *ll_new(void);
 
 /**
  * \brief Frees a linked list, frees its items with given function, if not
@@ -45,7 +45,7 @@ LinkedList *newlinkedlist(void);
  *
  * \note Accessing the list after freeing will result in undefined behaviour.
  */
-void lfree(LinkedList *self, void (*freeitem)(data*));
+void ll_free(LinkedList *self, void (*freeitem)(data*));
 
 
 /**
@@ -55,7 +55,7 @@ void lfree(LinkedList *self, void (*freeitem)(data*));
  *
  * \return The number of elements in the list.
  */
-unsigned int llen(const LinkedList *self);
+unsigned int ll_len(const LinkedList *self);
 
 
 /**
@@ -67,7 +67,7 @@ unsigned int llen(const LinkedList *self);
  * \return The \a index 'th element in the list, or \c NULL if the index is
  *         invalid.
  */
-data *lget(const LinkedList *self, int index);
+data *ll_get(const LinkedList *self, int index);
 
 /**
  * \brief Updates an element of the list.
@@ -79,7 +79,7 @@ data *lget(const LinkedList *self, int index);
  * \return The former element at \a index 'th position, or \c NULL if the index
  *         is invalid.
  */
-data *lset(LinkedList *self, int index, data *item);
+data *ll_set(LinkedList *self, int index, data *item);
 
 
 /**
@@ -92,7 +92,7 @@ data *lset(LinkedList *self, int index, data *item);
  * \return The index of the element, or \c -1 in case of error: memory
  *         allocation failed, or the \a index is invalid.
  */
-int ladd(LinkedList *self, int index, data *item);
+int ll_add(LinkedList *self, int index, data *item);
 
 /**
  * \brief Appends an element to the end of the linked list.
@@ -102,8 +102,8 @@ int ladd(LinkedList *self, int index, data *item);
  *
  * \return The index of the element, or \c -1 on error.
  */
-inline int lappend(LinkedList *self, data *item) {
-	return ladd(self, llen(self), item);
+inline int ll_append(LinkedList *self, data *item) {
+	return ll_add(self, ll_len(self), item);
 }
 
 
@@ -116,7 +116,7 @@ inline int lappend(LinkedList *self, data *item) {
  * \return The removed element, of NULL if no element was removed (\a i.e.
  *         \a index has an invalid value).
  */
-data *ldrop(LinkedList *self, int index);
+data *ll_drop(LinkedList *self, int index);
 
 
 #endif /* LINKEDLIST_H */

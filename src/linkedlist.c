@@ -17,7 +17,7 @@ struct llist {
 	char _padding[4];
 };
 
-LinkedList *newlinkedlist(void) {
+LinkedList *ll_new(void) {
 	LinkedList *const l = malloc(sizeof(LinkedList));
 	if(l == NULL)
 		return NULL;
@@ -36,7 +36,7 @@ static inline Node *newnode(data *const d, Node *const next) {
 	return node;
 }
 
-void lfree(LinkedList *const l, void (*const f)(data*)) {
+void ll_free(LinkedList *const l, void (*const f)(data*)) {
 	if(l->head) {
 		Node *item = l->head, *next;
 		if(f != NULL)
@@ -52,7 +52,7 @@ void lfree(LinkedList *const l, void (*const f)(data*)) {
 }
 
 
-unsigned int llen(const LinkedList *const l) {
+unsigned int ll_len(const LinkedList *const l) {
 	return l->len;
 }
 
@@ -78,7 +78,7 @@ static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
 }
 
 
-data *lget(const LinkedList *const l, const int index) {
+data *ll_get(const LinkedList *const l, const int index) {
 	int i = valid(l, index);
 	if(i < 0) {
 		return NULL;
@@ -86,7 +86,7 @@ data *lget(const LinkedList *const l, const int index) {
 	return lgoto(l, i)->data;
 }
 
-data *lset(LinkedList *const l, const int index, data *const d) {
+data *ll_set(LinkedList *const l, const int index, data *const d) {
 	int i = valid(l, index);
 	if(i < 0) {
 		return NULL;
@@ -97,7 +97,7 @@ data *lset(LinkedList *const l, const int index, data *const d) {
 	return former;
 }
 
-int ladd(LinkedList *const l, const int index, void *const d) {
+int ll_add(LinkedList *const l, const int index, void *const d) {
 	const int i = (index == (signed)l->len) ? index : valid(l, index);
 	if(i < 0) {
 		return -1;
@@ -117,9 +117,9 @@ int ladd(LinkedList *const l, const int index, void *const d) {
 	++l->len;
 	return i;
 }
-extern int lappend(LinkedList*, data*);
+extern int ll_append(LinkedList*, data*);
 
-data *ldrop(LinkedList *const l, const int index) {
+data *ll_drop(LinkedList *const l, const int index) {
 	const int i = valid(l, index);
 	if(i < 0) {
 		return NULL;

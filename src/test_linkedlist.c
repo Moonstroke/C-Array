@@ -16,26 +16,26 @@ static const unsigned int INT_LINKED_LIST_SIZE = 4;
 
 
 static void init(void) {
-	info("llist = newlinkedlist(%u)", INT_LINKED_LIST_SIZE);
-	llist = newlinkedlist();
+	info("llist = ll_new(%u)", INT_LINKED_LIST_SIZE);
+	llist = ll_new();
 	assert(llist != NULL);
 	info("OK\n");
 }
 
 static void cleanup(void) {
-	info("lfree(llist)");
-	lfree(llist, NULL);
+	info("ll_free(llist)");
+	ll_free(llist, NULL);
 	info("OK\n");
 }
 
 
 static void test_llen__empty(void) {
 	unsigned int expected, got;
-	info("test llen -- empty list");
-	info("llen(llist)");
+	info("test ll_len -- empty list");
+	info("ll_len(llist)");
 	expected = 0;
 	verbose("expected: %u", expected);
-	got = llen(llist);
+	got = ll_len(llist);
 	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
@@ -44,13 +44,13 @@ static void test_llen__empty(void) {
 static void test_lappend(void) {
 	int expected, got;
 	data *param;
-	info("tests lappend");
+	info("tests ll_append");
 	for(unsigned int n = 0; n < INT_LINKED_LIST_SIZE; ++n) {
 		param = values + n;
-		info("lappend(llist, %p)", param);
+		info("ll_append(llist, %p)", param);
 		expected = n;
 		verbose("expected: %d", expected);
-		got = lappend(llist, param);
+		got = ll_append(llist, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
@@ -59,11 +59,11 @@ static void test_lappend(void) {
 
 static void test_llen__full(void) {
 	unsigned int expected, got;
-	info("test llen -- list full");
-	info("llen(llist)");
+	info("test ll_len -- list full");
+	info("ll_len(llist)");
 	expected = INT_LINKED_LIST_SIZE;
 	verbose("expected: %u", expected);
-	got = llen(llist);
+	got = ll_len(llist);
 	verbose("got     : %u", got);
 	assert(got == expected);
 	info("OK\n");
@@ -71,12 +71,12 @@ static void test_llen__full(void) {
 
 static void test_lget__valid(void) {
 	data *expected, *got;
-	info("test lget -- valid indices");
+	info("test ll_get -- valid indices");
 	for(unsigned int index = 0; index < INT_LINKED_LIST_SIZE; ++index) {
-		info("lget(llist, %u)", index);
+		info("ll_get(llist, %u)", index);
 		expected = values + index;
 		verbose("expected: %d", expected);
-		got = lget(llist, index);
+		got = ll_get(llist, index);
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
@@ -85,19 +85,19 @@ static void test_lget__valid(void) {
 
 static void test_lget__invalid(void) {
 	const unsigned int invalid_indices[3] = {
-		llen(llist),
-		llen(llist) + 1,
+		ll_len(llist),
+		ll_len(llist) + 1,
 		42
 	};
 	data *expected, *got;
 	unsigned int index;
-	info("test lget -- invalid indices");
+	info("test ll_get -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		info("lget(llist, %u)", index);
+		info("ll_get(llist, %u)", index);
 		expected = NULL;
 		verbose("expected: %p", expected);
-		got = lget(llist, index);
+		got = ll_get(llist, index);
 		verbose("got     : %p", got);
 		assert(got == expected);
 	}
@@ -109,11 +109,11 @@ static void test_lset__valid(void) {
 	data *const param = &extra;
 	const unsigned int index = 2;
 	data *expected, *got;
-	info("test lset -- valid index");
-	info("lset(llist, %u, %p)", index, param);
+	info("test ll_set -- valid index");
+	info("ll_set(llist, %u, %p)", index, param);
 	expected = values + index;
 	verbose("expected: %d", expected);
-	got = lset(llist, index, param);
+	got = ll_set(llist, index, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
@@ -123,19 +123,19 @@ static void test_lset__invalid(void) {
 	static int extra = 4;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
-		llen(llist),
-		llen(llist) + 1,
+		ll_len(llist),
+		ll_len(llist) + 1,
 		13
 	};
 	data *expected, *got;
 	unsigned int index;
-	info("test lset -- invalid indices");
+	info("test ll_set -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		info("lset(llist, %u, %p)", index, param);
+		info("ll_set(llist, %u, %p)", index, param);
 		expected = NULL;
 		verbose("expected: %p", expected);
-		got = lset(llist, index, param);
+		got = ll_set(llist, index, param);
 		verbose("got     : %p", got);
 		assert(got == expected);
 	}
@@ -147,11 +147,11 @@ static void test_ladd__valid(void) {
 	data *const param = &extra;
 	int expected, got;
 	const unsigned int index = 3;
-	info("test ladd -- valid index");
-	info("ladd(llist, %u, %p)", index, param);
+	info("test ll_add -- valid index");
+	info("ll_add(llist, %u, %p)", index, param);
 	expected = (signed)index;
 	verbose("expected: %d", expected);
-	got = ladd(llist, index, param);
+	got = ll_add(llist, index, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
 	info("OK\n");
@@ -161,19 +161,19 @@ static void test_ladd__invalid(void) {
 	static int extra = 9;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
-		llen(llist) + 1,
-		llen(llist) + 2,
+		ll_len(llist) + 1,
+		ll_len(llist) + 2,
 		668
 	};
 	int expected, got;
 	unsigned int index;
-	info("test ladd -- invalid indices");
+	info("test ll_add -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		info("ladd(llist, %u, %p)", index, param);
+		info("ll_add(llist, %u, %p)", index, param);
 		expected = -1;
 		verbose("expected: %d", expected);
-		got = ladd(llist, index, param);
+		got = ll_add(llist, index, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
@@ -183,11 +183,11 @@ static void test_ladd__invalid(void) {
 static void test_ldrop__valid(void) {
 	data *expected, *got;
 	const unsigned int index = 0;
-	info("test ldrop -- valid index");
-	info("ldrop(llist, %u)", index);
+	info("test ll_drop -- valid index");
+	info("ll_drop(llist, %u)", index);
 	expected = values + index;
 	verbose("expected: %p", expected);
-	got = ldrop(llist, index);
+	got = ll_drop(llist, index);
 	verbose("got     : %p", got);
 	assert(got == expected);
 	info("OK\n");
@@ -195,19 +195,19 @@ static void test_ldrop__valid(void) {
 
 static void test_ldrop__invalid(void) {
 	const unsigned int invalid_indices[3] = {
-		llen(llist),
-		llen(llist) + 1,
+		ll_len(llist),
+		ll_len(llist) + 1,
 		99
 	};
 	data *expected, *got;
 	unsigned int index;
-	info("test ldrop -- invalid indices");
+	info("test ll_drop -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		info("ldrop(llist, %u)", index);
+		info("ll_drop(llist, %u)", index);
 		expected = NULL;
 		verbose("expected: %p", expected);
-		got = ldrop(llist, index);
+		got = ll_drop(llist, index);
 		verbose("got     : %p", got);
 		assert(got == expected);
 	}
@@ -228,7 +228,7 @@ void test_linkedlist(void) {
 	test_llen__empty();
 
 	test_lappend();
-	lprintf(llist, print_as_int);
+	ll_printf(llist, print_as_int);
 
 	test_llen__full();
 
@@ -237,17 +237,17 @@ void test_linkedlist(void) {
 	test_lget__invalid();
 
 	test_lset__valid();
-	lprintf(llist, print_as_int);
+	ll_printf(llist, print_as_int);
 
 	test_lset__invalid();
 
 	test_ladd__valid();
-	lprintf(llist, print_as_int);
+	ll_printf(llist, print_as_int);
 
 	test_ladd__invalid();
 
 	test_ldrop__valid();
-	lprintf(llist, print_as_int);
+	ll_printf(llist, print_as_int);
 
 	test_ldrop__invalid();
 
