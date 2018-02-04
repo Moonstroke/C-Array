@@ -29,7 +29,7 @@ static void cleanup(void) {
 }
 
 
-static void test_llen__empty(void) {
+static void test_ll_len__empty(void) {
 	unsigned int expected, got;
 	info("test ll_len -- empty list");
 	info("ll_len(llist)");
@@ -41,7 +41,7 @@ static void test_llen__empty(void) {
 	info("OK\n");
 }
 
-static void test_lappend(void) {
+static void test_ll_append(void) {
 	int expected, got;
 	data *param;
 	info("tests ll_append");
@@ -57,7 +57,7 @@ static void test_lappend(void) {
 	info("OK\n");
 }
 
-static void test_llen__full(void) {
+static void test_ll_len__full(void) {
 	unsigned int expected, got;
 	info("test ll_len -- list full");
 	info("ll_len(llist)");
@@ -69,7 +69,7 @@ static void test_llen__full(void) {
 	info("OK\n");
 }
 
-static void test_lget__valid(void) {
+static void test_ll_get__valid(void) {
 	data *expected, *got;
 	info("test ll_get -- valid indices");
 	for(unsigned int index = 0; index < INT_LINKED_LIST_SIZE; ++index) {
@@ -83,7 +83,7 @@ static void test_lget__valid(void) {
 	info("OK\n");
 }
 
-static void test_lget__invalid(void) {
+static void test_ll_get__invalid(void) {
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist),
 		ll_len(llist) + 1,
@@ -104,7 +104,7 @@ static void test_lget__invalid(void) {
 	info("OK\n");
 }
 
-static void test_lset__valid(void) {
+static void test_ll_set__valid(void) {
 	static int extra = -32;
 	data *const param = &extra;
 	const unsigned int index = 2;
@@ -119,7 +119,7 @@ static void test_lset__valid(void) {
 	info("OK\n");
 }
 
-static void test_lset__invalid(void) {
+static void test_ll_set__invalid(void) {
 	static int extra = 4;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
@@ -142,7 +142,7 @@ static void test_lset__invalid(void) {
 	info("OK\n");
 }
 
-static void test_ladd__valid(void) {
+static void test_ll_add__valid(void) {
 	static int extra = 8;
 	data *const param = &extra;
 	int expected, got;
@@ -157,7 +157,7 @@ static void test_ladd__valid(void) {
 	info("OK\n");
 }
 
-static void test_ladd__invalid(void) {
+static void test_ll_add__invalid(void) {
 	static int extra = 9;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
@@ -180,7 +180,7 @@ static void test_ladd__invalid(void) {
 	info("OK\n");
 }
 
-static void test_ldrop__valid(void) {
+static void test_ll_drop__valid(void) {
 	data *expected, *got;
 	const unsigned int index = 0;
 	info("test ll_drop -- valid index");
@@ -193,7 +193,7 @@ static void test_ldrop__valid(void) {
 	info("OK\n");
 }
 
-static void test_ldrop__invalid(void) {
+static void test_ll_drop__invalid(void) {
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist),
 		ll_len(llist) + 1,
@@ -225,31 +225,31 @@ void test_linkedlist(void) {
 
 	init();
 
-	test_llen__empty();
+	test_ll_len__empty();
 
-	test_lappend();
+	test_ll_append();
 	ll_printf(llist, print_as_int);
 
-	test_llen__full();
+	test_ll_len__full();
 
-	test_lget__valid();
+	test_ll_get__valid();
 
-	test_lget__invalid();
+	test_ll_get__invalid();
 
-	test_lset__valid();
+	test_ll_set__valid();
 	ll_printf(llist, print_as_int);
 
-	test_lset__invalid();
+	test_ll_set__invalid();
 
-	test_ladd__valid();
+	test_ll_add__valid();
 	ll_printf(llist, print_as_int);
 
-	test_ladd__invalid();
+	test_ll_add__invalid();
 
-	test_ldrop__valid();
+	test_ll_drop__valid();
 	ll_printf(llist, print_as_int);
 
-	test_ldrop__invalid();
+	test_ll_drop__invalid();
 
 	cleanup();
 }
