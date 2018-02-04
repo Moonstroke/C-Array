@@ -136,6 +136,7 @@ static void test_lset__invalid(void) {
 		expected = NULL;
 		verbose("expected: %p", expected);
 		got = lset(llist, index, param);
+		verbose("got     : %p", got);
 		assert(got == expected);
 	}
 	info("OK\n");
