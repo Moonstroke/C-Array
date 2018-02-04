@@ -29,6 +29,18 @@ static void cleanup(void) {
 }
 
 
+static void test_llen__empty(void) {
+	unsigned int expected, got;
+	info("test llen -- empty list");
+	info("llen(llist)");
+	expected = 0;
+	verbose("expected: %u", expected);
+	got = llen(llist);
+	verbose("got     : %u", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
 static void test_lappend(void) {
 	int expected, got;
 	data *param;
@@ -42,6 +54,18 @@ static void test_lappend(void) {
 		verbose("got     : %d", got);
 		assert(got == expected);
 	}
+	info("OK\n");
+}
+
+static void test_llen__full(void) {
+	unsigned int expected, got;
+	info("test llen -- list full");
+	info("llen(llist)");
+	expected = INT_LINKED_LIST_SIZE;
+	verbose("expected: %u", expected);
+	got = llen(llist);
+	verbose("got     : %u", got);
+	assert(got == expected);
 	info("OK\n");
 }
 
@@ -113,8 +137,12 @@ void test_linkedlist(void) {
 
 	init();
 
+	test_llen__empty();
+
 	test_lappend();
 	lprintf(llist, print_as_int);
+
+	test_llen__full();
 
 	test_lget__valid();
 
