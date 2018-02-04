@@ -17,15 +17,6 @@
 
 
 /**
- * \brief Frees a linked list and frees its elements with given function.
- *
- * \param[in,out] list      The linked list
- * \param[in]     freeitems The function to pass each item to free
- */
-void ll_freer(LinkedList *list, void (*freeitems)(data*));
-
-
-/**
  * \brief Removes an element of the linked list.
  *
  * \param[in,out] list The linked list

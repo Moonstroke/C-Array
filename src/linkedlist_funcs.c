@@ -5,16 +5,6 @@
 
 
 
-void ll_freer(LinkedList *const l, void (*const f)(data*)) {
-	// TODO
-	unsigned int i;
-	void *data;
-	for(i = 0; (data = ll_get(l, i)); ++i) {
-		f(data);
-	}
-}
-
-
 bool ll_remove(LinkedList *const l, const data *const d) {
 	unsigned int i = ll_len(l);
 	while(i--) {
