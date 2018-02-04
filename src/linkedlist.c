@@ -16,7 +16,7 @@
 
 typedef struct node Node;
 struct node {
-	void *data;
+	data *value;
 	Node *next;
 };
 
@@ -40,7 +40,7 @@ static inline Node *newnode(data *const d, Node *const next) {
 	if(node == NULL) {
 		return NULL;
 	}
-	node->data = d;
+	node->value = d;
 	node->next = next;
 	return node;
 }
@@ -50,7 +50,7 @@ void ll_free(LinkedList *const l, void (*const f)(data*)) {
 		Node *item = l->head, *next;
 		if(f != NULL)
 			for(next = l->head->next; next != NULL; item = next, next = next->next) {
-				f(item->data);
+				f(item->value);
 				free(item);
 			}
 		else
@@ -76,14 +76,14 @@ static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
 }
 data *ll_get(const LinkedList *const l, int i) {
 	validate(i, (signed)l->len, 0, NULL);
-	return lgoto(l, i)->data;
+	return lgoto(l, i)->value;
 }
 
 data *ll_set(LinkedList *const l, int i, data *const d) {
 	validate(i, (signed)l->len, 0, NULL);
 	Node *const item = lgoto(l, i);
-	data *const former = item->data;
-	item->data = d;
+	data *const former = item->value;
+	item->value = d;
 	return former;
 }
 
@@ -120,7 +120,7 @@ data *ll_drop(LinkedList *const l, int i) {
 		plug = &item->next;
 	}
 	item = *plug;
-	d = item->data;
+	d = item->value;
 	*plug = item->next;
 	--l->len;
 	free(item);
