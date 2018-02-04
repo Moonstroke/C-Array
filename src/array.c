@@ -11,6 +11,15 @@
 
 
 
+#define validate(index, size, include_top_size, return_value) {\
+	if(-(signed)size <= index && index < 0) {\
+		index +=  size;\
+	} else if(index >= ((signed)size + include_top_size) || index < -(signed)size) {\
+		return return_value;\
+	}\
+}
+
+
 struct array {
 	unsigned int size;
 	uint8_t _padding[4];
@@ -42,22 +51,8 @@ unsigned int a_size(const Array *const a) {
 }
 
 
-static inline int valid(const int s, const int i) {
-	if(-s <= i && i < 0) {
-		//debug("-%d <= %d < 0", s, i);
-		return s + i;
-	} else if(i < s) {
-		//debug("0 <= %d < %d", i, s);
-		return i;
-	} else {
-		//debug("%d < -%d || %d > %d", i, s, i, s);
-		return -1;
-	}
-}
-data *a_get(const Array *const a, const int index) {
-	const int i = valid(a->size, index);
-	if(i < 0)
-		return NULL;
+data *a_get(const Array *const a, int i) {
+	validate(i, a->size, false, NULL);
 	return fa_get(a->items, i);
 }
 
@@ -79,41 +74,32 @@ static bool a_resize(Array *const a, const unsigned int c) {
 	a->items = items;
 	return true;
 }
-int a_add(Array *const a, int index, data *const e) {
-	if(index != (signed)a->size)
-		index = valid(a->size, index);
-	/* not just i = valid(index) because a->size is a valid value (=> append) */
-	if(index < 0)
+int a_add(Array *const a, int i, data *const e) {
+	validate(i, a->size, true, -1);
+	const unsigned int index = (unsigned)i,
+	                   capa = fa_size(a->items),
+	                   size = a->size;
+	if(size == capa && !a_resize(a, size + (size / 2 + size % 2) /* capacity * 1.5 */)) {
 		return -1;
-	const unsigned int i = (unsigned)index,
-	                   n = fa_size(a->items),
-	                   c = a->size;
-	if(n == c) {
-		if(!a_resize(a, c + (c / 2 + c % 2) /* capacity * 1.5 */)) {
-			return -1;
-		}
 	}
-	for(unsigned int k = n + 1; k > i; --k)
-		fa_set(a->items, k, fa_get(a->items, k - 1));
-	fa_set(a->items, i, e);
+	for(unsigned int k = size; k > index; --k) {
+		fa_set(a->items, k + 1, fa_get(a->items, k));
+	}
+	fa_set(a->items, index, e);
 	a->size++;
-	return i;
+	return index;
 }
 extern int a_append(Array*, data*);
 
 
-data *a_drop(Array *a, const int index) {
+data *a_drop(Array *a, int index) {
 	const unsigned int l = a->size;
-	const int n = valid(l, index);
+	validate(index, l, false, NULL);
+	data *const it = fa_get(a->items, index);
+	fa_set(a->items, index, NULL);
 
-	if(n < 0)
-		return NULL;
-	data *const it = fa_get(a->items, n);
-	fa_set(a->items, n, NULL);
-
-	/* displace the elements to shrink the space */
-	unsigned int i;
-	for(i = n; i < l - 1; ++i)
+	/* move the elements to shrink the empty slots */
+	for(unsigned int i = index; i < l - 1; ++i)
 		fa_set(a->items, i, fa_get(a->items, i + 1));
 	a->size--;
 	return it;

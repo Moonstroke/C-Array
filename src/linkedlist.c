@@ -5,6 +5,15 @@
 
 
 
+#define validate(index, size, include_top_size, return_value) {\
+	if(-(signed)size <= index && index < 0) {\
+		index +=  size;\
+	} else if(index >= ((signed)size + include_top_size) || index < -(signed)size) {\
+		return return_value;\
+	}\
+}
+
+
 typedef struct node Node;
 struct node {
 	void *data;
@@ -57,17 +66,6 @@ unsigned int ll_len(const LinkedList *const l) {
 }
 
 
-static inline int valid(const LinkedList *const l, const int i) {
-	const unsigned int n = l->len;
-	if(0 <= i && i < (signed)n) {
-		return i;
-	} else if(-(signed)n <= i && i < 0) {
-		return n + i;
-	} else {
-		return -1;
-	}
-}
-
 static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
 	Node *item = l->head;
 	unsigned int i;
@@ -76,32 +74,21 @@ static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
 	}
 	return item;
 }
-
-
-data *ll_get(const LinkedList *const l, const int index) {
-	int i = valid(l, index);
-	if(i < 0) {
-		return NULL;
-	}
+data *ll_get(const LinkedList *const l, int i) {
+	validate(i, l->len, 0, NULL);
 	return lgoto(l, i)->data;
 }
 
-data *ll_set(LinkedList *const l, const int index, data *const d) {
-	int i = valid(l, index);
-	if(i < 0) {
-		return NULL;
-	}
+data *ll_set(LinkedList *const l, int i, data *const d) {
+	validate(i, l->len, 0, NULL);
 	Node *const item = lgoto(l, i);
 	data *const former = item->data;
 	item->data = d;
 	return former;
 }
 
-int ll_add(LinkedList *const l, const int index, void *const d) {
-	const int i = (index == (signed)l->len) ? index : valid(l, index);
-	if(i < 0) {
-		return -1;
-	}
+int ll_add(LinkedList *const l, int i, void *const d) {
+	validate(i, l->len, 1, -1);
 	Node *const item = newnode(d, NULL);
 	if(!item) {
 		return -1;
@@ -119,11 +106,8 @@ int ll_add(LinkedList *const l, const int index, void *const d) {
 }
 extern int ll_append(LinkedList*, data*);
 
-data *ll_drop(LinkedList *const l, const int index) {
-	const int i = valid(l, index);
-	if(i < 0) {
-		return NULL;
-	}
+data *ll_drop(LinkedList *const l, int i) {
+	validate(i, l->len, 0, NULL);
 	data *d = NULL;
 	Node *item, **plug = NULL;
 	if(i == 0) {
