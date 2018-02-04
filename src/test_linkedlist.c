@@ -193,6 +193,27 @@ static void test_ldrop__valid(void) {
 	info("OK\n");
 }
 
+static void test_ldrop__invalid(void) {
+	const unsigned int invalid_indices[3] = {
+		llen(llist),
+		llen(llist) + 1,
+		99
+	};
+	data *expected, *got;
+	unsigned int index;
+	info("test ldrop -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("ldrop(llist, %u)", index);
+		expected = NULL;
+		verbose("expected: %p", expected);
+		got = ldrop(llist, index);
+		verbose("got     : %p", got);
+		assert(got == expected);
+	}
+	info("OK\n");
+}
+
 
 static void print_as_int(const data *const e) {
 	if(e)
@@ -227,6 +248,8 @@ void test_linkedlist(void) {
 
 	test_ldrop__valid();
 	lprintf(llist, print_as_int);
+
+	test_ldrop__invalid();
 
 	cleanup();
 }
