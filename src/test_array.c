@@ -293,7 +293,7 @@ void test_array(void) {
 	test_a_size__empty();
 
 	test_a_append();
-	a_printf(array, *print_as_int);
+	a_printf(array, print_as_int);
 
 	test_a_size__full();
 
@@ -302,14 +302,14 @@ void test_array(void) {
 	test_a_get__invalid();
 
 	test_a_set__valid();
-	a_printf(array, *print_as_int);
+	a_printf(array, print_as_int);
 
 	test_a_set__invalid();
 
 	test_a_add__invalid();
 
 	test_a_append__overflow();
-	a_printf(array, *print_as_int);
+	a_printf(array, print_as_int);
 
 	test_a_drop__valid();
 
