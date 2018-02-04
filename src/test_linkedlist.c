@@ -83,6 +83,27 @@ static void test_lget__valid(void) {
 	}
 }
 
+static void test_lget__invalid(void) {
+	const unsigned int invalid_indices[3] = {
+		llen(llist),
+		llen(llist) + 1,
+		42
+	};
+	data *expected, *got;
+	unsigned int index;
+	info("test lget -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("lget(llist, %u)", index);
+		expected = NULL;
+		verbose("expected: %p", expected);
+		got = lget(llist, index);
+		verbose("got     : %p", got);
+		assert(got == expected);
+	}
+	info("OK\n");
+}
+
 static void test_lset__valid(void) {
 	static int extra = -32;
 	data *const param = &extra;
@@ -145,6 +166,8 @@ void test_linkedlist(void) {
 	test_llen__full();
 
 	test_lget__valid();
+
+	test_lget__invalid();
 
 	test_ladd__valid();
 	lprintf(llist, print_as_int);
