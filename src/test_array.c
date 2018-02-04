@@ -212,6 +212,39 @@ static void test_a_drop__invalid(void) {
 	info("OK\n");
 }
 
+static bool eq_as_int(const data *const e1, const data *const e2) {
+	assert(e1 != NULL && e2 != NULL);
+	return *(int*)e1 == *(int*)e2;
+}
+static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+static void test_a_remove__found(void) {
+	static int value = 13;
+	data *const param = &value;
+	data *expected, *got;
+	info("test a_remove -- item found");
+	info("a_remove(array, %p, %s)", param, eq_as_int_repr);
+	expected = values + 3;
+	verbose("expected: %p", expected);
+	got = a_remove(array, param, eq_as_int);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
+static void test_a_remove__not_found(void) {
+	static int value = -42;
+	data *const param = &value;
+	data *expected, *got;
+	info("test a_remove -- item not found");
+	info("a_remove(array, %p, %s)", param, eq_as_int_repr);
+	expected = NULL;
+	verbose("expected: %p", expected);
+	got = a_remove(array, param, eq_as_int);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
 static bool equals42(const data *const e) {
 	assert(e != NULL);
 	return *((int*)e) == 42;
@@ -281,6 +314,10 @@ void test_array(void) {
 	test_a_drop__valid();
 
 	test_a_drop__invalid();
+
+	test_a_remove__found();
+
+	test_a_remove__not_found();
 
 	test_a_cond();
 
