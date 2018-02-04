@@ -79,8 +79,8 @@ static void test_lget__valid(void) {
 		got = lget(llist, index);
 		verbose("got     : %d", got);
 		assert(got == expected);
-		info("OK\n");
 	}
+	info("OK\n");
 }
 
 static void test_lget__invalid(void) {
