@@ -117,7 +117,7 @@ static void test_fa_put__valid(void) {
 }
 
 static void test_fa_put__invalid(void) {
-	static int extra = 7;
+	int extra = 7;
 	data *const param = &extra;
 	int expected, got;
 	info("test fa_put -- invalid (array is full)");

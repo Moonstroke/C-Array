@@ -119,7 +119,7 @@ void test_a_set__valid(void) {
 }
 
 static void test_a_set__invalid(void) {
-	static int value = 42;
+	int value = 42;
 	const unsigned int invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
@@ -142,7 +142,7 @@ static void test_a_set__invalid(void) {
 }
 
 static void test_a_add__invalid(void) {
-	static int value = 42;
+	int value = 42;
 	const unsigned int invalid_indices[3] = {
 		a_size(array) + 1,
 		a_size(array) + 2,
@@ -218,8 +218,8 @@ static bool eq_as_int(const data *const e1, const data *const e2) {
 }
 static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
 static void test_a_remove__found(void) {
-	static int value = 13;
-	data *const param = &value;
+	const int value = 13;
+	const data *const param = &value;
 	data *expected, *got;
 	info("test a_remove -- item found");
 	info("a_remove(array, %p, %s)", param, eq_as_int_repr);
@@ -232,8 +232,8 @@ static void test_a_remove__found(void) {
 }
 
 static void test_a_remove__not_found(void) {
-	static int value = -42;
-	data *const param = &value;
+	const int value = -42;
+	const data *const param = &value;
 	data *expected, *got;
 	info("test a_remove -- item not found");
 	info("a_remove(array, %p, %s)", param, eq_as_int_repr);

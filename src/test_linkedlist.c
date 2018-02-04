@@ -120,7 +120,7 @@ static void test_ll_set__valid(void) {
 }
 
 static void test_ll_set__invalid(void) {
-	static int extra = 4;
+	int extra = 4;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist),
@@ -158,7 +158,7 @@ static void test_ll_add__valid(void) {
 }
 
 static void test_ll_add__invalid(void) {
-	static int extra = 9;
+	int extra = 9;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist) + 1,
