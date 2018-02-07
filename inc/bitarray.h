@@ -19,9 +19,15 @@ unsigned int ba_size(const BitArray *self);
 
 bool ba_get(const BitArray *self);
 
-bool ba_set(BitArray *self, unsigned int value);
+bool ba_put(BitArray *self, unsigned int index, bool value);
 
-bool ba_unset(BitArray *self, unsigned int index);
+inline bool ba_set(BitArray *const self, const unsigned int index) {
+	return ba_put(self, index, true);
+}
+
+bool ba_unset(BitArray *const self, const unsigned int index) {
+	return ba_put(self, index, false);
+}
 
 
 
