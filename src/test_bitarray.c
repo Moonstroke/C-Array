@@ -81,6 +81,7 @@ static void test_ba_put__invalid(void) {
 		verbose("got     : %s", got ? "true" : "false");
 		assert(got == false);
 	}
+	info("OK\n");
 }
 
 static void test_ba_get__valid(void) {
