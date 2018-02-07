@@ -17,7 +17,7 @@ void ba_free(BitArray *self);
 unsigned int ba_size(const BitArray *self);
 
 
-bool ba_get(const BitArray *self);
+bool ba_get(const BitArray *self, unsigned int index);
 
 bool ba_put(BitArray *self, unsigned int index, bool value);
 
