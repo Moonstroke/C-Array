@@ -9,7 +9,7 @@
 typedef struct bitarray BitArray;
 
 
-Bitarray *ba_new(unsigned int size);
+BitArray *ba_new(unsigned int size);
 
 void ba_free(BitArray *self);
 
