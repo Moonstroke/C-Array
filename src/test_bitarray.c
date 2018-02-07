@@ -11,6 +11,7 @@ static BitArray *barray;
 
 static const unsigned int BIT_ARRAY_SIZE = 10;
 static bool values[] = {true, false, false, true, false, true, true, false, true, false};
+static unsigned int COUNT = 5;
 
 
 static void init(void) {
@@ -118,6 +119,19 @@ static void test_ba_get__invalid(void) {
 }
 
 
+static void test_ba_count(void) {
+	unsigned int expected, got;
+	info("test ba_count");
+	info("ba_count(barray)");
+	expected = COUNT;
+	verbose("expected: %u", expected);
+	got = ba_count(barray);
+	verbose("got     : %u", got);
+	assert(got == expected);
+	info("OK\n");
+}
+
+
 void test_bitarray(void) {
 
 	init();
@@ -133,6 +147,8 @@ void test_bitarray(void) {
 	test_ba_get__valid();
 
 	test_ba_get__invalid();
+
+	test_ba_count();
 
 
 	cleanup();
