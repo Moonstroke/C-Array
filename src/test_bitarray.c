@@ -1,4 +1,5 @@
 #include "bitarray.h"
+#include "bitarray_funcs.h"
 
 #include <assert.h>
 #include <log.h>
