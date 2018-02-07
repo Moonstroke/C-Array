@@ -10,7 +10,7 @@
 static BitArray *barray;
 
 static const unsigned int BIT_ARRAY_SIZE = 10;
-static bool values[] = {true, false, false, true, false, true, true, false, true, false};
+static bool VALUES[] = {true, false, false, true, false, true, true, false, true, false};
 static unsigned int COUNT = 5;
 
 
@@ -55,7 +55,7 @@ static void test_ba_put__valid(void) {
 	bool param;
 	info("test ba_put -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
-		param = values[index];
+		param = VALUES[index];
 		info("ba_put(barray, %u, %s)", index, param ? "true" : "false");
 		verbose("expected: false");
 		got = ba_put(barray, index, param);
@@ -90,7 +90,7 @@ static void test_ba_get__valid(void) {
 	info("test ba_get -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		info("ba_get(barray, %u)", index);
-		expected = values[index];
+		expected = VALUES[index];
 		verbose("expected: %s", expected ? "true" : "false");
 		got = ba_get(barray, index);
 		verbose("got     : %s", got ? "true" : "false");
