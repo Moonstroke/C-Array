@@ -152,5 +152,7 @@ void test_bitarray(void) {
 	test_ba_count();
 
 
+	ba_printf(barray);
+
 	cleanup();
 }
