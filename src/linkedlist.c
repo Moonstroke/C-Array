@@ -82,7 +82,7 @@ data *ll_set(LinkedList *const l, const unsigned int i, data *const d) {
 	return former;
 }
 
-int ll_add(LinkedList *const l, const unsigned int i, void *const d) {
+int ll_add(LinkedList *const l, const unsigned int i, data *const d) {
 	if(i > l->len) {
 		return -1;
 	}
