@@ -83,41 +83,25 @@ data *ll_set(LinkedList *const l, const unsigned int i, data *const d) {
 }
 
 int ll_add(LinkedList *const l, const unsigned int i, data *const d) {
-	if(i > l->len) {
+	Node *item, **plug;
+	if(i > l->len || !(item = newnode(d, NULL))) {
 		return -1;
 	}
-	Node *const item = newnode(d, NULL);
-	if(!item) {
-		return -1;
-	}
-	if(!i) {
-		item->next = l->head;
-		l->head = item;
-	} else {
-		Node *const prev = lgoto(l, i - 1);
-		item->next = prev->next;
-		prev->next = item;
-	}
+	plug = i == 0 ? &l->head : &lgoto(l, i - 1)->next;
+	item->next = *plug;
+	*plug = item;
 	++l->len;
 	return i;
 }
 extern int ll_append(LinkedList*, data*);
 
 data *ll_drop(LinkedList *const l, const unsigned int i) {
+	Node *item, **plug;
+	data *d;
 	if(i >= l->len) {
 		return NULL;
 	}
-	data *d = NULL;
-	Node *item, **plug = NULL;
-	if(i == 0) {
-		plug = &l->head;
-	} else {
-		item = lgoto(l, i - 1);
-		if(item == NULL || item->next == NULL) {
-			return NULL;
-		}
-		plug = &item->next;
-	}
+	plug = i == 0 ? &l->head : &lgoto(l, i - 1)->next;
 	item = *plug;
 	d = item->value;
 	*plug = item->next;
