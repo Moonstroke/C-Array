@@ -5,15 +5,6 @@
 
 
 
-#define validate(index, size, include_top_size, return_value) {\
-	if(-size <= index && index < 0) {\
-		index +=  size;\
-	} else if(index >= (size + include_top_size) || index < -size) {\
-		return return_value;\
-	}\
-}
-
-
 typedef struct node Node;
 struct node {
 	data *value;
@@ -74,21 +65,27 @@ static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
 	}
 	return item;
 }
-data *ll_get(const LinkedList *const l, int i) {
-	validate(i, (signed)l->len, 0, NULL);
+data *ll_get(const LinkedList *const l, const unsigned int i) {
+	if(i >= l->len) {
+		return NULL;
+	}
 	return lgoto(l, i)->value;
 }
 
-data *ll_set(LinkedList *const l, int i, data *const d) {
-	validate(i, (signed)l->len, 0, NULL);
+data *ll_set(LinkedList *const l, const unsigned int i, data *const d) {
+	if(i >= l->len) {
+		return NULL;
+	}
 	Node *const item = lgoto(l, i);
 	data *const former = item->value;
 	item->value = d;
 	return former;
 }
 
-int ll_add(LinkedList *const l, int i, void *const d) {
-	validate(i, (signed)l->len, 1, -1);
+int ll_add(LinkedList *const l, const unsigned int i, void *const d) {
+	if(i > l->len) {
+		return -1;
+	}
 	Node *const item = newnode(d, NULL);
 	if(!item) {
 		return -1;
@@ -106,8 +103,10 @@ int ll_add(LinkedList *const l, int i, void *const d) {
 }
 extern int ll_append(LinkedList*, data*);
 
-data *ll_drop(LinkedList *const l, int i) {
-	validate(i, (signed)l->len, 0, NULL);
+data *ll_drop(LinkedList *const l, const unsigned int i) {
+	if(i >= l->len) {
+		return NULL;
+	}
 	data *d = NULL;
 	Node *item, **plug = NULL;
 	if(i == 0) {

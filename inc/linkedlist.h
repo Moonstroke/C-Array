@@ -67,7 +67,7 @@ unsigned int ll_len(const LinkedList *self);
  * \return The \a index 'th element in the list, or \c NULL if the index is
  *         invalid.
  */
-data *ll_get(const LinkedList *self, int index);
+data *ll_get(const LinkedList *self, unsigned int index);
 
 /**
  * \brief Updates an element of the list.
@@ -79,7 +79,7 @@ data *ll_get(const LinkedList *self, int index);
  * \return The former element at \a index 'th position, or \c NULL if the index
  *         is invalid.
  */
-data *ll_set(LinkedList *self, int index, data *item);
+data *ll_set(LinkedList *self, unsigned int index, data *item);
 
 
 /**
@@ -92,7 +92,7 @@ data *ll_set(LinkedList *self, int index, data *item);
  * \return The index of the element, or \c -1 in case of error: memory
  *         allocation failed, or the \a index is invalid.
  */
-int ll_add(LinkedList *self, int index, data *item);
+int ll_add(LinkedList *self, unsigned int index, data *item);
 
 /**
  * \brief Appends an element to the end of the linked list.
@@ -116,7 +116,7 @@ inline int ll_append(LinkedList *self, data *item) {
  * \return The removed element, of NULL if no element was removed (\a i.e.
  *         \a index has an invalid value).
  */
-data *ll_drop(LinkedList *self, int index);
+data *ll_drop(LinkedList *self, unsigned int index);
 
 
 #endif /* LINKEDLIST_H */

@@ -11,15 +11,6 @@
 
 
 
-#define validate(index, size, include_top_size, return_value) {\
-	if(-size <= index && index < 0) {\
-		index += size;\
-	} else if(index >= (size + include_top_size) || index < -size) {\
-		return return_value;\
-	}\
-}
-
-
 struct array {
 	unsigned int size;
 	uint8_t _padding[4];
@@ -51,12 +42,11 @@ unsigned int a_size(const Array *const a) {
 }
 
 
-data *a_get(const Array *const a, int i) {
-	validate(i, (signed)a->size, false, NULL);
+data *a_get(const Array *const a, const unsigned int i) {
 	return fa_get(a->items, i);
 }
 
-data *a_set(Array *const a, const int i, data *const e) {
+data *a_set(Array *const a, const unsigned int i, data *const e) {
 	return fa_swap(a->items, i, e);
 }
 
@@ -74,33 +64,35 @@ static bool a_resize(Array *const a, const unsigned int c) {
 	a->items = items;
 	return true;
 }
-int a_add(Array *const a, int i, data *const e) {
-	validate(i, (signed)a->size, true, -1);
-	const unsigned int index = (unsigned)i,
-	                   capa = fa_size(a->items),
-	                   size = a->size;
-	if(size == capa && !a_resize(a, size + (size / 2 + size % 2) /* capacity * 1.5 */)) {
+int a_add(Array *const a, const unsigned int i, data *const e) {
+	const unsigned int s = a->size;
+	if(i > s) {
 		return -1;
 	}
-	for(unsigned int k = size; k > index; --k) {
+	if(s == fa_size(a->items) && !a_resize(a, s + (s / 2 + s % 2) /* capacity * 1.5 */)) {
+		return -1;
+	}
+	for(unsigned int k = s; k > i; --k) {
 		fa_set(a->items, k + 1, fa_get(a->items, k));
 	}
-	fa_set(a->items, index, e);
+	fa_set(a->items, i, e);
 	++a->size;
-	return index;
+	return i;
 }
 extern int a_append(Array*, data*);
 
 
-data *a_drop(Array *a, int index) {
+data *a_drop(Array *a, const unsigned int i) {
 	const unsigned int l = a->size;
-	validate(index, (signed)l, false, NULL);
-	data *const it = fa_get(a->items, index);
-	fa_set(a->items, index, NULL);
+	if(i >= l) {
+		return NULL;
+	}
+	data *const e = fa_get(a->items, i);
+	fa_set(a->items, i, NULL);
 
 	/* move the elements to shrink the empty slots */
-	for(unsigned int i = index; i < l - 1; ++i)
-		fa_set(a->items, i, fa_get(a->items, i + 1));
+	for(unsigned int k = i; k < l - 1; ++k)
+		fa_set(a->items, k, fa_get(a->items, k + 1));
 	--a->size;
-	return it;
+	return e;
 }

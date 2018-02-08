@@ -62,12 +62,11 @@ unsigned int a_size(const Array *self);
 
 
 /**
- * \brief Retrieves an element of an array from its index or NULL if index is
- *        invalid.
+ * \brief Retrieves an element of an array from its position (ie. \a index), or
+ *        \c NULL if the \a index is invalid.
  *
- * An index is valid if an only if:
- * \code -arraysize(array) <= index < -1 || 0 <= index < arraysize(array) \endcode
- * Negative indexes will get \c |index| 'th item from the end
+ * \note An index is valid if an only if it is strictly less than the size of
+ *       the array.
  *
  * \param[in] self  The array
  * \param[in] index The index at which to look for an element
@@ -75,7 +74,7 @@ unsigned int a_size(const Array *self);
  * \return The \a index 'th element in the array, or \c NULL if the index is
  *         invalid
  */
-data *a_get(const Array *self, int index);
+data *a_get(const Array *self, unsigned int index);
 
 /**
  *\brief Replaces an element of the array.
@@ -85,9 +84,9 @@ data *a_get(const Array *self, int index);
  * \param[in]     newitem The new element to set
  *
  * \return The former element found at index \a index, or \c NULL if the index
- *         is invalid
+ *         is invalid.
  */
-data *a_set(Array *self, int index, data *newitem);
+data *a_set(Array *self, unsigned int index, data *newitem);
 
 
 /**
@@ -96,10 +95,10 @@ data *a_set(Array *self, int index, data *newitem);
  * \param[in,out] self    The array
  * \param[in]     index   The index at which to insert an element
  * \param[in]     newitem The element to add
- * \return The new size of the array or \c -1 if an error occurred (index is
- *         invalid or memory allocation failed)
+ * \return The new size of the array or \c -1 if an error occurred (\a index is
+ *         invalid, memory allocation failed)
  */
-int a_add(Array *self, int index, data *newitem);
+int a_add(Array *self, unsigned int index, data *newitem);
 
 /**
  * \brief Adds an item to the end of the array.
@@ -122,8 +121,9 @@ inline int a_append(Array *const self, data *const item) {
  * \param[in,out] self  The array
  * \param[in]     index The index of the element to remove
  *
- * \return The element just removed, or NULL if an error occurred (invalid index)
+ * \return The element just removed, or \c NULL if an error occurred (\a index
+ *         is invalid).
  */
-data *a_drop(Array *self, int index);
+data *a_drop(Array *self, unsigned int index);
 
 #endif /* ARRAY_H */
