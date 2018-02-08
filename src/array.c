@@ -20,10 +20,10 @@ struct array {
 
 Array *a_new(const unsigned int s) {
 	Array *const a = malloc(sizeof(Array));
-	if(a == NULL)
+	if(!a)
 		return NULL;
 	a->items = fa_new(s);
-	if(a->items == NULL) {
+	if(!a->items) {
 		free(a);
 		return NULL;
 	}

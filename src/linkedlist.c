@@ -19,7 +19,7 @@ struct llist {
 
 LinkedList *ll_new(void) {
 	LinkedList *const ll = malloc(sizeof(LinkedList));
-	if(ll == NULL)
+	if(!ll)
 		return NULL;
 	ll->len = 0;
 	ll->head = NULL;
@@ -28,7 +28,7 @@ LinkedList *ll_new(void) {
 
 static inline Node *newnode(data *const d, Node *const next) {
 	Node *const node = malloc(sizeof(Node));
-	if(node == NULL) {
+	if(!node) {
 		return NULL;
 	}
 	node->value = d;
