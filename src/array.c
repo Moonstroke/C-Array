@@ -87,12 +87,12 @@ data *a_drop(Array *a, const unsigned int i) {
 	if(i >= l) {
 		return NULL;
 	}
-	data *const e = fa_get(a->items, i);
-	fa_set(a->items, i, NULL);
+	data *const e = a_set(a, i, NULL);
 
 	/* move the elements to shrink the empty slots */
-	for(unsigned int k = i; k < l - 1; ++k)
+	for(unsigned int k = i; k < l - 1; ++k) {
 		fa_set(a->items, k, fa_get(a->items, k + 1));
+	}
 	--a->size;
 	return e;
 }
