@@ -51,8 +51,9 @@ data *a_set(Array *const a, const unsigned int i, data *const e) {
 }
 
 
-static bool a_resize(Array *const a, const unsigned int c) {
-	const unsigned int s = fa_size(a->items);
+static bool a_grow(Array *const a) {
+	const unsigned int s = fa_size(a->items),
+	                   c = s + (s / 2 + s % 2) /* capacity * 1.5 */;
 	FixedArray *const items = fa_new(c);
 	if(!items) {
 		return false;
@@ -69,7 +70,7 @@ int a_add(Array *const a, const unsigned int i, data *const e) {
 	if(i > s) {
 		return -1;
 	}
-	if(s == fa_size(a->items) && !a_resize(a, s + (s / 2 + s % 2) /* capacity * 1.5 */)) {
+	if(s == fa_size(a->items) && !a_grow(a)) {
 		return -1;
 	}
 	for(unsigned int k = s; k > i; --k) {
