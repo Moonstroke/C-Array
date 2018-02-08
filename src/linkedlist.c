@@ -18,12 +18,12 @@ struct llist {
 };
 
 LinkedList *ll_new(void) {
-	LinkedList *const l = malloc(sizeof(LinkedList));
-	if(l == NULL)
+	LinkedList *const ll = malloc(sizeof(LinkedList));
+	if(ll == NULL)
 		return NULL;
-	l->len = 0;
-	l->head = NULL;
-	return l;
+	ll->len = 0;
+	ll->head = NULL;
+	return ll;
 }
 
 static inline Node *newnode(data *const d, Node *const next) {
@@ -36,76 +36,76 @@ static inline Node *newnode(data *const d, Node *const next) {
 	return node;
 }
 
-void ll_free(LinkedList *const l, void (*const f)(data*)) {
-	if(l->head) {
-		Node *item = l->head, *next;
+void ll_free(LinkedList *const ll, void (*const f)(data*)) {
+	if(ll->head) {
+		Node *item = ll->head, *next;
 		if(f != NULL)
-			for(next = l->head->next; next != NULL; item = next, next = next->next) {
+			for(next = ll->head->next; next != NULL; item = next, next = next->next) {
 				f(item->value);
 				free(item);
 			}
 		else
-			for(next = l->head->next; next != NULL; item = next, next = next->next)
+			for(next = ll->head->next; next != NULL; item = next, next = next->next)
 				free(item);
 	}
-	free(l);
+	free(ll);
 }
 
 
-unsigned int ll_len(const LinkedList *const l) {
-	return l->len;
+unsigned int ll_len(const LinkedList *const ll) {
+	return ll->len;
 }
 
 
-static inline Node *lgoto(const LinkedList *const l, const unsigned int n) {
-	Node *item = l->head;
+static inline Node *lgoto(const LinkedList *const ll, const unsigned int n) {
+	Node *item = ll->head;
 	unsigned int i;
 	for(i = 0; i < n && item != NULL; ++i) {
 		item = item->next;
 	}
 	return item;
 }
-data *ll_get(const LinkedList *const l, const unsigned int i) {
-	if(i >= l->len) {
+data *ll_get(const LinkedList *const ll, const unsigned int i) {
+	if(i >= ll->len) {
 		return NULL;
 	}
-	return lgoto(l, i)->value;
+	return lgoto(ll, i)->value;
 }
 
-data *ll_set(LinkedList *const l, const unsigned int i, data *const d) {
-	if(i >= l->len) {
+data *ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
+	if(i >= ll->len) {
 		return NULL;
 	}
-	Node *const item = lgoto(l, i);
+	Node *const item = lgoto(ll, i);
 	data *const former = item->value;
 	item->value = d;
 	return former;
 }
 
-int ll_add(LinkedList *const l, const unsigned int i, data *const d) {
+int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
 	Node *item, **plug;
-	if(i > l->len || !(item = newnode(d, NULL))) {
+	if(i > ll->len || !(item = newnode(d, NULL))) {
 		return -1;
 	}
-	plug = i == 0 ? &l->head : &lgoto(l, i - 1)->next;
+	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
 	item->next = *plug;
 	*plug = item;
-	++l->len;
+	++ll->len;
 	return i;
 }
 extern int ll_append(LinkedList*, data*);
 
-data *ll_drop(LinkedList *const l, const unsigned int i) {
+data *ll_drop(LinkedList *const ll, const unsigned int i) {
 	Node *item, **plug;
 	data *d;
-	if(i >= l->len) {
+	if(i >= ll->len) {
 		return NULL;
 	}
-	plug = i == 0 ? &l->head : &lgoto(l, i - 1)->next;
+	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
 	item = *plug;
 	d = item->value;
 	*plug = item->next;
-	--l->len;
+	--ll->len;
 	free(item);
 	return d;
 }

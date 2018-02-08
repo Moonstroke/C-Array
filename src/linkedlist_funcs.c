@@ -8,33 +8,33 @@
 static bool eq_func__default(const data *const e1, const data* const e2) {
 	return e1 == e2;
 }
-data *ll_remove(LinkedList *const l, const data *const e, bool (*f)(const data*, const data*)) {
+data *ll_remove(LinkedList *const ll, const data *const e, bool (*f)(const data*, const data*)) {
 	if(!f) {
 		f = eq_func__default;
 	}
-	const unsigned int s = ll_len(l);
+	const unsigned int s = ll_len(ll);
 	for(unsigned int i = 0; i < s; ++i) {
-		if(f(ll_get(l, i), e)) {
-			return ll_drop(l, i);
+		if(f(ll_get(ll, i), e)) {
+			return ll_drop(ll, i);
 		}
 	}
 	return NULL;
 }
 
 
-void ll_each(LinkedList *const l, void (*const f)(data*)) {
+void ll_each(LinkedList *const ll, void (*const f)(data*)) {
 	if(f) {
 		data *item;
-		for(unsigned int i = 0; (item = ll_get(l, i)); ++i) {
+		for(unsigned int i = 0; (item = ll_get(ll, i)); ++i) {
 			f(item);
 		}
 	}
 }
 
 
-data *ll_cond(const LinkedList *const l, bool (*const f)(const data*)) {
+data *ll_cond(const LinkedList *const ll, bool (*const f)(const data*)) {
 	data *item;
-	for(unsigned int i = 0; (item = ll_get(l, i)) && f(item); ++i);
+	for(unsigned int i = 0; (item = ll_get(ll, i)) && f(item); ++i);
 	return item;
 }
 
@@ -43,15 +43,15 @@ static void printitem_default(const data *item) {
 	printf("%p", item);
 }
 
-void ll_printf(const LinkedList *const l, void (*f)(const data*)) {
+void ll_printf(const LinkedList *const ll, void (*f)(const data*)) {
 	printf("(");
 	if(!f)
 		f = printitem_default;
-	if(ll_len(l) > 0)
-		f(ll_get(l, 0));
+	if(ll_len(ll) > 0)
+		f(ll_get(ll, 0));
 	data *item;
 	unsigned int i;
-	for(i = 1; (item = ll_get(l, i)); ++i) {
+	for(i = 1; (item = ll_get(ll, i)); ++i) {
 			printf(", ");
 			f(item);
 	}
