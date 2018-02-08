@@ -26,13 +26,13 @@ LinkedList *ll_new(void) {
 	return ll;
 }
 
-static inline Node *newnode(data *const d, Node *const next) {
+static inline Node *newnode(data *const d) {
 	Node *const node = malloc(sizeof(Node));
 	if(!node) {
 		return NULL;
 	}
 	node->value = d;
-	node->next = next;
+	node->next = NULL;
 	return node;
 }
 
@@ -84,7 +84,7 @@ data *ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
 
 int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
 	Node *item, **plug;
-	if(i > ll->len || !(item = newnode(d, NULL))) {
+	if(i > ll->len || !(item = newnode(d))) {
 		return -1;
 	}
 	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
