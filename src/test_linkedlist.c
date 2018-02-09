@@ -24,7 +24,7 @@ static void init(void) {
 
 static void cleanup(void) {
 	info("ll_free(llist)");
-	ll_free(llist, NULL);
+	ll_free(llist);
 	info("OK\n");
 }
 

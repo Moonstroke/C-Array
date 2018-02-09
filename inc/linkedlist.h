@@ -15,6 +15,9 @@
 #define LINKEDLIST_H
 
 
+#include <stdlib.h> /* for NULL */
+
+
 
 typedef void data; /**< A more eloquent name for the type of the elements */
 
@@ -45,7 +48,18 @@ LinkedList *ll_new(void);
  *
  * \note Accessing the list after freeing will result in undefined behaviour.
  */
-void ll_free(LinkedList *self, void (*freeitem)(data*));
+void ll_freer(LinkedList *self, void (*freeitem)(data*));
+
+/**
+ * \brief Frees a linkedlist, without minding the elements.
+ *
+ * \param[in,out] self The linked list
+ *
+ * \sa ll_freer
+ */
+inline void ll_free(LinkedList *const self) {
+	ll_freer(self, NULL);
+}
 
 
 /**

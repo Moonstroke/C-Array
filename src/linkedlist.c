@@ -1,7 +1,6 @@
 #include "linkedlist.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 
 
@@ -36,7 +35,7 @@ static inline Node *newnode(data *const d) {
 	return node;
 }
 
-void ll_free(LinkedList *const ll, void (*const f)(data*)) {
+void ll_freer(LinkedList *const ll, void (*const f)(data*)) {
 	if(ll->head) {
 		Node *item = ll->head, *next;
 		if(f != NULL)
@@ -50,7 +49,7 @@ void ll_free(LinkedList *const ll, void (*const f)(data*)) {
 	}
 	free(ll);
 }
-
+extern void ll_free(LinkedList*);
 
 unsigned int ll_len(const LinkedList *const ll) {
 	return ll->len;
