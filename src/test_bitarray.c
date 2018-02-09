@@ -40,14 +40,13 @@ static void test_ba_new__0_null(void) {
 }
 
 static void test_ba_size(void) {
-	unsigned int expected, got;
+	unsigned int got;
 	info("test ba_size");
 	info("ba_size(barray)");
-	expected = BIT_ARRAY_SIZE;
-	verbose("expected: ", expected);
+	verbose("expected: %u", BIT_ARRAY_SIZE);
 	got = ba_size(barray);
 	verbose("got     : ", got);
-	assert(got == expected);
+	assert(got == BIT_ARRAY_SIZE);
 	info("OK\n");
 }
 

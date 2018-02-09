@@ -31,26 +31,24 @@ static void cleanup(void) {
 
 
 static void test_fa_new__0_null(void) {
-	FixedArray *expected, *got;
+	FixedArray *got;
 	info("test fa_new -- size of 0 => NULL");
-	info("test fa_new(%u)", 0);
-	expected = NULL;
-	verbose("expected: %p", expected);
+	info("test fa_new(0)");
+	verbose("expected: (nil)");
 	got = fa_new(0);
 	verbose("got     : %p", got);
-	assert(got == expected);
+	assert(got == NULL);
 	info("OK\n");
 }
 
 static void test_fa_size(void) {
-	unsigned int expected, got;
+	unsigned int got;
 	info("test fa_size");
 	info("fa_size(farray)");
-	expected = INT_FIXED_ARRAY_SIZE;
-	verbose("expected: %u", expected);
+	verbose("expected: %u", INT_FIXED_ARRAY_SIZE);
 	got = fa_size(farray);
 	verbose("got     : %u", got);
-	assert(got == expected);
+	assert(got == INT_FIXED_ARRAY_SIZE);
 	info("OK\n");
 }
 
@@ -119,14 +117,13 @@ static void test_fa_put__valid(void) {
 static void test_fa_put__invalid(void) {
 	int extra = 7;
 	data *const param = &extra;
-	int expected, got;
+	int got;
 	info("test fa_put -- invalid (array is full)");
 	info("fa_put(farray, %p)", param);
-	expected = -1;
-	verbose("expected: %d", expected);
+	verbose("expected: -1");
 	got = fa_put(farray, param);
 	verbose("got     : %d", got);
-	assert(got == expected);
+	assert(got == -1);
 	info("OK\n");
 }
 
