@@ -1,8 +1,13 @@
 #include "bitarray.h"
 
+#include <errno.h> /* for errno, EINVAL, ENOMEM, ERANGE */
 #include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for malloc(), free(), and NULL */
 #include <string.h> /* for memset() */
+
+
+
+extern int errno;
 
 
 
@@ -14,10 +19,12 @@ struct bitarray {
 
 BitArray *ba_new(const unsigned int s) {
 	if(!s) {
+		errno = EINVAL;
 		return NULL;
 	}
 	BitArray *const ba = malloc(sizeof(BitArray) + s * sizeof(uint8_t));
 	if(!ba) {
+		errno = ENOMEM;
 		return NULL;
 	}
 	ba->size = s;
@@ -34,18 +41,22 @@ unsigned int ba_size(const BitArray *const ba) {
 }
 
 bool ba_get(const BitArray *const ba, const unsigned int i) {
-	return (ba->data[i / 8] & 1 << (i % 8)) != 0;
+	if(i < ba->size) {
+		errno = 0;
+		return (ba->data[i / 8] & 1 << (i % 8)) != 0;
+	}
+	errno = ERANGE;
+	return false;
 }
 
 bool ba_put(BitArray *const ba, const unsigned int i, const bool v) {
-	if(i >= ba->size) {
-		return false;
-	}
 	const bool b = ba_get(ba, i);
-	if(v) {
-		ba->data[i / 8] |= 1 << i % 8;
-	} else {
-		ba->data[i / 8] &= ~(1 << i % 8);
+	if(!errno) {
+		if(v) {
+			ba->data[i / 8] |= 1 << i % 8;
+		} else {
+			ba->data[i / 8] &= ~(1 << i % 8);
+		}
 	}
 	return b;
 }

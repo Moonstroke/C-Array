@@ -1,7 +1,12 @@
 #include "linkedlist_funcs.h"
 
+#include <errno.h> /* for errno, EINVAL */
 #include <stdio.h>
 #include <stdlib.h>
+
+
+
+extern int errno;
 
 
 
@@ -15,9 +20,11 @@ data *ll_remove(LinkedList *const ll, const data *const e, bool (*f)(const data*
 	const unsigned int s = ll_len(ll);
 	for(unsigned int i = 0; i < s; ++i) {
 		if(f(ll_get(ll, i), e)) {
+			errno = 0;
 			return ll_drop(ll, i);
 		}
 	}
+	errno = EINVAL;
 	return NULL;
 }
 

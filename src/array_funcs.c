@@ -1,6 +1,11 @@
 #include "array_funcs.h"
 
+#include <errno.h> /* for errno, EINVAL */
 #include <stdio.h>
+
+
+
+extern int errno;
 
 
 void a_freer(Array *a, void(*f)(data*)) {
@@ -19,9 +24,11 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 	const unsigned int l = a_size(a);
 	for(unsigned int i = 0; i < l; ++i) {
 		if(f(a_get(a, i), e)) {
+			errno = 0;
 			return a_drop(a, i);
 		}
 	}
+	errno = EINVAL;
 	return NULL;
 }
 

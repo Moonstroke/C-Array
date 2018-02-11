@@ -1,8 +1,13 @@
 #include "fixedarray.h"
 
+#include <errno.h> /* for errno, EINVAL, ENOMEM, ERANGE */
 #include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for NULL, malloc(), calloc(), free() */
 #include <string.h> /* for memset() */
+
+
+
+extern int errno;
 
 
 
@@ -14,11 +19,15 @@ struct fixedarray {
 
 
 FixedArray *fa_new(const unsigned int s) {
-	if(!s)
+	if(!s) {
+		errno = EINVAL;
 		return NULL;
+	}
 	FixedArray *const fa = malloc(sizeof(FixedArray) + s * sizeof(data*));
-	if(!fa)
+	if(!fa) {
 		return NULL;
+		errno = ENOMEM;
+	}
 	fa->size = s;
 	memset(fa->items, 0, s);
 	return fa;
@@ -34,11 +43,19 @@ unsigned int fa_size(const FixedArray *const fa) {
 }
 
 data *fa_get(const FixedArray *const fa, const unsigned int i) {
-	return i < fa->size ? fa->items[i] : NULL;
+	if(i < fa->size) {
+		errno = 0;
+		return fa->items[i];
+	}
+	errno = ERANGE;
+	return NULL;
 }
 
 void fa_set(FixedArray *const fa, const unsigned int i, data *const d) {
 	if(i < fa->size) {
 		fa->items[i] = d;
+		errno = 0;
+	} else {
+		errno = ERANGE;
 	}
 }

@@ -1,6 +1,11 @@
 #include "fixedarray_funcs.h"
 
+#include <errno.h> /* for errno */
 #include <stdio.h> /* for printf() */
+
+
+
+extern int errno;
 
 
 
@@ -33,15 +38,14 @@ int fa_put(FixedArray *const fa, data *const item) {
 
 
 data *fa_swap(FixedArray *const fa, const unsigned int i, data *const e) {
-	if(i < fa_size(fa)) {
-		data *const d = fa_get(fa, i);
+	data *const d = fa_get(fa, i);
+	if(errno) {
+		return NULL;
+	} else {
 		fa_set(fa, i, e);
 		return d;
-	} else {
-		return NULL;
 	}
 }
-
 extern data *fa_unset(FixedArray*, unsigned int);
 
 
@@ -51,7 +55,7 @@ void fa_each(FixedArray *const fa, void (*const f)(data*)) {
 		for(unsigned int i = 0; i < s; ++i) {
 			data *const item = fa_get(fa, i);
 			if(item)
-			f(item);
+				f(item);
 		}
 	}
 }

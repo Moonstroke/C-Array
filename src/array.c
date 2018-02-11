@@ -4,10 +4,15 @@
 #include "fixedarray_funcs.h" /* for fa_swap() */
 
 
+#include <errno.h> /* for errno, EINVAL, ENOMEM, ERANGE */
 #include <log.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h> /* for uint8_t */
+
+
+
+extern int errno;
 
 
 
@@ -20,11 +25,14 @@ struct array {
 
 Array *a_new(const unsigned int s) {
 	Array *const a = malloc(sizeof(Array));
-	if(!a)
+	if(!a) {
+		errno = ENOMEM;
 		return NULL;
+	}
 	a->items = fa_new(s);
 	if(!a->items) {
 		free(a);
+		/* errno already set in fa_new() */
 		return NULL;
 	}
 	a->size = 0;
@@ -56,6 +64,7 @@ static bool a_grow(Array *const a) {
 	                   c = s + (s / 2 + s % 2) /* capacity * 1.5 */;
 	FixedArray *const items = fa_new(c);
 	if(!items) {
+		/* errno already set in fa_new() */
 		return false;
 	}
 	for(unsigned int i = 0; i < s; ++i) {
@@ -68,9 +77,11 @@ static bool a_grow(Array *const a) {
 int a_add(Array *const a, const unsigned int i, data *const e) {
 	const unsigned int s = a->size;
 	if(i > s) {
+		errno = ERANGE;
 		return -1;
 	}
 	if(s == fa_size(a->items) && !a_grow(a)) {
+		/* errno set in a_grow */
 		return -1;
 	}
 	for(unsigned int k = s; k > i; --k) {
@@ -86,8 +97,10 @@ extern int a_append(Array*, data*);
 data *a_drop(Array *a, const unsigned int i) {
 	const unsigned int l = a->size;
 	if(i >= l) {
+		errno = ERANGE;
 		return NULL;
 	}
+	errno = 0;
 	data *const e = a_set(a, i, NULL);
 
 	/* move the elements to shrink the empty slots */

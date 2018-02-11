@@ -1,6 +1,11 @@
 #include "linkedlist.h"
 
+#include <errno.h> /** errno, ENOMEM, ERANGE */
 #include <stdio.h>
+
+
+
+extern int errno;
 
 
 
@@ -18,8 +23,10 @@ struct llist {
 
 LinkedList *ll_new(void) {
 	LinkedList *const ll = malloc(sizeof(LinkedList));
-	if(!ll)
+	if(!ll) {
+		errno = ENOMEM;
 		return NULL;
+	}
 	ll->len = 0;
 	ll->head = NULL;
 	return ll;
@@ -28,6 +35,7 @@ LinkedList *ll_new(void) {
 static inline Node *newnode(data *const d) {
 	Node *const node = malloc(sizeof(Node));
 	if(!node) {
+		errno = ENOMEM;
 		return NULL;
 	}
 	node->value = d;
@@ -65,46 +73,59 @@ static inline Node *lgoto(const LinkedList *const ll, const unsigned int n) {
 	return item;
 }
 data *ll_get(const LinkedList *const ll, const unsigned int i) {
-	if(i >= ll->len) {
-		return NULL;
+	if(i < ll->len) {
+		errno = 0;
+		return lgoto(ll, i)->value;
 	}
-	return lgoto(ll, i)->value;
+	errno = ERANGE;
+	return NULL;
 }
 
 data *ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
-	if(i >= ll->len) {
-		return NULL;
+	if(i < ll->len) {
+		Node *const item = lgoto(ll, i);
+		data *const former = item->value;
+		item->value = d;
+		errno = 0;
+		return former;
 	}
-	Node *const item = lgoto(ll, i);
-	data *const former = item->value;
-	item->value = d;
-	return former;
+	errno = ERANGE;
+	return NULL;
 }
 
 int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
-	Node *item, **plug;
-	if(i > ll->len || !(item = newnode(d))) {
+	Node *item;
+	if(i > ll->len) {
+		errno = ERANGE;
 		return -1;
+	} else if(!(item = newnode(d))) {
+		/* errno set in newnode */
+		return -1;
+	} else {
+		Node **plug;
+		plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
+		item->next = *plug;
+		*plug = item;
+		++ll->len;
+		errno = 0;
+		return i;
 	}
-	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
-	item->next = *plug;
-	*plug = item;
-	++ll->len;
-	return i;
 }
 extern int ll_append(LinkedList*, data*);
 
 data *ll_drop(LinkedList *const ll, const unsigned int i) {
-	Node *item, **plug;
-	data *d;
-	if(i >= ll->len) {
-		return NULL;
+	if(i < ll->len) {
+		Node *item, **plug;
+		data *d;
+		plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
+		item = *plug;
+		d = item->value;
+		*plug = item->next;
+		--ll->len;
+		free(item);
+		errno = 0;
+		return d;
 	}
-	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
-	item = *plug;
-	d = item->value;
-	*plug = item->next;
-	--ll->len;
-	free(item);
-	return d;
+	errno = ERANGE;
+	return NULL;
 }
