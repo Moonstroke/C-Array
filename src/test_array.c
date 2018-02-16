@@ -2,9 +2,14 @@
 #include "array_funcs.h"
 
 #include <assert.h>
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <log.h> /* for info(), verbose(), log_setfilter() */
 #include <stdio.h> /* for printf() */
 #include <stdlib.h> /* for NULL */
+
+
+
+extern int errno;
 
 
 
@@ -36,6 +41,7 @@ static void test_a_new__0_null(void) {
 	got = a_new(index);
 	verbose("got     : %p", got);
 	assert(got == NULL);
+	assert(errno == EINVAL);
 	info("OK\n");
 }
 
@@ -63,6 +69,7 @@ static void test_a_append(void) {
 		got = a_append(array, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -89,6 +96,7 @@ static void test_a_get__valid(void) {
 		got = a_get(array, index);
 		verbose("got     : %p", got);
 		assert(got == expected);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -109,6 +117,7 @@ static void test_a_get__invalid(void) {
 		got = a_get(array, index);
 		verbose("got     : %p", got);
 		assert(got == NULL);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -126,6 +135,7 @@ void test_a_set__valid(void) {
 	got = *(int*)a_set(array, index, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -147,6 +157,7 @@ static void test_a_set__invalid(void) {
 		got = a_set(array, index, param);
 		verbose("got     : %p", got);
 		assert(got == NULL);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -169,6 +180,7 @@ static void test_a_add__invalid(void) {
 		got = a_add(array, index, param);
 		verbose("got     : %d", got);
 		assert(got == -1);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -184,6 +196,7 @@ static void test_a_append__overflow(void) {
 	got = a_append(array, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -197,6 +210,7 @@ static void test_a_drop__valid(void) {
 	got = a_drop(array, index);
 	verbose("got     : %p", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -216,6 +230,7 @@ static void test_a_drop__invalid(void) {
 		got = a_drop(array, index);
 		verbose("got     : %p", got);
 		assert(got == NULL);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -249,6 +264,7 @@ static void test_a_remove__not_found(void) {
 	got = a_remove(array, param, eq_as_int);
 	verbose("got     : %p", got);
 	assert(got == NULL);
+	assert(errno == EINVAL);
 	info("OK\n");
 }
 

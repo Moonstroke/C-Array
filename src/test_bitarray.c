@@ -2,9 +2,14 @@
 #include "bitarray_funcs.h"
 
 #include <assert.h>
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <log.h>
 #include <stdbool.h>
 #include <stdlib.h>
+
+
+
+extern int errno;
 
 
 
@@ -36,6 +41,7 @@ static void test_ba_new__0_null(void) {
 	got = ba_new(0);
 	verbose("got     : %p", got);
 	assert(got == NULL);
+	assert(errno == EINVAL);
 	info("OK\n");
 }
 
@@ -61,6 +67,7 @@ static void test_ba_put__valid(void) {
 		got = ba_put(barray, index, param);
 		verbose("got     : %s", got ? "true" : "false");
 		assert(got == false);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -81,6 +88,7 @@ static void test_ba_put__invalid(void) {
 		got = ba_put(barray, index, false);
 		verbose("got     : %s", got ? "true" : "false");
 		assert(got == false);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -95,6 +103,7 @@ static void test_ba_get__valid(void) {
 		got = ba_get(barray, index);
 		verbose("got     : %s", got ? "true" : "false");
 		assert(got == expected);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -114,6 +123,7 @@ static void test_ba_get__invalid(void) {
 		verbose("expected = false");
 		got = ba_get(barray, index);
 		assert(got == false);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }

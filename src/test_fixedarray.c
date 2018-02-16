@@ -2,9 +2,14 @@
 #include "fixedarray_funcs.h"
 
 #include <assert.h>
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <log.h> /* for info(), verbose(), log_setfilter() */
 #include <stdio.h> /* for printf() */
 #include <stdlib.h> /* for NULL */
+
+
+
+extern int errno;
 
 
 
@@ -38,6 +43,7 @@ static void test_fa_new__0_null(void) {
 	got = fa_new(0);
 	verbose("got     : %p", got);
 	assert(got == NULL);
+	assert(errno == EINVAL);
 	info("OK\n");
 }
 
@@ -59,6 +65,7 @@ static void test_fa_set(void) {
 		param = values + index;
 		info("fa_set(farray, %u, %p)", index, param);
 		fa_set(farray, index, param);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -73,6 +80,7 @@ static void test_fa_get(void) {
 		got = fa_get(farray, index);
 		verbose("got     : %p", got);
 		assert(got == expected);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -86,6 +94,7 @@ static void test_fa_unset(void) {
 	got = fa_unset(farray, unset_index);
 	verbose("got     : %p", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 

@@ -2,9 +2,14 @@
 #include "linkedlist_funcs.h"
 
 #include <assert.h>
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <log.h> /* for info(), verbose() */
 #include <stdio.h> /* for printf() */
 #include <stdlib.h> /* for NULL */
+
+
+
+extern int errno;
 
 
 
@@ -52,6 +57,7 @@ static void test_ll_append(void) {
 		got = ll_append(llist, param);
 		verbose("got     : %d", got);
 		assert(got == expected);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -77,6 +83,7 @@ static void test_ll_get__valid(void) {
 		got = ll_get(llist, index);
 		verbose("got     : %d", got);
 		assert(got == expected);
+		assert(errno == 0);
 	}
 	info("OK\n");
 }
@@ -97,6 +104,7 @@ static void test_ll_get__invalid(void) {
 		got = ll_get(llist, index);
 		verbose("got     : %p", got);
 		assert(got == NULL);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -113,6 +121,7 @@ static void test_ll_set__valid(void) {
 	got = ll_set(llist, index, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -134,6 +143,7 @@ static void test_ll_set__invalid(void) {
 		got = ll_set(llist, index, param);
 		verbose("got     : %p", got);
 		assert(got == NULL);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -150,6 +160,7 @@ static void test_ll_add__valid(void) {
 	got = ll_add(llist, index, param);
 	verbose("got     : %d", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -171,6 +182,7 @@ static void test_ll_add__invalid(void) {
 		got = ll_add(llist, index, param);
 		verbose("got     : %d", got);
 		assert(got == -1);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
@@ -191,6 +203,7 @@ static void test_ll_remove__found(void) {
 	got = ll_remove(llist, param, eq_as_int);
 	verbose("got     : %p", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -204,6 +217,7 @@ static void test_ll_remove__not_found(void) {
 	got = ll_remove(llist, param, eq_as_int);
 	verbose("got     : %p", got);
 	assert(got == NULL);
+	assert(errno == EINVAL);
 	info("OK\n");
 }
 
@@ -217,6 +231,7 @@ static void test_ll_drop__valid(void) {
 	got = ll_drop(llist, index);
 	verbose("got     : %p", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -236,6 +251,7 @@ static void test_ll_drop__invalid(void) {
 		got = ll_drop(llist, index);
 		verbose("got     : %p", got);
 		assert(got == NULL);
+		assert(errno == ERANGE);
 	}
 	info("OK\n");
 }
