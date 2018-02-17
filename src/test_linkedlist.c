@@ -187,40 +187,6 @@ static void test_ll_add__invalid(void) {
 	info("OK\n");
 }
 
-static bool eq_as_int(const data *const e1, const data *const e2) {
-	assert(e1 != NULL && e2 != NULL);
-	return *(int*)e1 == *(int*)e2;
-}
-static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
-static void test_ll_remove__found(void) {
-	const int value = 13;
-	const data *const param = &value;
-	data *expected, *got;
-	info("test ll_remove -- item found");
-	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
-	expected = values + 3;
-	verbose("expected: %p", expected);
-	got = ll_remove(llist, param, eq_as_int);
-	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
-	info("OK\n");
-}
-
-static void test_ll_remove__not_found(void) {
-	const int value = 4096;
-	const data *const param = &value;
-	data *got;
-	info("test ll_remove -- item not found");
-	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
-	verbose("expected: (nil)");
-	got = ll_remove(llist, param, eq_as_int);
-	verbose("got     : %p", got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
-	info("OK\n");
-}
-
 static void test_ll_drop__valid(void) {
 	data *expected, *got;
 	const unsigned int index = 0;
@@ -253,6 +219,40 @@ static void test_ll_drop__invalid(void) {
 		assert(got == NULL);
 		assert(errno == ERANGE);
 	}
+	info("OK\n");
+}
+
+static bool eq_as_int(const data *const e1, const data *const e2) {
+	assert(e1 != NULL && e2 != NULL);
+	return *(int*)e1 == *(int*)e2;
+}
+static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+static void test_ll_remove__found(void) {
+	const int value = 13;
+	const data *const param = &value;
+	data *expected, *got;
+	info("test ll_remove -- item found");
+	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
+	expected = values + 3;
+	verbose("expected: %p", expected);
+	got = ll_remove(llist, param, eq_as_int);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	assert(errno == 0);
+	info("OK\n");
+}
+
+static void test_ll_remove__not_found(void) {
+	const int value = 4096;
+	const data *const param = &value;
+	data *got;
+	info("test ll_remove -- item not found");
+	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
+	verbose("expected: (nil)");
+	got = ll_remove(llist, param, eq_as_int);
+	verbose("got     : %p", got);
+	assert(got == NULL);
+	assert(errno == EINVAL);
 	info("OK\n");
 }
 
