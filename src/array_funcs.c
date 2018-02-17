@@ -21,8 +21,8 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 	if(!f) {
 		f = eq_func__default;
 	}
-	const unsigned int l = a_size(a);
-	for(unsigned int i = 0; i < l; ++i) {
+	const unsigned int s = a_size(a);
+	for(unsigned int i = 0; i < s; ++i) {
 		if(f(a_get(a, i), e)) {
 			errno = 0;
 			return a_drop(a, i);
@@ -34,17 +34,17 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 
 void a_each(Array *const a, void (*f)(data*)) {
 	if(f) {
-		const unsigned int l = a_size(a);
-		for(unsigned int i = 0; i < l; ++i) {
+		const unsigned int s = a_size(a);
+		for(unsigned int i = 0; i < s; ++i) {
 			f(a_get(a, i));
 		}
 	}
 }
 
 data *a_cond(const Array *a, bool (*f)(const data*)) {
-	const unsigned int l = a_size(a);
+	const unsigned int s = a_size(a);
 	data *item;
-	for(unsigned int i = 0; i < l; ++i) {
+	for(unsigned int i = 0; i < s; ++i) {
 		item = a_get(a, i);
 		if(f(item))
 			return item;

@@ -95,8 +95,8 @@ extern int a_append(Array*, data*);
 
 
 data *a_drop(Array *a, const unsigned int i) {
-	const unsigned int l = a->size;
-	if(i >= l) {
+	const unsigned int s = a->size;
+	if(i >= s) {
 		errno = ERANGE;
 		return NULL;
 	}
@@ -104,7 +104,7 @@ data *a_drop(Array *a, const unsigned int i) {
 	data *const e = a_set(a, i, NULL);
 
 	/* move the elements to shrink the empty slots */
-	for(unsigned int k = i; k < l - 1; ++k) {
+	for(unsigned int k = i; k < s - 1; ++k) {
 		fa_set(a->items, k, fa_get(a->items, k + 1));
 	}
 	--a->size;
