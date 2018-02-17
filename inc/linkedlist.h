@@ -7,8 +7,15 @@
  *        store elements dynamically.
  *
  * Each element is added on the fly, there is no guarantee that the element will
- * be stored in contiguous space in the memory -- actually, they certainly will
- * not.
+ * be stored in contiguous space in the memory -- they most certainly will
+ * not be, actually.
+ *
+ * The functions \a ll_new, \a ll_get, \a ll_set, \a ll_add, \a ll_append and
+ * \a ll_drop set the variable \a errno to describe their state:
+ * - \c 0 if the execution proceeded nominally,
+ * - \c ENOMEM if a memory allocation process failed (no more memory available),
+ * - \c EINVAL if the value of an argument is invalid for the function,
+ * - \c ERANGE if the argument describing an acces index is invalid.
  */
 
 #ifndef LINKEDLIST_H
@@ -32,10 +39,14 @@ typedef struct llist LinkedList;
 /**
  * \brief Allocates a new linked list.
  *
- * \note No parameters are needed because the memory for the elements will be
- * allocated on the fly upon adding -- that's the very concept of a linked list.
+ * \note The functions sets \a errno to \c ENOMEM if memory for the list could
+ *       not be allocated, in that case the function returns \c NULL.
  *
- * \return A newly allocated linked list.
+ * \note No parameters are needed because the memory for the elements will be
+ *       allocated on the fly upon adding -- that's the very concept of a linked
+ *       list.
+ *
+ * \return A newly allocated linked list, or \c NULL.
  */
 LinkedList *ll_new(void);
 
@@ -51,7 +62,7 @@ LinkedList *ll_new(void);
 void ll_freer(LinkedList *self, void (*freeitem)(data*));
 
 /**
- * \brief Frees a linkedlist, without minding the elements.
+ * \brief Frees a linkedlist, without attempting to deallocate the elements.
  *
  * \param[in,out] self The linked list
  *
@@ -75,6 +86,9 @@ unsigned int ll_len(const LinkedList *self);
 /**
  * \brief Retrieves an element of the linked list by its position.
  *
+ * \note Sets \a errno to \c ERANGE if \a index is greater than, or equal to the
+ *       size of the list, in that case returns \c NULL.
+ *
  * \param[in,out] self  The linked list
  * \param[in]     index The index
  *
@@ -85,6 +99,9 @@ data *ll_get(const LinkedList *self, unsigned int index);
 
 /**
  * \brief Updates an element of the list.
+ *
+ * \note Sets \a errno to \c ERANGE if \a index is invalid; in that case
+ *       returns \c NULL.
  *
  * \param[in,out] self  The linked list
  * \param[in]     index The index where to update the element
@@ -97,8 +114,12 @@ data *ll_set(LinkedList *self, unsigned int index, data *item);
 
 
 /**
- * \brief Inserts an element to the linked list before given \a index (index
- *        starts at \c 0).
+ * \brief Inserts an element to the linked list before given \a index (indices
+ *        start at \c 0).
+ *
+ * \note Sets \a errno to \c ENOMEM if no memory could be allocated for the
+ *       element, or \c ERANGE if \a index is invalid. In these cases, returns
+ *       \c NULL.
  *
  * \param[in,out] self  The linked list
  * \param[in]     index The index where to add the element
@@ -110,6 +131,9 @@ int ll_add(LinkedList *self, unsigned int index, data *item);
 
 /**
  * \brief Appends an element to the end of the linked list.
+ *
+ * \note Sets \a errno to \c ENOMEM if no memory for the element could be
+ *       allocated.
  *
  * \param[in,out] self The linked list
  * \param[in]     item The element to add
@@ -123,6 +147,8 @@ inline int ll_append(LinkedList *self, data *item) {
 
 /**
  * \brief Removes an element of the list.
+ *
+ * \note Sets \a errno to \c ERANGE and returns \c NULL if \a index is invalid.
  *
  * \param[in,out] self  The linked list
  * \param[in]     index The index where to delete the element

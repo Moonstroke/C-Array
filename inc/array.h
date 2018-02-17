@@ -8,6 +8,20 @@
  * The Array type is a dynamic container for any type of elements. It is
  * allocated an initial size, but in the contrary of FixedArray, its size can
  * dynamically increase over time when further elements are added to it.
+ *
+ * The functions \a a_new, \a a_get, \a a_set, \a a_add, \a aappend and
+ * \a a_drop can be in an error state (generally if an argument given is
+ * invalid), and to indicate their status set the variable \a errno (defined in
+ * the standard header \c errno.h, and to be declared as \c extern in the
+ * source).
+ * In these functions, the variable \a errno is assured to be set to \c 0 in the
+ * state of the function is nominal, and a non-zero value otherwise:
+ * - \c ENOMEM, in case of a memory allocation failure (in \a a_new),
+ * - \c EINVAL, in case of an invalid value for an argument (a size of \c 0
+ *   given to \a a_new),
+ * - \c ERANGE, in case of a function argument describing an index to access and
+ *   whose value is out of range (ie. greater than, or equal to the size of the
+ *   array).
  */
 
 #ifndef ARRAY_H
@@ -37,9 +51,13 @@ typedef struct array Array;
 /**
  * \brief Constructs an array with initial capacity of \a size elements.
  *
+ * \note This function sets \a errno to \c ENOMEM if the memory allocation fails
+ *       or \c EINVAL if the given size is invalid (ie. is \c 0).
+ *
  * \param[in] size The number of elements to allocate
  *
- * \return A new instance of \a Array, with \a size elements slots.
+ * \return A new instance of \a Array, with \a size elements slots, or \c NULL
+ *         if an error occurred.
  */
 Array *a_new(unsigned int size);
 
@@ -66,18 +84,20 @@ unsigned int a_size(const Array *self);
  *        \c NULL if the \a index is invalid.
  *
  * \note An index is valid if an only if it is strictly less than the size of
- *       the array.
+ *       the array. If the index is greater than this value, \a errno is set to
+ *       \c ERANGE and \c NULL is returned.
  *
  * \param[in] self  The array
  * \param[in] index The index at which to look for an element
  *
- * \return The \a index 'th element in the array, or \c NULL if the index is
- *         invalid
+ * \return The \a index 'th element in the array, or \c NULL.
  */
 data *a_get(const Array *self, unsigned int index);
 
 /**
  *\brief Replaces an element of the array.
+ *
+ * \note Sets \a errno to \c ERANGE if \a index is invalid.
  *
  * \param[in,out] self    The array
  * \param[in]     index   The index at which to update the element
@@ -92,16 +112,22 @@ data *a_set(Array *self, unsigned int index, data *newitem);
 /**
  * \brief Inserts an element at \a index'th position.
  *
+ * \note This function sets \a errno to \c ENOMEM if the memory allocation fails
+ *       or \c ERANGE if the \a index is strictly greater than the size of the
+ *       array. In these cases, \c -1 i returned.
+ *
  * \param[in,out] self    The array
  * \param[in]     index   The index at which to insert an element
  * \param[in]     newitem The element to add
- * \return The new size of the array or \c -1 if an error occurred (\a index is
- *         invalid, memory allocation failed)
+ * \return The new size of the array or \c -1.
  */
 int a_add(Array *self, unsigned int index, data *newitem);
 
 /**
  * \brief Adds an item to the end of the array.
+ *
+ * \note Sets \a errno to \c ENOMEM if the memory allocation for the new element
+ *       fails.
  *
  * \param[in,out] self The array
  * \param[in]     item The element to append
@@ -117,6 +143,8 @@ inline int a_append(Array *const self, data *const item) {
 
 /**
  * \brief Removes an element from the array.
+ *
+ * \note Sets \a errno to \c ERANGE and returns \c NULL if \a index is invalid.
  *
  * \param[in,out] self  The array
  * \param[in]     index The index of the element to remove

@@ -26,6 +26,8 @@
  * \note If more than one element matches, only the first in the order of the
  *       list is returned.
  *
+ * \note This function sets \a errno to \c EINVAL if the item is not found.
+ *
  * \param[in,out] list    The linked list
  * \param[in]     item    The item to find and remove
  * \param[in]     eq_func The comparison function

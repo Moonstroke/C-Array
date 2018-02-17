@@ -38,7 +38,7 @@ int fa_put(FixedArray *const fa, data *const item) {
 
 
 data *fa_swap(FixedArray *const fa, const unsigned int i, data *const e) {
-	data *const d = fa_get(fa, i);
+	data *const d = fa_get(fa, i); /* this sets errno */
 	if(errno) {
 		return NULL;
 	} else {

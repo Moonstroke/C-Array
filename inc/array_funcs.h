@@ -44,6 +44,8 @@ void a_freer(Array *array, void (*freeitem)(data*));
  * \note If more than one element matches, only the first in the order of the
  *       array is returned.
  *
+ * \note This function sets \a errno to \c EINVAL if the item is not found.
+ *
  * \param[in,out] array   The array
  * \param[in]     item    The value to compare
  * \param[in]     eq_func The function to pass each item and the value
@@ -81,6 +83,10 @@ data *a_cond(const Array *array, bool (*predicate)(const data*));
  *
  * \note The \c static in the declaration of \a elements means that the array
  *       must contain <i>at least</i> \a n elements.
+ *
+ * \note This function sets \a errno to \c EINVAL if \a n is \c 0, and as it
+ *       internally calls \a a_new, it can set \a errno to \c ENOMEM if the
+ *       memory can not be allocated.
  *
  * \param[in] n        The number of elements in the array
  * \param[in] elements The elements to fill the Array with

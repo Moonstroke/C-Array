@@ -67,6 +67,9 @@ int fa_put(FixedArray *farray, data *item);
 /**
  * \brief Replaces an element in the array and returns it.
  *
+ * \note This function internally calls \a fa_get and \a fa_set, so calling it
+ *       with an invalid value of \a index will set \a errno to \c ERANGE.
+ *
  * \param[in,out] farray The fixed array
  * \param[in]     index  The index where to change the values
  * \param[in]     item   The new value to put
@@ -78,6 +81,8 @@ data *fa_swap(FixedArray *farray, unsigned int index, data *item);
 
 /**
  * \brief Unsets an element of the array (ie. set it to \c NULL) and returns it.
+ *
+ * \note This function sets \a errno to \c ERANGE if the index is invalid.
  *
  * \param[in,out] farray The fixed array
  * \param[in]     index  The index of the element
