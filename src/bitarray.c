@@ -49,16 +49,20 @@ bool ba_get(const BitArray *const ba, const unsigned int i) {
 	return false;
 }
 
-bool ba_put(BitArray *const ba, const unsigned int i, const bool v) {
+bool ba_set(BitArray *const ba, const unsigned int i) {
 	const bool b = ba_get(ba, i);
 	if(!errno) {
-		if(v) {
-			ba->data[i / 8] |= 1 << i % 8;
-		} else {
-			ba->data[i / 8] &= ~(1 << i % 8);
-		}
+		ba->data[i / 8] |= 1 << i % 8;
 	}
 	return b;
 }
-extern bool ba_set(BitArray*, unsigned int);
-extern bool ba_unset(BitArray*, unsigned int);
+
+bool ba_unset(BitArray *const ba, const unsigned int i) {
+	const bool b = ba_get(ba, i);
+	if(!errno) {
+		ba->data[i / 8] &= ~(1 << i % 8);
+	}
+	return b;
+}
+
+extern bool ba_put(BitArray*, unsigned int, bool);

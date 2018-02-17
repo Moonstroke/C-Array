@@ -81,47 +81,45 @@ unsigned int ba_size(const BitArray *self);
 bool ba_get(const BitArray *self, unsigned int index);
 
 /**
- * \brief Gives the element at position \a index in the array the given value.
+ * \brief Sets the element at position \a index in the bit array to \c true.
+ *
+ * \note If the index is invalid, this function sets \a errno to \c ERANGE and
+ *       returns \c false.
+ *
+ * \param[in] self The bit array
+ * \param[in] index The index
+ *
+ * \return The former value of the element, or \c false.
+ */
+bool ba_set(BitArray *const self, const unsigned int index);
+
+/**
+ * \brief Sets the element at position \a index in the bit array to \c false.
+ *
+ * \note If the index is invalid, this function sets \a errno to \c ERANGE and
+ *       returns \c false.
+ *
+ * \param[in] self The bit array
+ * \param[in] index The index
+ *
+ * \return The former value of the element, or \c false.
+ */
+bool ba_unset(BitArray *const self, const unsigned int index);
+
+/**
+ * \brief Gives an element of the bit array the given value.
  *
  * \note If the index is invalid, this function sets \a errno to \c ERANGE and
  *       returns \c false.
  *
  * \param[in] self  The bit array
- * \param[in] index The index
+ * \param[in] i     The index
  * \param[in] value The value to give
  *
  * \return The former value of the element, or \c false.
  */
-bool ba_put(BitArray *self, unsigned int index, bool value);
-
-/**
- * \brief Sets an element of the bit array to \c true.
- *
- * \note If the index is invalid, this function sets \a errno to \c ERANGE and
- *       returns \c false.
- *
- * \param[in] self The bit array
- * \param[in] index The index
- *
- * \return The former value of the element, or \c false.
- */
-inline bool ba_set(BitArray *const self, const unsigned int index) {
-	return ba_put(self, index, true);
-}
-
-/**
- * \brief Sets an element of the bit array to \c false.
- *
- * \note If the index is invalid, this function sets \a errno to \c ERANGE and
- *       returns \c false.
- *
- * \param[in] self The bit array
- * \param[in] index The index
- *
- * \return The former value of the element, or \c false.
- */
-inline bool ba_unset(BitArray *const self, const unsigned int index) {
-	return ba_put(self, index, false);
+inline bool ba_put(BitArray *const self, const unsigned int i, const bool v) {
+	return v ? ba_set(self, i) : ba_unset(self, i);
 }
 
 
