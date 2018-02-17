@@ -8,13 +8,13 @@ extern void test_linkedlist(void);
 extern void test_bitarray(void);
 
 int main(void) {
-	info("Launching tests for Array...\n");
-	test_array();
-	info("\nTests for Array ended correctly.\n\n");
-
 	info("Launching tests for FixedArray...\n");
 	test_fixedarray();
 	info("\nTests for FixedArray ended correctly.\n\n");
+
+	info("Launching tests for Array...\n");
+	test_array();
+	info("\nTests for Array ended correctly.\n\n");
 
 	info("Launching tests for LinkedList...\n");
 	test_linkedlist();
