@@ -49,20 +49,20 @@ bool ba_get(const BitArray *const ba, const unsigned int i) {
 	return false;
 }
 
-bool ba_set(BitArray *const ba, const unsigned int i) {
+static inline bool ba_replace(BitArray *const ba, const unsigned int i, const uint8_t v) {
 	const bool b = ba_get(ba, i);
 	if(!errno) {
-		ba->data[i / 8] |= 1 << i % 8;
+		ba->data[i / 8] = v;
 	}
 	return b;
 }
 
+bool ba_set(BitArray *const ba, const unsigned int i) {
+	return ba_replace(ba, i, ba->data[i / 8] | 1 << i % 8);
+}
+
 bool ba_unset(BitArray *const ba, const unsigned int i) {
-	const bool b = ba_get(ba, i);
-	if(!errno) {
-		ba->data[i / 8] &= ~(1 << i % 8);
-	}
-	return b;
+	return ba_replace(ba, i, ba->data[i / 8] & ~(1 << i % 8));
 }
 
 extern bool ba_put(BitArray*, unsigned int, bool);
