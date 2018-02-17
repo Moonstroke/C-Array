@@ -21,7 +21,7 @@ unsigned int fa_count(const FixedArray *const fa) {
 	unsigned int n = 0;
 	for(unsigned int i = 0; i < s; ++i) {
 		if(fa_get(fa, i))
-			n++;
+			++n;
 	}
 	return n;
 }

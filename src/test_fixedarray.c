@@ -139,7 +139,7 @@ static void test_fa_put__invalid(void) {
 static void inc(data *const v) {
 	++*(int*)v;
 }
-static const char inc_repr[] = "(int i) {i++;}";
+static const char inc_repr[] = "(int i) {++i;}";
 static void test_fa_each(void) {
 	const int values_after[] = {2, 43, 7, 34, 28, 10, 56, 701};
 	info("test fa_each");
