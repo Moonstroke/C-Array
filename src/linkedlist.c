@@ -1,7 +1,6 @@
 #include "linkedlist.h"
 
 #include <errno.h> /** errno, ENOMEM, ERANGE */
-#include <stdio.h>
 
 
 
