@@ -1,5 +1,7 @@
 language: c
-compiler: gcc
+compiler:
+   - gcc
+   - clang
 
 
 # Activate builds only for master
