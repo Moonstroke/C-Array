@@ -87,3 +87,6 @@ install: all
 uninstall:
 	rm -f $(patsubst $(INC_DIR)/%,$(INST_DIR)/include/%,$(wildcard $(INC_DIR)/*))
 	rm -f $(INST_DIR)/lib/$(LIB)
+
+get-deps:
+	./install_deps.sh

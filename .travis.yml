@@ -14,8 +14,7 @@ branches:
 sudo: true
 
 install:
-  # Install dependencies from the bash script
-  - sudo ./install_deps.sh
+  - make get-deps
 
 script:
   - make
