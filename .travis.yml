@@ -1,22 +1,22 @@
 language: c
 compiler:
-   - gcc
-   - clang
+  - gcc
+  - clang
 
 
 # Activate builds only for master
 branches:
   only:
-   - master
+    - master
 
 
 # We need to be root to install the dependencies
 sudo: true
 
 install:
- # Install dependencies from the bash script
- - sudo ./install_deps.sh
+  # Install dependencies from the bash script
+  - sudo ./install_deps.sh
 
 script:
- - make
- - make test
+  - make
+  - make test
