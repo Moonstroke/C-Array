@@ -1,6 +1,6 @@
 #include "linkedlist.h"
 
-#include <errno.h> /** errno, ENOMEM, ERANGE */
+#include <errno.h> /** errno, ERANGE */
 
 
 
@@ -23,7 +23,6 @@ struct llist {
 LinkedList *ll_new(void) {
 	LinkedList *const ll = malloc(sizeof(LinkedList));
 	if(!ll) {
-		errno = ENOMEM;
 		return NULL;
 	}
 	ll->len = 0;
@@ -34,7 +33,6 @@ LinkedList *ll_new(void) {
 static inline Node *newnode(data *const d) {
 	Node *const node = malloc(sizeof(Node));
 	if(!node) {
-		errno = ENOMEM;
 		return NULL;
 	}
 	node->value = d;

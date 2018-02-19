@@ -4,7 +4,7 @@
 #include "fixedarray_funcs.h" /* for fa_swap() */
 
 
-#include <errno.h> /* for errno, EINVAL, ENOMEM, ERANGE */
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <log.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -26,7 +26,6 @@ struct array {
 Array *a_new(const unsigned int s) {
 	Array *const a = malloc(sizeof(Array));
 	if(!a) {
-		errno = ENOMEM;
 		return NULL;
 	}
 	a->items = fa_new(s);

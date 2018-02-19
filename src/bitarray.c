@@ -1,6 +1,6 @@
 #include "bitarray.h"
 
-#include <errno.h> /* for errno, EINVAL, ENOMEM, ERANGE */
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for malloc(), free(), and NULL */
 #include <string.h> /* for memset() */
@@ -24,7 +24,6 @@ BitArray *ba_new(const unsigned int s) {
 	}
 	BitArray *const ba = malloc(sizeof(BitArray) + s * sizeof(uint8_t));
 	if(!ba) {
-		errno = ENOMEM;
 		return NULL;
 	}
 	ba->size = s;

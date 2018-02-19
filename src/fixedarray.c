@@ -1,6 +1,6 @@
 #include "fixedarray.h"
 
-#include <errno.h> /* for errno, EINVAL, ENOMEM, ERANGE */
+#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for NULL, malloc(), calloc(), free() */
 #include <string.h> /* for memset() */
@@ -26,7 +26,6 @@ FixedArray *fa_new(const unsigned int s) {
 	FixedArray *const fa = malloc(sizeof(FixedArray) + s * sizeof(data*));
 	if(!fa) {
 		return NULL;
-		errno = ENOMEM;
 	}
 	fa->size = s;
 	memset(fa->items, 0, s);
