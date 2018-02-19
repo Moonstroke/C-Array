@@ -48,7 +48,7 @@ DOC_DIR := doc
 CC := gcc
 
 # Compilation flags
-CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL)
+CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL) -I$(INC_DIR)
 ifeq ($(DEBUG), y)
 	CFLAGS += -g
 endif
@@ -57,7 +57,7 @@ endif
 LDLIBS := -llog
 
 # Linkage flags
-LDFLAGS := -I$(INC_DIR)
+LDFLAGS :=
 
 
 
@@ -77,7 +77,7 @@ $(LIB): $(OBJ)
 # File-wise compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) -c $< -o$@ $(LDFLAGS) $(CFLAGS)
+	$(CC) -c $< -o$@ $(CFLAGS)
 
 
 # Remove compiled files
@@ -98,7 +98,7 @@ docclean:
 
 # Build and launch tests
 test: $(TEST_OBJ) $(OBJ)
-	$(CC) -o$(TEST_EXEC) $^ $(LDLIBS)
+	$(CC) -o$(TEST_EXEC) $^ $(LDLIBS) $(LDFLAGS)
 	./$(TEST_EXEC)
 
 # Remove test build files
