@@ -114,12 +114,12 @@ bool ba_unset(BitArray *const self, const unsigned int index);
  *
  * \param[in] self  The bit array
  * \param[in] i     The index
- * \param[in] value The value to give
+ * \param[in] val   The value to give
  *
  * \return The former value of the element, or \c false.
  */
-inline bool ba_put(BitArray *const self, const unsigned int i, const bool v) {
-	return v ? ba_set(self, i) : ba_unset(self, i);
+inline bool ba_put(BitArray *const self, const unsigned int i, const bool val) {
+	return val ? ba_set(self, i) : ba_unset(self, i);
 }
 
 
