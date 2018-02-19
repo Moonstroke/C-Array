@@ -1,8 +1,8 @@
 # Compilation parameters
 # y/n, debugging
 DEBUG := n
-# 0/s/1/2/3/n, optimisation level at compilation (n => no optimisation)
-OPTIM_LVL := 2
+# 0/s/1/2/3, optimization level at compilation (0 => no optimization)
+OPTIM_LVL := 0
 
 
 # Directories
@@ -37,12 +37,9 @@ INST_DIR := /usr/local
 
 # Compilation flags
 CC := gcc
-CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded
+CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL)
 ifeq ($(DEBUG), y)
 	CFLAGS += -g
-endif
-ifneq ($(OPTIM_LVL), n)
-	CFLAGS += -O$(OPTIM_LVL)
 endif
 LDLIBS := -llog
 LDFLAGS := -I$(INC_DIR)
