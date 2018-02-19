@@ -106,7 +106,7 @@ testclean:
 	rm -rf $(TEST_OBJ) $(TEST_EXEC)
 
 # Install the project for system use
-install: all
+install:
 	cp --update --target-directory=$(INST_DIR)/include $(INC_DIR)/*
 	cp --update --target-directory=$(INST_DIR)/lib $(LIB)
 
