@@ -21,7 +21,7 @@
 
 
 /**
- * \brief Frees the elements of the fixed array wth the provided function.
+ * \brief Frees the elements of the fixed array with the provided function.
  *
  * \note if \a free_item is \c NULL, the elements are not freed.
  *
