@@ -82,19 +82,19 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Remove compiled files
 clean:
-	rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
 
 # Reset the project to its initial state
 distclean: clean docclean testclean
-	rm -rf $(LIB)
+	@rm -rf $(LIB)
 
 # (Re)generate documentation
 doc:
-	$(DOC_PRG) $(DOC_CFG)
+	@$(DOC_PRG) $(DOC_CFG)
 
 # Remove documentation
 docclean:
-	rm -rf $(DOC_DIR)
+	@rm -rf $(DOC_DIR)
 
 # Build and launch tests
 test: $(TEST_OBJ) $(OBJ)
@@ -103,18 +103,18 @@ test: $(TEST_OBJ) $(OBJ)
 
 # Remove test build files
 testclean:
-	rm -rf $(TEST_OBJ) $(TEST_EXEC)
+	@rm -rf $(TEST_OBJ) $(TEST_EXEC)
 
 # Install the project for system use
 install:
-	cp --update --target-directory=$(INST_DIR)/include $(INC_DIR)/*
-	cp --update --target-directory=$(INST_DIR)/lib $(LIB)
+	@cp --update --target-directory=$(INST_DIR)/include $(INC_DIR)/*
+	@cp --update --target-directory=$(INST_DIR)/lib $(LIB)
 
 # Remove the project from the system
 uninstall:
-	rm -f $(patsubst $(INC_DIR)/%,$(INST_DIR)/include/%,$(wildcard $(INC_DIR)/*))
-	rm -f $(INST_DIR)/lib/$(LIB)
+	@rm -f $(patsubst $(INC_DIR)/%,$(INST_DIR)/include/%,$(wildcard $(INC_DIR)/*))
+	@rm -f $(INST_DIR)/lib/$(LIB)
 
 # Install the project dependencies
 get-deps:
-	./install_deps.sh
+	@./install_deps.sh
