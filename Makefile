@@ -57,7 +57,7 @@ endif
 LDLIBS := -llog
 
 # Linkage flags
-LDFLAGS :=
+LDFLAGS := -L.
 
 
 
@@ -97,7 +97,7 @@ docclean:
 	@rm -rf $(DOC_DIR)
 
 # Build and launch tests
-test: $(TEST_OBJ) $(OBJ)
+test: $(TEST_OBJ) $(LIB)
 	$(CC) -o$(TEST_EXEC) $^ $(LDLIBS) $(LDFLAGS)
 	./$(TEST_EXEC)
 
