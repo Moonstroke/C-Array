@@ -18,7 +18,7 @@
 
 /**
  * \brief Removes an element of the linked list, found by comparing each element
- *        with a given value and a speciied comparision function.
+ *        with a given value and a specified comparision function.
  *
  * \note If \a eq_func is \c NULL, the default behaviour is to compare the
  *       addresses of the elements.
