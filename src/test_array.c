@@ -16,7 +16,7 @@ extern int errno;
 static Array *array;
 
 static const unsigned int INT_ARRAY_SIZE = 10;
-static int values[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
+static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
 
 static void init(void) {
@@ -60,9 +60,9 @@ static void test_a_append(void) {
 	data *param;
 	int expected, got;
 	info("test a_append");
-	verbose("values = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
+	verbose("VALUES = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
 	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
-		param = values + index;
+		param = VALUES + index;
 		info("a_append(array, %p)", param);
 		expected = index;
 		verbose("expected: %d", expected);
@@ -91,7 +91,7 @@ static void test_a_get__valid(void) {
 	info("tests a_get -- valid indices");
 	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
 		info("a_get(array, %p)", index);
-		expected = values + index;
+		expected = VALUES + index;
 		verbose("expected: %p", expected);
 		got = a_get(array, index);
 		verbose("got     : %p", got);
@@ -130,7 +130,7 @@ void test_a_set__valid(void) {
 	info("test a_set -- valid indices");
 	index = 2;
 	info("a_set(array, %u, %p)", index, param);
-	expected = values[index];
+	expected = VALUES[index];
 	verbose("expected: %d", expected);
 	got = *(int*)a_set(array, index, param);
 	verbose("got     : %d", got);
@@ -205,7 +205,7 @@ static void test_a_drop__valid(void) {
 	data *expected, *got;
 	info("test a_drop -- valid index");
 	info("a_drop(array, %u)", index);
-	expected = values + index;
+	expected = VALUES + index;
 	verbose("expected: %p", expected);
 	got = a_drop(array, index);
 	verbose("got     : %p", got);
@@ -246,7 +246,7 @@ static void test_a_remove__found(void) {
 	data *expected, *got;
 	info("test a_remove -- item found");
 	info("a_remove(array, %p, %s)", param, eq_as_int_repr);
-	expected = values + 3;
+	expected = VALUES + 3;
 	verbose("expected: %p", expected);
 	got = a_remove(array, param, eq_as_int);
 	verbose("got     : %p", got);
@@ -277,7 +277,7 @@ static const char equals42_repr[] = "(int i) -> (i == 42)";
 static void test_a_cond__found(void) {
 	data *expected, *got;
 	info("test a_cond -- found");
-	expected = values + 1;
+	expected = VALUES + 1;
 	info("a_cond(array, %s)", equals42_repr);
 	verbose("expected: %p", expected);
 	got = a_cond(array, equals42);

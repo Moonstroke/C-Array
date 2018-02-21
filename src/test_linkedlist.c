@@ -16,7 +16,7 @@ extern int errno;
 static LinkedList *llist;
 
 
-static int values[] = {42, 3, 7, 13};
+static int VALUES[] = {42, 3, 7, 13};
 static const unsigned int INT_LINKED_LIST_SIZE = 4;
 
 
@@ -50,7 +50,7 @@ static void test_ll_append(void) {
 	data *param;
 	info("tests ll_append");
 	for(unsigned int n = 0; n < INT_LINKED_LIST_SIZE; ++n) {
-		param = values + n;
+		param = VALUES + n;
 		info("ll_append(llist, %p)", param);
 		expected = n;
 		verbose("expected: %d", expected);
@@ -78,7 +78,7 @@ static void test_ll_get__valid(void) {
 	info("test ll_get -- valid indices");
 	for(unsigned int index = 0; index < INT_LINKED_LIST_SIZE; ++index) {
 		info("ll_get(llist, %u)", index);
-		expected = values + index;
+		expected = VALUES + index;
 		verbose("expected: %d", expected);
 		got = ll_get(llist, index);
 		verbose("got     : %d", got);
@@ -116,7 +116,7 @@ static void test_ll_set__valid(void) {
 	data *expected, *got;
 	info("test ll_set -- valid index");
 	info("ll_set(llist, %u, %p)", index, param);
-	expected = values + index;
+	expected = VALUES + index;
 	verbose("expected: %d", expected);
 	got = ll_set(llist, index, param);
 	verbose("got     : %d", got);
@@ -192,7 +192,7 @@ static void test_ll_drop__valid(void) {
 	const unsigned int index = 0;
 	info("test ll_drop -- valid index");
 	info("ll_drop(llist, %u)", index);
-	expected = values + index;
+	expected = VALUES + index;
 	verbose("expected: %p", expected);
 	got = ll_drop(llist, index);
 	verbose("got     : %p", got);
@@ -233,7 +233,7 @@ static void test_ll_remove__found(void) {
 	data *expected, *got;
 	info("test ll_remove -- item found");
 	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
-	expected = values + 3;
+	expected = VALUES + 3;
 	verbose("expected: %p", expected);
 	got = ll_remove(llist, param, eq_as_int);
 	verbose("got     : %p", got);

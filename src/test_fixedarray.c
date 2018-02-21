@@ -16,7 +16,7 @@ extern int errno;
 static FixedArray *farray;
 
 static const unsigned int INT_FIXED_ARRAY_SIZE = 8;
-static int values[] = {1, 42, 6, 3, 27, 9, 55, 700};
+static int VALUES[] = {1, 42, 6, 3, 27, 9, 55, 700};
 
 /* This value must be declared at global level, because it is used
    in fa_unset AND fa_put */
@@ -69,7 +69,7 @@ static void test_fa_set(void) {
 	data *param;
 	info("test fa_set");
 	for(unsigned int index = 0; index < INT_FIXED_ARRAY_SIZE; ++index) {
-		param = values + index;
+		param = VALUES + index;
 		info("fa_set(farray, %u, %p)", index, param);
 		fa_set(farray, index, param);
 		assert(errno == 0);
@@ -82,7 +82,7 @@ static void test_fa_get(void) {
 	info("test fa_get");
 	for(unsigned int index = 0; index < INT_FIXED_ARRAY_SIZE; ++index) {
 		info("fa_get(farray, %u)", index);
-		expected = values + index;
+		expected = VALUES + index;
 		verbose("expected: %p", expected);
 		got = fa_get(farray, index);
 		verbose("got     : %p", got);
@@ -96,7 +96,7 @@ static void test_fa_unset(void) {
 	data *expected, *got;
 	info("test fa_unset");
 	info("fa_unset(farray, %u)", unset_index);
-	expected = values + unset_index;
+	expected = VALUES + unset_index;
 	verbose("expected: %p", expected);
 	got = fa_unset(farray, unset_index);
 	verbose("got     : %p", got);
@@ -149,7 +149,7 @@ static void test_fa_cond__valid(void) {
 	data *expected, *got;
 	info("test fa_cond -- valid element value: %d", test_val);
 	info("fa_cond(farray, %s, %p)", equal_as_ints_repr, param);
-	expected = values + 6;
+	expected = VALUES + 6;
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
@@ -160,11 +160,11 @@ static void test_fa_cond__valid(void) {
 
 static void test_fa_cond__null(void) {
 	const unsigned int index = 5;
-	data *const param = values + index;
+	data *const param = VALUES + index;
 	data *expected, *got;
 	info("test fa_cond -- NULL as function (compare addresses)");
 	info("fa_cond(farray, (nil), %p)", param);
-	expected = values + index;
+	expected = VALUES + index;
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, NULL, param);
 	verbose("got     :", got);
@@ -193,7 +193,7 @@ static void test_fa_remove__valid(void) {
 	data *expected, *got;
 	info("test fa_remove -- valid element value: %d", test_val);
 	info("fa_remove(farray, %s, %p)", equal_as_ints_repr, param);
-	expected = values + 2;
+	expected = VALUES + 2;
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
@@ -204,11 +204,11 @@ static void test_fa_remove__valid(void) {
 
 static void test_fa_remove__null(void) {
 	const unsigned int index = 5;
-	data *const param = values + index;
+	data *const param = VALUES + index;
 	data *expected, *got;
 	info("test fa_remove -- NULL as function (compare addresses)");
 	info("fa_remove(farray, (nil), %p)", param);
-	expected = values + index;
+	expected = VALUES + index;
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, NULL, param);
 	verbose("got     :", got);
