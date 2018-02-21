@@ -274,7 +274,7 @@ static bool equals42(const data *const e) {
 	return *((int*)e) == 42;
 }
 static const char equals42_repr[] = "(int i) -> (i == 42)";
-static void test_a_cond(void) {
+static void test_a_cond__found(void) {
 	data *expected, *got;
 	info("test a_cond -- found");
 	expected = values + 1;
