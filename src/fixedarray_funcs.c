@@ -9,6 +9,11 @@ extern int errno;
 
 
 
+static bool default_equals(const data *const e1, const data *const e2) {
+	return e1 == e2;
+}
+
+
 void fa_freer(FixedArray *const fa, void (*const f)(data*)) {
 	if(f)
 		fa_clear(fa, f);
@@ -47,6 +52,39 @@ data *fa_swap(FixedArray *const fa, const unsigned int i, data *const e) {
 	}
 }
 extern data *fa_unset(FixedArray*, unsigned int);
+
+
+data *fa_cond(const FixedArray *fa, bool (*f)(const data*, const data*), const data *v) {
+	const unsigned int s = fa_size(fa);
+	data *e;
+	if(!f) {
+		f = default_equals;
+	}
+	for(unsigned int i = 0; i < s; ++i) {
+		e = fa_get(fa, i);
+		if(f(e, v)) {
+			errno = 0;
+			return e;
+		}
+	}
+	errno = EINVAL;
+	return NULL;
+}
+
+data *fa_remove(FixedArray *fa, bool (*f)(const data*, const data*), const data *const v) {
+	const unsigned int s = fa_size(fa);
+	if(!f) {
+		f = default_equals;
+	}
+	for(unsigned int i = 0; i < s; ++i) {
+		if(f(fa_get(fa, i), v)) {
+			errno = 0;
+			return fa_unset(fa, i);
+		}
+	}
+	errno = EINVAL;
+	return NULL;
+}
 
 
 void fa_each(FixedArray *const fa, void (*const f)(data*)) {

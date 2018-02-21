@@ -15,6 +15,7 @@
 
 #include "fixedarray.h"
 
+#include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
 
@@ -92,6 +93,45 @@ data *fa_swap(FixedArray *farray, unsigned int index, data *item);
 inline data *fa_unset(FixedArray *const farray, const unsigned int index) {
 	return fa_swap(farray, index, NULL);
 }
+
+/**
+ * \brief Retrieves an element of the array by comparing it with another value,
+ *        through a given equality function.
+ *
+ * \note If more than one element in the array matches the value, only the first
+ *       (lowest index) is returned.
+ * \note If the function is \c NULL, the default behavior is to compare the
+ *       elements' addresses.
+ * \note If no match is found, \a errno is set to \c EINVAL and \c NULL is
+ *       returned.
+ *
+ *
+ * \param[in] farray  The fixed array
+ * \param[in] eq_func The condition function
+ * \param[in] value   The value to compare to
+ *
+ * \return The first match
+ */
+data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value);
+
+/**
+ * \brief Unsets and return an element from the fixed array that compares equal
+ *        to the given value with the given comparison function.
+ *
+ * \note If more than one element in the array matches the value, only the first
+ *       (lowest index) is returned.
+ * \note If the function is \c NULL, the default behavior is to compare the
+ *       elements' addresses.
+ * \note If no match is found, \a errno is set to \c EINVAL and \c NULL is
+ *       returned.
+ *
+ * \param[in,out] farray  The fixed array
+ * \param[in]     eq_func The equality function
+ * \param[in]     value   The value to compare to
+ *
+ * \return The first element to match the value, or \c NULL.
+ */
+data *fa_remove(FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value);
 
 
 /**
