@@ -1,3 +1,14 @@
+/**
+ * \file "bitarray_funcs.h"
+ * \author joH1
+ * \version 0.1
+ *
+ * \brief Supplementary functions for the BitArray type.
+ *
+ * This file declares more convenience functions to manipulate instances of
+ * \a BitArray.
+ */
+
 #ifndef BITARRAY_FUNCS_H
 #define BITARRAY_FUNCS_H
 
