@@ -251,6 +251,7 @@ static void test_a_remove__found(void) {
 	got = a_remove(array, param, eq_as_int);
 	verbose("got     : %p", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
@@ -282,6 +283,7 @@ static void test_a_cond(void) {
 	got = a_cond(array, equals42);
 	verbose("got     : %p", got);
 	assert(got == expected);
+	assert(errno == 0);
 	info("OK\n");
 }
 
