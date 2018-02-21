@@ -7,7 +7,7 @@ DEBUG := n
 
 # Optimization level at compilation (0 => no optimization)
 # 0..3/s
-OPTIM_LVL := 0
+OPTIM_LVL := 2
 
 
 
