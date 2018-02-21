@@ -89,28 +89,39 @@ data *fa_remove(FixedArray *fa, bool (*f)(const data*, const data*), const data 
 
 void fa_each(FixedArray *const fa, void (*const f)(data*)) {
 	if(f) {
+		errno = 0;
 		const unsigned int s = fa_size(fa);
 		for(unsigned int i = 0; i < s; ++i) {
 			data *const item = fa_get(fa, i);
 			if(item)
 				f(item);
 		}
+	} else {
+		errno = EINVAL;
 	}
 }
 
 void fa_iter(const FixedArray *const fa, void (*const f)(const data*)) {
 	const unsigned int s = fa_size(fa);
-	for(unsigned int i = 0; i < s; ++i)
-		f(fa_get(fa, i));
+	if(f) {
+		errno = 0;
+		for(unsigned int i = 0; i < s; ++i) {
+			f(fa_get(fa, i));
+		}
+	} else {
+		errno = EINVAL;
+	}
 }
 
 
 void fa_clear(FixedArray *const fa, void (*const f)(data*)) {
 	const unsigned int s = fa_size(fa);
-	if(f)
+	if(f) {
 		fa_each(fa, f);
-	for(unsigned int i = 0; i < s; ++i)
+	}
+	for(unsigned int i = 0; i < s; ++i) {
 		fa_unset(fa, i);
+	}
 }
 
 

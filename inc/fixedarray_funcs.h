@@ -135,9 +135,11 @@ data *fa_remove(FixedArray *farray, bool (*eq_func)(const data*, const data*), c
 
 
 /**
- * \brief Applies a function to each element of the array, possibly changing it.
+ * \brief Applies a function to each \e non-\c NULL element of the array,
+ *        possibly changing it.
  *
- * \note If \a apply is \c NULL, the function is a no-op.
+ * \note If \a apply is \c NULL, the function sets \a errno to \c EINVAL and
+ *       returns. Otherwise, \c errno is set to \c 0.
  *
  * \param[in,out] farray The array
  * \param[in]     func   The function to apply
@@ -146,6 +148,9 @@ void fa_each(FixedArray *farray, void (*func)(data*));
 
 /**
  * \brief Iterates over the fixed array, without modifying the elements.
+ *
+ * \note \a errno is set to \c EINVAL when \a func is \c NULL. In that case, the
+ *       function does nothing.
  *
  * \param[in] farray The array
  * \param[in] func   The function to apply

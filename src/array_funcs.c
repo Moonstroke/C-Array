@@ -34,10 +34,13 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 
 void a_each(Array *const a, void (*f)(data*)) {
 	if(f) {
+		errno = 0;
 		const unsigned int s = a_size(a);
 		for(unsigned int i = 0; i < s; ++i) {
 			f(a_get(a, i));
 		}
+	} else {
+		errno = EINVAL;
 	}
 }
 
