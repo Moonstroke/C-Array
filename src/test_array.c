@@ -345,7 +345,7 @@ void test_array(void) {
 
 	test_a_remove__not_found();
 
-	test_a_cond();
+	test_a_cond__found();
 
 	test_a_cond__not_found();
 
