@@ -14,8 +14,11 @@ static bool _equals(const data *const e1, const data *const e2) {
 
 
 void a_freer(Array *a, void(*f)(data*)) {
-	if(f)
+	if(f) {
 		a_each(a, f);
+	} else {
+		errno = EINVAL;
+	}
 	a_free(a);
 }
 

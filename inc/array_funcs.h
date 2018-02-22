@@ -22,12 +22,12 @@
  * \brief Frees an array and its items using given function.
  *
  * If one makes an array of user-defined type, providing a destructor function,
- * this is the place to use it. Cast to \c void(*)(void*) might be necessary to
- * shut up some compilers warnings.
+ * this is the place to use it.
  *
- * \note Function pointers casts usually cause undefined behavior, but if one
- *       knows what he's doing, a cast to \c void* will not cause undefined
- *       behaviour.
+ * \note You might want to cast your function to \c void(*)(void*) to shut up
+ * some compilers warnings.
+ *
+ * \note If \a freeitem is \c NULL, \a errno is set to \c EINVAL.
  *
  * \param[in,out] array    The array to free recursively
  * \param[in]     freeitem The function to use to free each item
