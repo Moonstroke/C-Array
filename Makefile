@@ -44,9 +44,6 @@ DOC_CFG := Doxyfile
 DOC_DIR := doc
 
 
-# The compiler
-CC := gcc
-
 # Compilation flags
 CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL) -I$(INC_DIR)
 ifeq ($(DEBUG), y)
