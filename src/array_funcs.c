@@ -8,18 +8,20 @@
 extern int errno;
 
 
+static bool _equals(const data *const e1, const data *const e2) {
+	return e1 == e2;
+}
+
+
 void a_freer(Array *a, void(*f)(data*)) {
 	if(f)
 		a_each(a, f);
 	a_free(a);
 }
 
-static bool eq_func__default(const data *const e1, const data *const e2) {
-	return e1 == e2;
-}
 data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const data*)) {
 	if(!f) {
-		f = eq_func__default;
+		f = _equals;
 	}
 	const unsigned int s = a_size(a);
 	for(unsigned int i = 0; i < s; ++i) {
@@ -44,14 +46,22 @@ void a_each(Array *const a, void (*f)(data*)) {
 	}
 }
 
-data *a_cond(const Array *a, bool (*f)(const data*)) {
+data *a_cond(const Array *a, const data *const e, bool (*f)(const data*, const data*)) {
 	const unsigned int s = a_size(a);
 	data *item;
+	if(!f) {
+		if(!e) {
+			errno = EINVAL;
+			return NULL;
+		}
+		f = _equals;
+	}
 	for(unsigned int i = 0; i < s; ++i) {
 		item = a_get(a, i);
-		if(f(item))
+		if(f(item, e))
 			return item;
 	}
+	errno = EINVAL;
 	return NULL;
 }
 

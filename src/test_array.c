@@ -18,6 +18,12 @@ static Array *array;
 static const unsigned int INT_ARRAY_SIZE = 10;
 static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
+static bool eq_as_int(const data *const e1, const data *const e2) {
+	assert(e1 != NULL && e2 != NULL);
+	return *(int*)e1 == *(int*)e2;
+}
+static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+
 
 static void init(void) {
 	info("array = a_new(%u)", INT_ARRAY_SIZE);
@@ -235,17 +241,12 @@ static void test_a_drop__invalid(void) {
 	info("OK\n");
 }
 
-static bool eq_as_int(const data *const e1, const data *const e2) {
-	assert(e1 != NULL && e2 != NULL);
-	return *(int*)e1 == *(int*)e2;
-}
-static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
 static void test_a_remove__found(void) {
-	const int value = 13;
+	const int value = VALUES[3];
 	const data *const param = &value;
 	data *expected, *got;
 	info("test a_remove -- item found");
-	info("a_remove(array, %p, %s)", param, eq_as_int_repr);
+	info("a_remove(array, *%d, %s)", value, eq_as_int_repr);
 	expected = VALUES + 3;
 	verbose("expected: %p", expected);
 	got = a_remove(array, param, eq_as_int);
@@ -260,7 +261,7 @@ static void test_a_remove__not_found(void) {
 	const data *const param = &value;
 	data *got;
 	info("test a_remove -- item not found");
-	info("a_remove(array, %p, %s)", param, eq_as_int_repr);
+	info("a_remove(array, *%d, %s)", value, eq_as_int_repr);
 	verbose("expected: (nil)");
 	got = a_remove(array, param, eq_as_int);
 	verbose("got     : %p", got);
@@ -269,35 +270,29 @@ static void test_a_remove__not_found(void) {
 	info("OK\n");
 }
 
-static bool equals42(const data *const e) {
-	assert(e != NULL);
-	return *((int*)e) == 42;
-}
-static const char equals42_repr[] = "(int i) -> (i == 42)";
 static void test_a_cond__found(void) {
+	const int value = VALUES[1];
+	const data *const param = &value;
 	data *expected, *got;
 	info("test a_cond -- found");
 	expected = VALUES + 1;
-	info("a_cond(array, %s)", equals42_repr);
+	info("a_cond(array, *%d, %s)", *(int*)param, eq_as_int_repr);
 	verbose("expected: %p", expected);
-	got = a_cond(array, equals42);
+	got = a_cond(array, param, eq_as_int);
 	verbose("got     : %p", got);
 	assert(got == expected);
 	assert(errno == 0);
 	info("OK\n");
 }
 
-static bool equals1024(const data *const e) {
-	assert(e != NULL);
-	return *((int*)e) == 1024;
-}
-static const char equals1024_repr[] = "(int i) -> (i == 1024)";
 static void test_a_cond__not_found(void) {
+	static int value = 1024;
+	data *const param = &value;
 	data *got;
 	info("test a_cond -- not found");
-	info("a_cond(array, %s)", equals1024_repr);
+	info("a_cond(array, *%d, %s)", value, eq_as_int_repr);
 	verbose("expected: (nil)");
-	got = a_cond(array, equals1024);
+	got = a_cond(array, param, eq_as_int);
 	verbose("got     : %p", got);
 	assert(got == NULL);
 	info("OK\n");
