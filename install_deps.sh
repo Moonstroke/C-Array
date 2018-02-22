@@ -8,7 +8,7 @@ function install_git_repo() (
 	# Build
 	make &&
 	# Install
-	make install &&
+	sudo make install &&
 	echo "Successfully installed \"$1\" from \"$2\""
 )
 
