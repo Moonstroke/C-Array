@@ -21,6 +21,10 @@ void a_freer(Array *a, void(*f)(data*)) {
 
 data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const data*)) {
 	if(!f) {
+		if(!e) {
+			errno = EINVAL;
+			return NULL;
+		}
 		f = _equals;
 	}
 	const unsigned int s = a_size(a);

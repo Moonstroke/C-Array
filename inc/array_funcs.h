@@ -38,21 +38,25 @@ void a_freer(Array *array, void (*freeitem)(data*));
  * \brief Removes an element from the array, found not by index but by comparing
  *        each element with a provided value.
  *
+ * The function compares each element of the array with the given value through
+ * the provided function. The first element, in the order of the array, to match
+ * (the function call returns \c true) is returned, even if there are more
+ * matches after this element.
+ *
  * \note The comparison function can be \c NULL, in which case the default
  *       behaviour is to compare the elements' addresses.
  *
- * \note If more than one element matches, only the first in the order of the
- *       array is returned.
+ * \note This function sets \a errno to \c EINVAL if the element is not found,
+ *       or if both \a value and \a equals are \c NULL, in which case the
+ *       function returns \c NULL immediately.
  *
- * \note This function sets \a errno to \c EINVAL if the item is not found.
+ * \param[in,out] array  The array
+ * \param[in]     value  The value to compare
+ * \param[in] equals The comparator function
  *
- * \param[in,out] array   The array
- * \param[in]     item    The value to compare
- * \param[in]     eq_func The function to pass each item and the value
- *
- * \return The removed element, or \c NULL if none matched.
+ * \return The removed element, or \c NULL.
  */
-data *a_remove(Array *array, const data *item, bool (*eq_func)(const data*, const data*));
+data *a_remove(Array *array, const data *value, bool (*equals)(const data*, const data*));
 
 /**
  * \brief Applies a function to each element.
