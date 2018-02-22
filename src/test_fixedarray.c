@@ -65,9 +65,9 @@ static void test_fa_size(void) {
 	info("OK\n");
 }
 
-static void test_fa_set(void) {
+static void test_fa_set__valid(void) {
 	data *param;
-	info("test fa_set");
+	info("test fa_set -- valid indices");
 	for(unsigned int index = 0; index < INT_FIXED_ARRAY_SIZE; ++index) {
 		param = VALUES + index;
 		info("fa_set(farray, %u, %p)", index, param);
@@ -77,9 +77,30 @@ static void test_fa_set(void) {
 	info("OK\n");
 }
 
-static void test_fa_get(void) {
+static void test_fa_set__invalid(void) {
+	static int extra_value = 7;
+	data *const param = &extra_value;
+	const unsigned int invalid_indices[3] = {
+		INT_FIXED_ARRAY_SIZE,
+		INT_FIXED_ARRAY_SIZE + 1,
+		3 * INT_FIXED_ARRAY_SIZE
+	};
+	unsigned int index;
+	info("test fa_set -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("fa_set(farray, %u, %p)", index, param);
+		verbose("expected errno: %d", ERANGE);
+		fa_set(farray, index, param);
+		verbose("got      errno: %d", errno);
+		assert(errno == ERANGE);
+	}
+	info("OK\n");
+}
+
+static void test_fa_get__valid(void) {
 	data *expected, *got;
-	info("test fa_get");
+	info("test fa_get -- valid indices");
 	for(unsigned int index = 0; index < INT_FIXED_ARRAY_SIZE; ++index) {
 		info("fa_get(farray, %u)", index);
 		expected = VALUES + index;
@@ -92,9 +113,30 @@ static void test_fa_get(void) {
 	info("OK\n");
 }
 
-static void test_fa_unset(void) {
+static void test_fa_get__invalid(void) {
+	const unsigned int invalid_indices[3] = {
+		INT_FIXED_ARRAY_SIZE,
+		INT_FIXED_ARRAY_SIZE + 1,
+		100
+	};
+	data *got;
+	unsigned int index;
+	info("test fa_get -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("fa_get(farray, %u)", index);
+		verbose("expected : (nil)");
+		got = fa_get(farray, index);
+		verbose("got      : %p", got);
+		assert(got == NULL);
+		assert(errno == ERANGE);
+	}
+	info("OK\n");
+}
+
+static void test_fa_unset__valid(void) {
 	data *expected, *got;
-	info("test fa_unset");
+	info("test fa_unset -- valid index");
 	info("fa_unset(farray, %u)", unset_index);
 	expected = VALUES + unset_index;
 	verbose("expected: %p", expected);
@@ -102,6 +144,27 @@ static void test_fa_unset(void) {
 	verbose("got     : %p", got);
 	assert(got == expected);
 	assert(errno == 0);
+	info("OK\n");
+}
+
+static void test_fa_unset__invalid(void) {
+	const unsigned int invalid_indices[3] = {
+		INT_FIXED_ARRAY_SIZE,
+		INT_FIXED_ARRAY_SIZE + 1,
+		43
+	};
+	data *got;
+	unsigned int index;
+	info("test fa_unset -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("fa_unset(farray, %u)", index);
+		verbose("expected : (nil)");
+		got = fa_unset(farray, index);
+		verbose("got      : %p", got);
+		assert(got == NULL);
+		assert(errno == ERANGE);
+	}
 	info("OK\n");
 }
 
@@ -264,14 +327,19 @@ void test_fixedarray(void) {
 
 	test_fa_size();
 
-	test_fa_set();
+	test_fa_set__valid();
 	fa_printf(farray, print_as_int);
 
-	test_fa_get();
+	test_fa_set__invalid();
 
+	test_fa_get__valid();
 
-	test_fa_unset();
+	test_fa_get__invalid();
+
+	test_fa_unset__valid();
 	fa_printf(farray, print_as_int);
+
+	test_fa_unset__invalid();
 
 	test_fa_count();
 
