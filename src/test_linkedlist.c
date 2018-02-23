@@ -19,6 +19,13 @@ static LinkedList *llist;
 static int VALUES[] = {42, 3, 7, 13};
 static const unsigned int INT_LINKED_LIST_SIZE = 4;
 
+static bool eq_as_int(const data *const e1, const data *const e2) {
+	assert(e1 != NULL && e2 != NULL);
+	return *(int*)e1 == *(int*)e2;
+}
+static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+
+
 
 static void init(void) {
 	info("llist = ll_new(%u)", INT_LINKED_LIST_SIZE);
@@ -222,11 +229,34 @@ static void test_ll_drop__invalid(void) {
 	info("OK\n");
 }
 
-static bool eq_as_int(const data *const e1, const data *const e2) {
-	assert(e1 != NULL && e2 != NULL);
-	return *(int*)e1 == *(int*)e2;
+static void test_ll_cond__found(void) {
+	const int value = VALUES[1];
+	const data *const param = &value;
+	data *expected, *got;
+	info("test ll_cond -- found");
+	expected = VALUES + 1;
+	info("ll_cond(array, *%d, %s)", *(int*)param, eq_as_int_repr);
+	verbose("expected: %p", expected);
+	got = ll_cond(llist, param, eq_as_int);
+	verbose("got     : %p", got);
+	assert(got == expected);
+	assert(errno == 0);
+	info("OK\n");
 }
-static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+
+static void test_ll_cond__not_found(void) {
+	static int value = 1024;
+	data *const param = &value;
+	data *got;
+	info("test ll_cond -- not found");
+	info("ll_cond(array, *%d, %s)", value, eq_as_int_repr);
+	verbose("expected: (nil)");
+	got = ll_cond(llist, param, eq_as_int);
+	verbose("got     : %p", got);
+	assert(got == NULL);
+	info("OK\n");
+}
+
 static void test_ll_remove__found(void) {
 	const int value = 13;
 	const data *const param = &value;
@@ -292,6 +322,10 @@ void test_linkedlist(void) {
 	ll_printf(llist, print_as_int);
 
 	test_ll_drop__invalid();
+
+	test_ll_cond__found();
+
+	test_ll_cond__not_found();
 
 	ll_printf(llist, print_as_int);
 	test_ll_remove__found();

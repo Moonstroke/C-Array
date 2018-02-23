@@ -17,6 +17,28 @@
 
 
 /**
+* \brief Retrieves an element of the linked list that compares equal to a value
+*        through given comparison function.
+*
+* Each element of the list is passed to the comparator function along with the
+* value, the first element that returns \c true is then returned.
+*
+* \note If \a equals is \c NULL, the elements' addresses are compared.
+*
+* \note It is safe to pass \a value as \c NULL, as long as \a equals is not
+*       \c NULL in the same time; in that case, \a errno is set to \c EINVAL
+*       and the function returns \c NULL immediately.
+*
+* \param[in] list The linked list
+* \param[in] value The value to check against
+* \param[in] equals The comparator function
+*
+* \return The first element to satisfy the condition, or \c NULL.
+ */
+ data *ll_cond(const LinkedList *list, const data *value, bool (*equals)(const data*, const data*));
+
+
+/**
  * \brief Removes an element of the linked list, found by comparing each element
  *        with a given value and a specified comparision function.
  *
@@ -47,18 +69,6 @@ data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*,
  * \param[in]     apply The function to apply
  */
 void ll_each(LinkedList *list, void (*apply)(data*));
-
-
-/**
- * \brief Retrieve the first item in the linked list to match a given
- *        predicate.
- *
- * \param[in] list The linked list
- * \param[in] pred The predicate function to apply
- *
- * \return The first matching element, or \c NULL if none was found.
- */
-data *ll_cond(const LinkedList *list, bool (*pred)(const data*));
 
 
 /**
