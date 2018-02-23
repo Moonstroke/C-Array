@@ -1,21 +1,27 @@
 #include "linkedlist_funcs.h"
 
 #include <errno.h> /* for errno, EINVAL */
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h> /* for printf */
+#include <stdlib.h> /* for NULL */
 
 
 
 extern int errno;
 
 
-
-static bool eq_func__default(const data *const e1, const data* const e2) {
+static bool _equals(const data *const e1, const data* const e2) {
 	return e1 == e2;
 }
+
+static void _printitem(const data *const e) {
+	printf("%p", e);
+}
+
+
+
 data *ll_remove(LinkedList *const ll, const data *const e, bool (*f)(const data*, const data*)) {
 	if(!f) {
-		f = eq_func__default;
+		f = _equals;
 	}
 	const unsigned int s = ll_len(ll);
 	for(unsigned int i = 0; i < s; ++i) {
@@ -49,14 +55,10 @@ data *ll_cond(const LinkedList *const ll, bool (*const f)(const data*)) {
 }
 
 
-static void printitem_default(const data *item) {
-	printf("%p", item);
-}
-
 void ll_printf(const LinkedList *const ll, void (*f)(const data*)) {
 	printf("(");
 	if(!f)
-		f = printitem_default;
+		f = _printitem;
 	if(ll_len(ll) > 0)
 		f(ll_get(ll, 0));
 	data *item;
