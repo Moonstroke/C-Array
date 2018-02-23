@@ -288,15 +288,15 @@ void test_linkedlist(void) {
 
 	test_ll_add__invalid();
 
-	ll_printf(llist, print_as_int);
-	test_ll_remove__found();
-
-	test_ll_remove__not_found();
-
 	test_ll_drop__valid();
 	ll_printf(llist, print_as_int);
 
 	test_ll_drop__invalid();
+
+	ll_printf(llist, print_as_int);
+	test_ll_remove__found();
+
+	test_ll_remove__not_found();
 
 	cleanup();
 }
