@@ -91,7 +91,7 @@ bool ba_get(const BitArray *self, unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-bool ba_set(BitArray *const self, const unsigned int index);
+bool ba_set(BitArray *self, unsigned int index);
 
 /**
  * \brief Sets the element at position \a index in the bit array to \c false.
@@ -104,7 +104,7 @@ bool ba_set(BitArray *const self, const unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-bool ba_unset(BitArray *const self, const unsigned int index);
+bool ba_unset(BitArray *self, unsigned int index);
 
 /**
  * \brief Gives an element of the bit array the given value.
