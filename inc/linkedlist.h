@@ -24,6 +24,8 @@
 
 #include <stdlib.h> /* for NULL */
 
+#include "arrays.h" /* for function attrs */
+
 
 
 typedef void data; /**< A more eloquent name for the type of the elements */
@@ -48,7 +50,7 @@ typedef struct llist LinkedList;
  *
  * \return A newly allocated linked list, or \c NULL.
  */
-LinkedList *ll_new(void);
+CTOR LinkedList *ll_new(void);
 
 /**
  * \brief Frees a linked list, frees its items with given function, if not
@@ -59,7 +61,7 @@ LinkedList *ll_new(void);
  *
  * \note Accessing the list after freeing will result in undefined behaviour.
  */
-void ll_freer(LinkedList *self, void (*freeitem)(data*));
+MEMBER void ll_freer(LinkedList *self, void (*freeitem)(data*));
 
 /**
  * \brief Frees a linkedlist, without attempting to deallocate the elements.
@@ -68,7 +70,7 @@ void ll_freer(LinkedList *self, void (*freeitem)(data*));
  *
  * \sa ll_freer
  */
-inline void ll_free(LinkedList *const self) {
+MEMBER INLINE void ll_free(LinkedList *const self) {
 	ll_freer(self, NULL);
 }
 
@@ -80,7 +82,7 @@ inline void ll_free(LinkedList *const self) {
  *
  * \return The number of elements in the list.
  */
-unsigned int ll_len(const LinkedList *self);
+MEMBER unsigned int ll_len(const LinkedList *self) PURE;
 
 
 /**
@@ -95,7 +97,7 @@ unsigned int ll_len(const LinkedList *self);
  * \return The \a index 'th element in the list, or \c NULL if the index is
  *         invalid.
  */
-data *ll_get(const LinkedList *self, unsigned int index);
+MEMBER data *ll_get(const LinkedList *self, unsigned int index) PURE;
 
 /**
  * \brief Updates an element of the list.
@@ -110,7 +112,7 @@ data *ll_get(const LinkedList *self, unsigned int index);
  * \return The former element at \a index 'th position, or \c NULL if the index
  *         is invalid.
  */
-data *ll_set(LinkedList *self, unsigned int index, data *item);
+MEMBER data *ll_set(LinkedList *self, unsigned int index, data *item) NOTNULL(3);
 
 
 /**
@@ -127,7 +129,7 @@ data *ll_set(LinkedList *self, unsigned int index, data *item);
  * \return The index of the element, or \c -1 in case of error: memory
  *         allocation failed, or the \a index is invalid.
  */
-int ll_add(LinkedList *self, unsigned int index, data *item);
+MEMBER int ll_add(LinkedList *self, unsigned int index, data *item) NOTNULL(3);
 
 /**
  * \brief Appends an element to the end of the linked list.
@@ -140,7 +142,7 @@ int ll_add(LinkedList *self, unsigned int index, data *item);
  *
  * \return The index of the element, or \c -1 on error.
  */
-inline int ll_append(LinkedList *self, data *item) {
+MEMBER INLINE NOTNULL(2) int ll_append(LinkedList *self, data *item) {
 	return ll_add(self, ll_len(self), item);
 }
 
@@ -156,7 +158,7 @@ inline int ll_append(LinkedList *self, data *item) {
  * \return The removed element, of NULL if no element was removed (\a i.e.
  *         \a index has an invalid value).
  */
-data *ll_drop(LinkedList *self, unsigned int index);
+MEMBER data *ll_drop(LinkedList *self, unsigned int index);
 
 
 #endif /* LINKEDLIST_H */

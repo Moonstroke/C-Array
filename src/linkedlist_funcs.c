@@ -56,14 +56,9 @@ data *ll_remove(LinkedList *const ll, const data *const e, bool (*f)(const data*
 
 
 void ll_each(LinkedList *const ll, void (*const f)(data*)) {
-	if(f) {
-		errno = 0;
-		data *item;
-		for(unsigned int i = 0; (item = ll_get(ll, i)); ++i) {
-			f(item);
-		}
-	} else {
-		errno = EINVAL;
+	data *item;
+	for(unsigned int i = 0; (item = ll_get(ll, i)); ++i) {
+		f(item);
 	}
 }
 

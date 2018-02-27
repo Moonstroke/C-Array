@@ -29,6 +29,8 @@
 
 #include <stdbool.h>
 
+#include "arrays.h" /* for function attrs */
+
 
 
 /**
@@ -47,14 +49,14 @@ typedef struct bitarray BitArray;
  *
  * \return A pointer to a bit array of \a size elements, or \c NULL.
  */
-BitArray *ba_new(unsigned int size);
+CTOR BitArray *ba_new(unsigned int size);
 
 /**
  * \brief Releases memory used by the bit array.
  *
  * \param[in] self The bit array to free
  */
-void ba_free(BitArray *self);
+MEMBER void ba_free(BitArray *self);
 
 
 /**
@@ -64,7 +66,7 @@ void ba_free(BitArray *self);
  *
  * \return The size of the bit array.
  */
-unsigned int ba_size(const BitArray *self);
+MEMBER unsigned int ba_size(const BitArray *self) PURE;
 
 
 /**
@@ -78,7 +80,7 @@ unsigned int ba_size(const BitArray *self);
  *
  * \return The value in the array, at index \a index.
  */
-bool ba_get(const BitArray *self, unsigned int index);
+MEMBER bool ba_get(const BitArray *self, unsigned int index) PURE;
 
 /**
  * \brief Sets the element at position \a index in the bit array to \c true.
@@ -91,7 +93,7 @@ bool ba_get(const BitArray *self, unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-bool ba_set(BitArray *self, unsigned int index);
+MEMBER bool ba_set(BitArray *const self, const unsigned int index);
 
 /**
  * \brief Sets the element at position \a index in the bit array to \c false.
@@ -104,7 +106,7 @@ bool ba_set(BitArray *self, unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-bool ba_unset(BitArray *self, unsigned int index);
+MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
 
 /**
  * \brief Gives an element of the bit array the given value.
@@ -118,7 +120,7 @@ bool ba_unset(BitArray *self, unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-inline bool ba_put(BitArray *const self, const unsigned int i, const bool val) {
+MEMBER INLINE bool ba_put(BitArray *const self, const unsigned int i, const bool val) {
 	return val ? ba_set(self, i) : ba_unset(self, i);
 }
 

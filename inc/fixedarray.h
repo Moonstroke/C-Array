@@ -29,6 +29,10 @@
 #define FIXEDARRAY_H
 
 
+#include "arrays.h" /* for function attrs */
+
+
+
 /**
  * \brief An explicit redefinition of the type contained in the array.
 */
@@ -48,14 +52,14 @@ typedef struct fixedarray FixedArray;
  *
  * \return A new instance of FixedArray of given size
  */
-FixedArray *fa_new(unsigned int size);
+CTOR FixedArray *fa_new(unsigned int size);
 
 /**
  * \brief Deallocates a fixed array.
 *
 * \param[in,out] self The fixed array to free
 */
-void fa_free(FixedArray *self);
+MEMBER void fa_free(FixedArray *self);
 
 
 /**
@@ -65,7 +69,7 @@ void fa_free(FixedArray *self);
  *
  * \return The size of the fixed array
  */
-unsigned int fa_size(const FixedArray *self);
+MEMBER unsigned int fa_size(const FixedArray *self) PURE;
 
 
 /**
@@ -81,7 +85,7 @@ unsigned int fa_size(const FixedArray *self);
  *
  * \return The element at given index, or \c NULL if the index is invalid
  */
-data *fa_get(const FixedArray *self, unsigned int index);
+MEMBER data *fa_get(const FixedArray *self, unsigned int index) PURE;
 
 /**
  * \brief Overwrites an element of the fixed array.
@@ -90,7 +94,7 @@ data *fa_get(const FixedArray *self, unsigned int index);
  * \param[in]     index   The index at which to set the element
  * \param[in]     element The value to set
  */
-void fa_set(FixedArray *self, unsigned int index, data *element);
+MEMBER void fa_set(FixedArray *self, unsigned int index, data *element);
 
 
 # endif /* FIXEDARRAY_H */

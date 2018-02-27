@@ -13,12 +13,8 @@ static bool _equals(const data *const e1, const data *const e2) {
 }
 
 
-void a_freer(Array *a, void(*f)(data*)) {
-	if(f) {
-		a_each(a, f);
-	} else {
-		errno = EINVAL;
-	}
+void a_freer(Array *a, void (*const f)(data*)) {
+	a_each(a, f);
 	a_free(a);
 }
 
@@ -42,14 +38,9 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 }
 
 void a_each(Array *const a, void (*f)(data*)) {
-	if(f) {
-		errno = 0;
-		const unsigned int s = a_size(a);
-		for(unsigned int i = 0; i < s; ++i) {
-			f(a_get(a, i));
-		}
-	} else {
-		errno = EINVAL;
+	const unsigned int s = a_size(a);
+	for(unsigned int i = 0; i < s; ++i) {
+		f(a_get(a, i));
 	}
 }
 

@@ -14,6 +14,7 @@
 
 #include <stdbool.h>
 
+#include "arrays.h" /* for function attrs */
 #include "array.h"
 
 
@@ -27,12 +28,10 @@
  * \note You might want to cast your function to \c void(*)(void*) to shut up
  * some compilers warnings.
  *
- * \note If \a freeitem is \c NULL, \a errno is set to \c EINVAL.
- *
  * \param[in,out] array    The array to free recursively
  * \param[in]     freeitem The function to use to free each item
  */
-void a_freer(Array *array, void (*freeitem)(data*));
+MEMBER void a_freer(Array *array, void (*freeitem)(data*)) NOTNULL(2);
 
 /**
  * \brief Removes an element from the array, found not by index but by comparing
@@ -56,18 +55,15 @@ void a_freer(Array *array, void (*freeitem)(data*));
  *
  * \return The removed element, or \c NULL.
  */
-data *a_remove(Array *array, const data *value, bool (*equals)(const data*, const data*));
+MEMBER data *a_remove(Array *array, const data *value, bool (*equals)(const data*, const data*));
 
 /**
  * \brief Applies a function to each element.
  *
- * \note If \a apply is \c NULL, the function sets \a errno to \c EINVAL and
- *       returns. Otherwise, \c errno is set to \c 0.
- *
  * \param[in,out] array The array to iterate over
  * \param[in]     apply The function to apply to each element
  */
-void a_each(Array *array, void (*apply)(data*));
+MEMBER void a_each(Array *array, void (*apply)(data*)) NOTNULL(2);
 
 /**
  * \brief Retrieves an element of the array that compares equal to a value
@@ -88,7 +84,7 @@ void a_each(Array *array, void (*apply)(data*));
  *
  * \return The first element to satisfy the condition, or \c NULL.
  */
-data *a_cond(const Array *array, const data *value, bool (*equals)(const data*, const data*));
+MEMBER data *a_cond(const Array *array, const data *value, bool (*equals)(const data*, const data*));
 
 
 /**
@@ -107,7 +103,7 @@ data *a_cond(const Array *array, const data *value, bool (*equals)(const data*, 
  * \return An \a Array filled with the given items, or \c NULL if an error
  *         occured, or \a n equals \c 0.
  */
-Array *a_make(unsigned int n, data *const elements[static n]);
+CTOR Array *a_make(unsigned int n, data *const elements[static n]);
 
 
 /**
@@ -126,7 +122,7 @@ Array *a_make(unsigned int n, data *const elements[static n]);
  * \param[in,out] array     The array
  * \param[in]     printitem The function to print each element with
  */
-void a_printf(const Array *array, void (*printitem)(const data*));
+MEMBER void a_printf(const Array *array, void (*printitem)(const data*));
 
 
 #endif /* ARRAY_FUNCS_H */

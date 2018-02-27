@@ -10,9 +10,11 @@
 #ifndef LINKEDLIST_FUNCS_H
 #define LINKEDLIST_FUNCS_H
 
-#include "linkedlist.h"
 
 #include <stdbool.h>
+
+#include "arrays.h" /* for function attrs */
+#include "linkedlist.h"
 
 
 
@@ -35,7 +37,7 @@
 *
 * \return The first element to satisfy the condition, or \c NULL.
  */
- data *ll_cond(const LinkedList *list, const data *value, bool (*equals)(const data*, const data*));
+MEMBER data *ll_cond(const LinkedList *list, const data *value, bool (*equals)(const data*, const data*)) PURE;
 
 
 /**
@@ -56,19 +58,16 @@
  *
  * \return The removed element, or \c NULL if none matched.
  */
-data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*, const data*));
+MEMBER data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*, const data*));
 
 
 /**
  * \brief Applies a function to each element of the structure.
  *
- * \note If \a apply is \c NULL, the function sets \a errno to \c EINVAL and
- *       returns. Otherwise, \c errno is set to \c 0.
- *
  * \param[in,out] list  The linked list
  * \param[in]     apply The function to apply
  */
-void ll_each(LinkedList *list, void (*apply)(data*));
+MEMBER void ll_each(LinkedList *list, void (*apply)(data*)) NOTNULL(2);
 
 
 /**
@@ -86,7 +85,7 @@ void ll_each(LinkedList *list, void (*apply)(data*));
  * output will be:
  * \verbatim (42.3, 6.0, 19.5) \endverbatim
  */
-void ll_printf(const LinkedList *list, void (*printitem)(const data*));
+MEMBER void ll_printf(const LinkedList *list, void (*printitem)(const data*));
 
 
 #endif /* LINKEDLIST_FUNCS_H */

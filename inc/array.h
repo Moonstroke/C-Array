@@ -28,6 +28,9 @@
 #define ARRAY_H
 
 
+#include "arrays.h" /* for function attrs */
+
+
 
 typedef void data; /**< A more eloquent name for the type of the elements */
 
@@ -59,14 +62,14 @@ typedef struct array Array;
  * \return A new instance of \a Array, with \a size elements slots, or \c NULL
  *         if an error occurred.
  */
-Array *a_new(unsigned int size);
+CTOR Array *a_new(unsigned int size);
 
 /**
  * \brief Deallocates an array.
  *
  * \param[in,out] self The array to free
  */
-void a_free(Array *self);
+MEMBER void a_free(Array *self);
 
 
 /**
@@ -76,7 +79,7 @@ void a_free(Array *self);
  *
  * \return The number of elements in the array
  */
-unsigned int a_size(const Array *self);
+MEMBER unsigned int a_size(const Array *self) PURE;
 
 
 /**
@@ -92,7 +95,7 @@ unsigned int a_size(const Array *self);
  *
  * \return The \a index 'th element in the array, or \c NULL.
  */
-data *a_get(const Array *self, unsigned int index);
+MEMBER data *a_get(const Array *self, unsigned int index) PURE;
 
 /**
  *\brief Replaces an element of the array.
@@ -106,7 +109,7 @@ data *a_get(const Array *self, unsigned int index);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-data *a_set(Array *self, unsigned int index, data *newitem);
+MEMBER data *a_set(Array *self, unsigned int index, data *newitem);
 
 
 /**
@@ -121,7 +124,7 @@ data *a_set(Array *self, unsigned int index, data *newitem);
  * \param[in]     newitem The element to add
  * \return The new size of the array or \c -1.
  */
-int a_add(Array *self, unsigned int index, data *newitem);
+MEMBER int a_add(Array *self, unsigned int index, data *newitem) NOTNULL(3);
 
 /**
  * \brief Adds an item to the end of the array.
@@ -136,7 +139,7 @@ int a_add(Array *self, unsigned int index, data *newitem);
  *
  * \sa a_add
  */
-inline int a_append(Array *const self, data *const item) {
+MEMBER INLINE NOTNULL(2) int a_append(Array *self, data *item) {
 	return a_add(self, a_size(self), item);
 }
 
@@ -152,6 +155,6 @@ inline int a_append(Array *const self, data *const item) {
  * \return The element just removed, or \c NULL if an error occurred (\a index
  *         is invalid).
  */
-data *a_drop(Array *self, unsigned int index);
+MEMBER data *a_drop(Array *self, unsigned int index);
 
 #endif /* ARRAY_H */

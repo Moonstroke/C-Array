@@ -13,6 +13,7 @@
 #define BITARRAY_FUNCS_H
 
 
+#include "arrays.h" /* for function attrs */
 #include "bitarray.h"
 
 
@@ -25,7 +26,7 @@
  *
  * \return The number of elements set to \c true in the bit array.
  */
-unsigned int ba_count(const BitArray *array);
+MEMBER unsigned int ba_count(const BitArray *array) PURE;
 
 
 /**
@@ -36,7 +37,7 @@ unsigned int ba_count(const BitArray *array);
  *
  * \param[in] array The bit array
  */
-void ba_printf(const BitArray *array);
+MEMBER void ba_printf(const BitArray *array);
 
 
 #endif /* BITARRAY_FUNCS_H */

@@ -13,10 +13,11 @@
 #define FIXEDARRAY_FUNCS_H
 
 
-#include "fixedarray.h"
-
 #include <stdbool.h>
 #include <stdlib.h> /* for NULL */
+
+#include "arrays.h" /* for function attrs */
+#include "fixedarray.h"
 
 
 
@@ -28,7 +29,7 @@
  * \param[in,out] farray    The fixed array
  * \param[in]     free_item The function to free each item with
  */
-void fa_freer(FixedArray *farray, void (*free_item)(data*));
+MEMBER void fa_freer(FixedArray *farray, void (*free_item)(data*)) NOTNULL(2);
 
 /**
  * \brief Clears the elements of the array (unset all), optionally freeing the
@@ -39,7 +40,7 @@ void fa_freer(FixedArray *farray, void (*free_item)(data*));
  * \param[in,out] farray    The fixed array
  * \param[in]     free_item The function to free the items
  */
-void fa_clear(FixedArray *farray, void (*free_item)(data*));
+MEMBER void fa_clear(FixedArray *farray, void (*free_item)(data*));
 
 
 /**
@@ -49,7 +50,7 @@ void fa_clear(FixedArray *farray, void (*free_item)(data*));
  *
  * \return The number of elements that are not \c NULL.
  */
-unsigned int fa_count(const FixedArray *farray);
+MEMBER unsigned int fa_count(const FixedArray *farray) PURE;
 
 
 /**
@@ -62,7 +63,7 @@ unsigned int fa_count(const FixedArray *farray);
  * \return The index where the element was put, or \c -1 i the element could not
  *         be placed.
  */
-int fa_put(FixedArray *farray, data *item);
+MEMBER int fa_put(FixedArray *farray, data *item) NOTNULL(2);
 
 
 /**
@@ -78,7 +79,7 @@ int fa_put(FixedArray *farray, data *item);
  * \return The former element of the array at given index, or \c NULL if the
  *         provided index is invalid.
  */
-data *fa_swap(FixedArray *farray, unsigned int index, data *item);
+MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item);
 
 /**
  * \brief Unsets an element of the array (ie. set it to \c NULL) and returns it.
@@ -90,7 +91,7 @@ data *fa_swap(FixedArray *farray, unsigned int index, data *item);
  *
  * \return The element just unset, or \c NULL if the index is invalid.
  */
-inline data *fa_unset(FixedArray *const farray, const unsigned int index) {
+MEMBER INLINE data *fa_unset(FixedArray *const farray, const unsigned int index) {
 	return fa_swap(farray, index, NULL);
 }
 
@@ -112,7 +113,7 @@ inline data *fa_unset(FixedArray *const farray, const unsigned int index) {
  *
  * \return The first match
  */
-data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value);
+MEMBER data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value) PURE;
 
 /**
  * \brief Unsets and return an element from the fixed array that compares equal
@@ -131,31 +132,25 @@ data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*
  *
  * \return The first element to match the value, or \c NULL.
  */
-data *fa_remove(FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value);
+MEMBER data *fa_remove(FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value);
 
 
 /**
  * \brief Applies a function to each \e non-\c NULL element of the array,
  *        possibly changing it.
  *
- * \note If \a apply is \c NULL, the function sets \a errno to \c EINVAL and
- *       returns. Otherwise, \c errno is set to \c 0.
- *
  * \param[in,out] farray The array
  * \param[in]     func   The function to apply
  */
-void fa_each(FixedArray *farray, void (*func)(data*));
+MEMBER void fa_each(FixedArray *farray, void (*func)(data*)) NOTNULL(2);
 
 /**
  * \brief Iterates over the fixed array, without modifying the elements.
  *
- * \note \a errno is set to \c EINVAL when \a func is \c NULL. In that case, the
- *       function does nothing.
- *
  * \param[in] farray The array
  * \param[in] func   The function to apply
  */
-void fa_iter(const FixedArray *farray, void (*func)(const data*));
+MEMBER void fa_iter(const FixedArray *farray, void (*func)(const data*)) NOTNULL(2);
 
 
 /**
@@ -174,7 +169,7 @@ void fa_iter(const FixedArray *farray, void (*func)(const data*));
  * \param[in] farray     The array
  * \param[in] print_item The function used to print each element
  */
-void fa_printf(const FixedArray *farray, void (*print_item)(const data*));
+MEMBER void fa_printf(const FixedArray *farray, void (*print_item)(const data*));
 
 
 #endif /* FIXEDARRAY_FUNCS_H */
