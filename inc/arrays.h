@@ -14,6 +14,12 @@
 
 
 
+/**
+ * \brief Explicit redefinition of the type contained in one of the structures.
+*/
+typedef void data;
+
+
 #ifdef __GNUC__
 
 # define LIKELY(cond)   __builtin_expect((cond), 1)

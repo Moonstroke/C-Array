@@ -14,7 +14,7 @@
 
 #include <stdbool.h>
 
-#include "arrays.h" /* for function attrs */
+#include "arrays.h" /* for function attrs, data */
 #include "array.h"
 
 

@@ -28,11 +28,8 @@
 #define ARRAY_H
 
 
-#include "arrays.h" /* for function attrs */
+#include "arrays.h" /* for function attrs, data */
 
-
-
-typedef void data; /**< A more eloquent name for the type of the elements */
 
 
 /**
