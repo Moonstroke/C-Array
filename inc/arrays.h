@@ -116,4 +116,22 @@ typedef void data;
 #define MEMBER NOTNULL(1)
 
 
+#if !defined(FIXEDARRAY_H) && !defined(FIXEDARRAY_FUNCS_H) \
+    && !defined(ARRAY_H) && !defined(ARRAY_FUNCS_H) \
+    && !defined(LINKEDLIST_H) && !defined(LINKEDLIST_FUNCS_H) \
+    && !defined(BITARRAY_H) && !defined(BITARRAY_FUNCS_H)
+
+/* The file has been included directly: use it as the project's main interface */
+
+#include "array.h"
+#include "array_funcs.h"
+#include "bitarray.h"
+#include "bitarray_funcs.h"
+#include "fixedarray.h"
+#include "fixedarray_funcs.h"
+#include "linkedlist.h"
+#include "linkedlist_funcs.h"
+
+#endif /* main project file */
+
 #endif /* ARRAYS_H */
