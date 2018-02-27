@@ -55,7 +55,7 @@ MEMBER unsigned int fa_count(const FixedArray *farray) PURE;
 
 /**
  * \brief Places an item into the array in the first available slot (ie. the
- *        first non-\c NULL element).
+ *        first \c NULL element).
  *
  * \param[in,out] farray The fixed array
  * \param[in]     item   The item to place
