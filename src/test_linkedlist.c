@@ -86,9 +86,9 @@ static void test_ll_get__valid(void) {
 	for(unsigned int index = 0; index < INT_LINKED_LIST_SIZE; ++index) {
 		info("ll_get(llist, %u)", index);
 		expected = VALUES + index;
-		verbose("expected: %d", expected);
+		verbose("expected: %p", expected);
 		got = ll_get(llist, index);
-		verbose("got     : %d", got);
+		verbose("got     : %p", got);
 		assert(got == expected);
 		assert(errno == 0);
 	}
@@ -124,9 +124,9 @@ static void test_ll_set__valid(void) {
 	info("test ll_set -- valid index");
 	info("ll_set(llist, %u, %p)", index, param);
 	expected = VALUES + index;
-	verbose("expected: %d", expected);
+	verbose("expected: %p", expected);
 	got = ll_set(llist, index, param);
-	verbose("got     : %d", got);
+	verbose("got     : %p", got);
 	assert(got == expected);
 	assert(errno == 0);
 	info("OK\n");
