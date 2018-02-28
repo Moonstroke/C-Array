@@ -21,10 +21,10 @@
 /**
  * \brief Applies a function to each element of the structure.
  *
- * \param[in,out] list  The linked list
+ * \param[in,out] llist  The linked list
  * \param[in]     apply The function to apply
  */
-MEMBER void ll_each(LinkedList *list, void (*apply)(data*)) NOTNULL(2);
+MEMBER void ll_each(LinkedList *llist, void (*apply)(data*)) NOTNULL(2);
 
 
 /**
@@ -32,14 +32,14 @@ MEMBER void ll_each(LinkedList *list, void (*apply)(data*)) NOTNULL(2);
  *
  * \note Sets \a errno to \c ERANGE if \a index is invalid.
  *
- * \param[in,out] list    The linked list
+ * \param[in,out] llist    The linked list
  * \param[in]     index   The index at which to update the element
  * \param[in]     newitem The new element to set
  *
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-MEMBER data *ll_swap(LinkedList *list, unsigned int index, data *newitem) NODISCARD NOTNULL(3);
+MEMBER data *ll_swap(LinkedList *llist, unsigned int index, data *newitem) NODISCARD NOTNULL(3);
 
 
 /**
@@ -55,13 +55,13 @@ MEMBER data *ll_swap(LinkedList *list, unsigned int index, data *newitem) NODISC
 *       \c NULL in the same time; in that case, \a errno is set to \c EINVAL
 *       and the function returns \c NULL immediately.
 *
-* \param[in] list The linked list
+* \param[in] llist The linked list
 * \param[in] value The value to check against
 * \param[in] equals The comparator function
 *
 * \return The first element to satisfy the condition, or \c NULL.
  */
-MEMBER data *ll_cond(const LinkedList *list, const data *value, bool (*equals)(const data*, const data*)) PURE;
+MEMBER data *ll_cond(const LinkedList *llist, const data *value, bool (*equals)(const data*, const data*)) PURE;
 
 
 /**
@@ -76,20 +76,20 @@ MEMBER data *ll_cond(const LinkedList *list, const data *value, bool (*equals)(c
  *
  * \note This function sets \a errno to \c EINVAL if the item is not found.
  *
- * \param[in,out] list    The linked list
+ * \param[in,out] llist    The linked list
  * \param[in]     item    The item to find and remove
  * \param[in]     eq_func The comparison function
  *
  * \return The removed element, or \c NULL if none matched.
  */
-MEMBER data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*, const data*));
+MEMBER data *ll_remove(LinkedList *llist, const data *item, bool (*eq_func)(const data*, const data*));
 
 
 /**
  * \brief Prints a linked list on \a stdin, each element separated with a comma
  * and a space, enclosed in round brackets.
  *
- * \param[in] list      The linked list
+ * \param[in] llist      The linked list
  * \param[in] printitem The function to print each element with
  *
  * \note If \a printitem is \c NULL, the elements' addresses will be output in
@@ -100,7 +100,7 @@ MEMBER data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const
  * output will be:
  * \verbatim (42.3, 6.0, 19.5) \endverbatim
  */
-MEMBER void ll_printf(const LinkedList *list, void (*printitem)(const data*));
+MEMBER void ll_printf(const LinkedList *llist, void (*printitem)(const data*));
 
 
 #endif /* LINKEDLIST_FUNCS_H */
