@@ -9,8 +9,6 @@
 
 extern int errno;
 
-
-
 struct fixedarray {
 	unsigned int size;
 	uint8_t _padding[4];
@@ -35,7 +33,6 @@ FixedArray *fa_new(const unsigned int s) {
 void fa_free(FixedArray *const fa) {
 	free(fa);
 }
-
 
 unsigned int fa_size(const FixedArray *const fa) {
 	return fa->size;

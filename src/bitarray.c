@@ -9,12 +9,19 @@
 
 extern int errno;
 
-
-
 struct bitarray {
 	unsigned int size;
 	uint8_t data[];
 };
+
+
+static inline bool ba_replace(BitArray *const ba, const unsigned int i, const uint8_t v) {
+	const bool b = ba_get(ba, i);
+	if(!errno) {
+		ba->data[i / 8] = v;
+	}
+	return b;
+}
 
 
 BitArray *ba_new(const unsigned int s) {
@@ -48,20 +55,10 @@ bool ba_get(const BitArray *const ba, const unsigned int i) {
 	return false;
 }
 
-static inline bool ba_replace(BitArray *const ba, const unsigned int i, const uint8_t v) {
-	const bool b = ba_get(ba, i);
-	if(!errno) {
-		ba->data[i / 8] = v;
-	}
-	return b;
-}
-
 bool ba_set(BitArray *const ba, const unsigned int i) {
 	return ba_replace(ba, i, ba->data[i / 8] | 1 << i % 8);
 }
-
 bool ba_unset(BitArray *const ba, const unsigned int i) {
 	return ba_replace(ba, i, ba->data[i / 8] & ~(1 << i % 8));
 }
-
 extern bool ba_put(BitArray*, unsigned int, bool);

@@ -14,13 +14,28 @@
 
 extern int errno;
 
-
-
 struct array {
 	unsigned int size;
 	uint8_t _padding[4];
 	FixedArray *items;
 };
+
+
+static bool a_grow(Array *const a) {
+	const unsigned int s = fa_size(a->items),
+	                   c = s + (s / 2 + s % 2) /* capacity * 1.5 */;
+	FixedArray *const items = fa_new(c);
+	if(!items) {
+		/* errno already set in fa_new() */
+		return false;
+	}
+	for(unsigned int i = 0; i < s; ++i) {
+		fa_set(items, i, fa_get(a->items, i));
+	}
+	fa_free(a->items);
+	a->items = items;
+	return true;
+}
 
 
 Array *a_new(const unsigned int s) {
@@ -43,11 +58,9 @@ void a_free(Array *const a) {
 	free(a);
 }
 
-
 unsigned int a_size(const Array *const a) {
 	return a->size;
 }
-
 
 data *a_get(const Array *const a, const unsigned int i) {
 	return fa_get(a->items, i);
@@ -57,22 +70,6 @@ data *a_set(Array *const a, const unsigned int i, data *const e) {
 	return fa_swap(a->items, i, e);
 }
 
-
-static bool a_grow(Array *const a) {
-	const unsigned int s = fa_size(a->items),
-	                   c = s + (s / 2 + s % 2) /* capacity * 1.5 */;
-	FixedArray *const items = fa_new(c);
-	if(!items) {
-		/* errno already set in fa_new() */
-		return false;
-	}
-	for(unsigned int i = 0; i < s; ++i) {
-		fa_set(items, i, fa_get(a->items, i));
-	}
-	fa_free(a->items);
-	a->items = items;
-	return true;
-}
 int a_add(Array *const a, const unsigned int i, data *const e) {
 	const unsigned int s = a->size;
 	if(i > s) {
@@ -92,7 +89,6 @@ int a_add(Array *const a, const unsigned int i, data *const e) {
 }
 extern int a_append(Array*, data*);
 
-
 data *a_drop(Array *a, const unsigned int i) {
 	const unsigned int s = a->size;
 	if(i >= s) {
@@ -101,7 +97,6 @@ data *a_drop(Array *a, const unsigned int i) {
 	}
 	errno = 0;
 	data *const e = a_set(a, i, NULL);
-
 	/* move the elements to shrink the empty slots */
 	for(unsigned int k = i; k < s - 1; ++k) {
 		fa_set(a->items, k, fa_get(a->items, k + 1));

@@ -8,9 +8,12 @@
 extern int errno;
 
 
-
 static bool default_equals(const data *const e1, const data *const e2) {
 	return e1 == e2;
+}
+
+static void default_print_item(const data *const item) {
+	printf("%p", item);
 }
 
 
@@ -19,6 +22,15 @@ void fa_freer(FixedArray *const fa, void (*const f)(data*)) {
 	fa_free(fa);
 }
 
+void fa_clear(FixedArray *const fa, void (*const f)(data*)) {
+	const unsigned int s = fa_size(fa);
+	if(f) {
+		fa_each(fa, f);
+	}
+	for(unsigned int i = 0; i < s; ++i) {
+		fa_unset(fa, i);
+	}
+}
 
 unsigned int fa_count(const FixedArray *const fa) {
 	const unsigned int s = fa_size(fa);
@@ -39,7 +51,6 @@ int fa_put(FixedArray *const fa, data *const item) {
 		}
 	return -1;
 }
-
 
 data *fa_swap(FixedArray *const fa, const unsigned int i, data *const e) {
 	data *const d = fa_get(fa, i); /* this sets errno */
@@ -85,7 +96,6 @@ data *fa_remove(FixedArray *fa, bool (*f)(const data*, const data*), const data 
 	return NULL;
 }
 
-
 void fa_each(FixedArray *const fa, void (*const f)(data*)) {
 	const unsigned int s = fa_size(fa);
 	for(unsigned int i = 0; i < s; ++i) {
@@ -95,21 +105,6 @@ void fa_each(FixedArray *const fa, void (*const f)(data*)) {
 	}
 }
 
-
-void fa_clear(FixedArray *const fa, void (*const f)(data*)) {
-	const unsigned int s = fa_size(fa);
-	if(f) {
-		fa_each(fa, f);
-	}
-	for(unsigned int i = 0; i < s; ++i) {
-		fa_unset(fa, i);
-	}
-}
-
-
-static void default_print_item(const data *const item) {
-	printf("%p", item);
-}
 void fa_printf(const FixedArray *const fa, void (*p)(const data*)) {
 	const unsigned int s = fa_size(fa);
 	printf("[");

@@ -18,6 +18,12 @@ static void _printitem(const data *const e) {
 }
 
 
+void ll_each(LinkedList *const ll, void (*const f)(data*)) {
+	data *item;
+	for(unsigned int i = 0; (item = ll_get(ll, i)); ++i) {
+		f(item);
+	}
+}
 
 data *ll_cond(const LinkedList *const ll, const data *const e, bool (*f)(const data*, const data*)) {
 	const unsigned int l = ll_len(ll);
@@ -53,15 +59,6 @@ data *ll_remove(LinkedList *const ll, const data *const e, bool (*f)(const data*
 	errno = EINVAL;
 	return NULL;
 }
-
-
-void ll_each(LinkedList *const ll, void (*const f)(data*)) {
-	data *item;
-	for(unsigned int i = 0; (item = ll_get(ll, i)); ++i) {
-		f(item);
-	}
-}
-
 
 void ll_printf(const LinkedList *const ll, void (*f)(const data*)) {
 	printf("(");

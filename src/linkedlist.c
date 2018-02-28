@@ -6,8 +6,6 @@
 
 extern int errno;
 
-
-
 typedef struct node Node;
 struct node {
 	data *value;
@@ -20,15 +18,6 @@ struct llist {
 	char _padding[4];
 };
 
-LinkedList *ll_new(void) {
-	LinkedList *const ll = malloc(sizeof(LinkedList));
-	if(!ll) {
-		return NULL;
-	}
-	ll->len = 0;
-	ll->head = NULL;
-	return ll;
-}
 
 static inline Node *newnode(data *const d) {
 	Node *const node = malloc(sizeof(Node));
@@ -38,6 +27,26 @@ static inline Node *newnode(data *const d) {
 	node->value = d;
 	node->next = NULL;
 	return node;
+}
+
+static inline Node *lgoto(const LinkedList *const ll, const unsigned int n) {
+	Node *item = ll->head;
+	unsigned int i;
+	for(i = 0; i < n && item != NULL; ++i) {
+		item = item->next;
+	}
+	return item;
+}
+
+
+LinkedList *ll_new(void) {
+	LinkedList *const ll = malloc(sizeof(LinkedList));
+	if(!ll) {
+		return NULL;
+	}
+	ll->len = 0;
+	ll->head = NULL;
+	return ll;
 }
 
 void ll_freer(LinkedList *const ll, void (*const f)(data*)) {
@@ -60,15 +69,6 @@ unsigned int ll_len(const LinkedList *const ll) {
 	return ll->len;
 }
 
-
-static inline Node *lgoto(const LinkedList *const ll, const unsigned int n) {
-	Node *item = ll->head;
-	unsigned int i;
-	for(i = 0; i < n && item != NULL; ++i) {
-		item = item->next;
-	}
-	return item;
-}
 data *ll_get(const LinkedList *const ll, const unsigned int i) {
 	if(i < ll->len) {
 		errno = 0;
