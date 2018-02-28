@@ -144,14 +144,6 @@ MEMBER data *fa_remove(FixedArray *farray, bool (*eq_func)(const data*, const da
  */
 MEMBER void fa_each(FixedArray *farray, void (*func)(data*)) NOTNULL(2);
 
-/**
- * \brief Iterates over the fixed array, without modifying the elements.
- *
- * \param[in] farray The array
- * \param[in] func   The function to apply
- */
-MEMBER void fa_iter(const FixedArray *farray, void (*func)(const data*)) NOTNULL(2);
-
 
 /**
  * \brief Outputs the array on \c stdin.

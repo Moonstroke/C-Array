@@ -95,13 +95,6 @@ void fa_each(FixedArray *const fa, void (*const f)(data*)) {
 	}
 }
 
-void fa_iter(const FixedArray *const fa, void (*const f)(const data*)) {
-	const unsigned int s = fa_size(fa);
-	for(unsigned int i = 0; i < s; ++i) {
-		f(fa_get(fa, i));
-	}
-}
-
 
 void fa_clear(FixedArray *const fa, void (*const f)(data*)) {
 	const unsigned int s = fa_size(fa);
