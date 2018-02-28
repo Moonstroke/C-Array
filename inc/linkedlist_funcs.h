@@ -28,6 +28,21 @@ MEMBER void ll_each(LinkedList *list, void (*apply)(data*)) NOTNULL(2);
 
 
 /**
+ *\brief Replaces an element of the list.
+ *
+ * \note Sets \a errno to \c ERANGE if \a index is invalid.
+ *
+ * \param[in,out] list    The linked list
+ * \param[in]     index   The index at which to update the element
+ * \param[in]     newitem The new element to set
+ *
+ * \return The former element found at index \a index, or \c NULL if the index
+ *         is invalid.
+ */
+MEMBER data *ll_swap(LinkedList *list, unsigned int index, data *newitem) NODISCARD NOTNULL(3);
+
+
+/**
 * \brief Retrieves an element of the linked list that compares equal to a value
 *        through given comparison function.
 *

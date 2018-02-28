@@ -25,6 +25,16 @@ void ll_each(LinkedList *const ll, void (*const f)(data*)) {
 	}
 }
 
+data *ll_swap(LinkedList *const ll, const unsigned int i, data *const d) {
+	data *const e = ll_get(ll, i);
+	if(errno) {
+		return NULL;
+	}
+	ll_set(ll, i, d);
+	return e;
+}
+
+
 data *ll_cond(const LinkedList *const ll, const data *const e, bool (*f)(const data*, const data*)) {
 	const unsigned int l = ll_len(ll);
 	data *item;

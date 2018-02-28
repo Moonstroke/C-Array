@@ -80,7 +80,7 @@ MEMBER int fa_put(FixedArray *farray, data *item) NOTNULL(2);
  * \return The former element of the array at given index, or \c NULL if the
  *         provided index is invalid.
  */
-MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item);
+MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item) NODISCARD;
 
 /**
  * \brief Unsets an element of the array (ie. set it to \c NULL) and returns it.

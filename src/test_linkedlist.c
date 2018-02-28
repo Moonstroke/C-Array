@@ -16,8 +16,8 @@ extern int errno;
 static LinkedList *llist;
 
 
-static int VALUES[] = {42, 3, 7, 13};
-static const unsigned int INT_LINKED_LIST_SIZE = 4;
+static int VALUES[] = {42, 3, 7, 13, 6};
+static const unsigned int INT_LINKED_LIST_SIZE = 5;
 
 static bool eq_as_int(const data *const e1, const data *const e2) {
 	assert(e1 != NULL && e2 != NULL);
@@ -117,39 +117,34 @@ static void test_ll_get__invalid(void) {
 }
 
 static void test_ll_set__valid(void) {
-	static int extra = -32;
+	static int extra = 64;
 	data *const param = &extra;
-	const unsigned int index = 2;
-	data *expected, *got;
+	const unsigned int index = 4;
 	info("test ll_set -- valid index");
 	info("ll_set(llist, %u, %p)", index, param);
-	expected = VALUES + index;
-	verbose("expected: %p", expected);
-	got = ll_set(llist, index, param);
-	verbose("got     : %p", got);
-	assert(got == expected);
+	verbose("expected errno: 0");
+	ll_set(llist, index, param);
+	verbose("actual errno  : %d", errno);
 	assert(errno == 0);
 	info("OK\n");
 }
 
 static void test_ll_set__invalid(void) {
-	int extra = 4;
+	static int extra = 23;
 	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist),
 		ll_len(llist) + 1,
-		13
+		73 /* big "arbitrary" value */
 	};
-	data *got;
 	unsigned int index;
-	info("test ll_set -- invalid indices");
+	info("tests ll_set -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
 		info("ll_set(llist, %u, %p)", index, param);
-		verbose("expected: (nil)");
-		got = ll_set(llist, index, param);
-		verbose("got     : %p", got);
-		assert(got == NULL);
+		verbose("expected errno: %d", ERANGE);
+		ll_set(llist, index, param);
+		verbose("actual errno  : %d", errno);
 		assert(errno == ERANGE);
 	}
 	info("OK\n");
@@ -222,6 +217,45 @@ static void test_ll_drop__invalid(void) {
 		info("ll_drop(llist, %u)", index);
 		verbose("expected: (nil)");
 		got = ll_drop(llist, index);
+		verbose("got     : %p", got);
+		assert(got == NULL);
+		assert(errno == ERANGE);
+	}
+	info("OK\n");
+}
+
+static void test_ll_swap__valid(void) {
+	static int extra = -32;
+	data *const param = &extra;
+	const unsigned int index = 2;
+	data *expected, *got;
+	info("test ll_swap -- valid index");
+	info("ll_swap(llist, %u, %p)", index, param);
+	expected = VALUES + index;
+	verbose("expected: %p = %d", expected, *(int*)expected);
+	got = ll_swap(llist, index - 1, param); /* -1 because of ll_drop */
+	verbose("got     : %p = %d", got, *(int*)got);
+	assert(got == expected);
+	assert(errno == 0);
+	info("OK\n");
+}
+
+static void test_ll_swap__invalid(void) {
+	int extra = 4;
+	data *const param = &extra;
+	const unsigned int invalid_indices[3] = {
+		ll_len(llist),
+		ll_len(llist) + 1,
+		13
+	};
+	data *got;
+	unsigned int index;
+	info("test ll_swap -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("ll_swap(llist, %u, %p)", index, param);
+		verbose("expected: (nil)");
+		got = ll_swap(llist, index, param);
 		verbose("got     : %p", got);
 		assert(got == NULL);
 		assert(errno == ERANGE);
@@ -322,6 +356,11 @@ void test_linkedlist(void) {
 	ll_printf(llist, print_as_int);
 
 	test_ll_drop__invalid();
+
+	test_ll_swap__valid();
+	ll_printf(llist, print_as_int);
+
+	test_ll_swap__invalid();
 
 	test_ll_cond__found();
 

@@ -76,16 +76,13 @@ data *ll_get(const LinkedList *const ll, const unsigned int i) {
 	return NULL;
 }
 
-data *ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
-	if(i < ll->len) {
-		Node *const item = ll_goto(ll, i);
-		data *const former = item->value;
-		item->value = d;
+void ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
+	if(i >= ll->len) {
+		errno = ERANGE;
+	} else {
+		ll_goto(ll, i)->value = d;
 		errno = 0;
-		return former;
 	}
-	errno = ERANGE;
-	return NULL;
 }
 
 int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {

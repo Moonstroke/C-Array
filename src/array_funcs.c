@@ -22,6 +22,16 @@ void a_freer(Array *a, void (*const f)(data*)) {
 	a_free(a);
 }
 
+data *a_swap(Array *const a, const unsigned int i, data *const e) {
+	data *const former = a_get(a, i);
+	if(errno) {
+		return NULL;
+	} else {
+		a_set(a, i, e);
+		return former;
+	}
+}
+
 void a_each(Array *const a, void (*f)(data*)) {
 	const unsigned int s = a_size(a);
 	for(unsigned int i = 0; i < s; ++i) {

@@ -104,11 +104,8 @@ MEMBER data *a_get(const Array *self, unsigned int index) PURE;
  * \param[in,out] self    The array
  * \param[in]     index   The index at which to update the element
  * \param[in]     newitem The new element to set
- *
- * \return The former element found at index \a index, or \c NULL if the index
- *         is invalid.
  */
-MEMBER data *a_set(Array *self, unsigned int index, data *newitem);
+MEMBER void a_set(Array *self, unsigned int index, data *newitem) NOTNULL(3);
 
 
 /**

@@ -107,11 +107,8 @@ MEMBER data *ll_get(const LinkedList *self, unsigned int index) PURE;
  * \param[in,out] self  The linked list
  * \param[in]     index The index where to update the element
  * \param[in]     item  The element to set
- *
- * \return The former element at \a index 'th position, or \c NULL if the index
- *         is invalid.
  */
-MEMBER data *ll_set(LinkedList *self, unsigned int index, data *item) NOTNULL(3);
+MEMBER void ll_set(LinkedList *self, unsigned int index, data *item) NOTNULL(3);
 
 
 /**

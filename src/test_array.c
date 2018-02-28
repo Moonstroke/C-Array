@@ -128,41 +128,35 @@ static void test_a_get__invalid(void) {
 	info("OK\n");
 }
 
-void test_a_set__valid(void) {
-	static int extra = 777;
+static void test_a_set__valid(void) {
+	static int extra = 64;
 	data *const param = &extra;
-	int expected, got;
-	unsigned int index;
-	info("test a_set -- valid indices");
-	index = 2;
+	const unsigned int index = 7;
+	info("test a_set -- valid index");
 	info("a_set(array, %u, %p)", index, param);
-	expected = VALUES[index];
-	verbose("expected: %d", expected);
-	got = *(int*)a_set(array, index, param);
-	verbose("got     : %d", got);
-	assert(got == expected);
+	verbose("expected errno: 0");
+	a_set(array, index, param);
+	verbose("actual errno  : %d", errno);
 	assert(errno == 0);
 	info("OK\n");
 }
 
 static void test_a_set__invalid(void) {
-	int value = 42;
+	static int extra = 23;
+	data *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
-		73
+		73 /* big "arbitrary" value */
 	};
-	data *const param = &value;
 	unsigned int index;
-	data *got;
 	info("tests a_set -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
 		info("a_set(array, %u, %p)", index, param);
-		verbose("expected: (nil)");
-		got = a_set(array, index, param);
-		verbose("got     : %p", got);
-		assert(got == NULL);
+		verbose("expected errno: %d", ERANGE);
+		a_set(array, index, param);
+		verbose("actual errno  : %d", errno);
 		assert(errno == ERANGE);
 	}
 	info("OK\n");
@@ -234,6 +228,46 @@ static void test_a_drop__invalid(void) {
 		info("a_drop(array, %u)", index);
 		verbose("expected: (nil)");
 		got = a_drop(array, index);
+		verbose("got     : %p", got);
+		assert(got == NULL);
+		assert(errno == ERANGE);
+	}
+	info("OK\n");
+}
+
+void test_a_swap__valid(void) {
+	static int extra = 777;
+	data *const param = &extra;
+	int expected, got;
+	unsigned int index;
+	info("test a_swap -- valid indices");
+	index = 2;
+	info("a_swap(array, %u, %p)", index, param);
+	expected = VALUES[index];
+	verbose("expected: %d", expected);
+	got = *(int*)a_swap(array, index, param);
+	verbose("got     : %d", got);
+	assert(got == expected);
+	assert(errno == 0);
+	info("OK\n");
+}
+
+static void test_a_swap__invalid(void) {
+	int value = 42;
+	const unsigned int invalid_indices[3] = {
+		a_size(array),
+		a_size(array) + 1,
+		73
+	};
+	data *const param = &value;
+	unsigned int index;
+	data *got;
+	info("tests a_swap -- invalid indices");
+	for(unsigned int i = 0; i < 3; ++i) {
+		index = invalid_indices[i];
+		info("a_swap(array, %u, %p)", index, param);
+		verbose("expected: (nil)");
+		got = a_swap(array, index, param);
 		verbose("got     : %p", got);
 		assert(got == NULL);
 		assert(errno == ERANGE);
@@ -335,6 +369,11 @@ void test_array(void) {
 	test_a_drop__valid();
 
 	test_a_drop__invalid();
+
+	test_a_swap__valid();
+	a_printf(array, print_as_int);
+
+	test_a_swap__invalid();
 
 	test_a_remove__found();
 

@@ -35,6 +35,21 @@ MEMBER void a_freer(Array *array, void (*freeitem)(data*)) NOTNULL(2);
 
 
 /**
+ *\brief Replaces an element of the array.
+ *
+ * \note Sets \a errno to \c ERANGE if \a index is invalid.
+ *
+ * \param[in,out] self    The array
+ * \param[in]     index   The index at which to update the element
+ * \param[in]     newitem The new element to set
+ *
+ * \return The former element found at index \a index, or \c NULL if the index
+ *         is invalid.
+ */
+MEMBER data *a_swap(Array *self, unsigned int index, data *newitem) NODISCARD NOTNULL(3);
+
+
+/**
  * \brief Applies a function to each element.
  *
  * \param[in,out] array The array to iterate over

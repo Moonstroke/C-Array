@@ -1,7 +1,6 @@
 #include "array.h"
 
 #include "fixedarray.h"
-#include "fixedarray_funcs.h" /* for fa_swap() */
 
 
 #include <errno.h> /* for errno, EINVAL, ERANGE */
@@ -63,11 +62,22 @@ unsigned int a_size(const Array *const a) {
 }
 
 data *a_get(const Array *const a, const unsigned int i) {
-	return fa_get(a->items, i);
+	if(i < a->size) {
+		errno = 0;
+		return fa_get(a->items, i);
+	} else {
+		errno = ERANGE;
+		return NULL;
+	}
 }
 
-data *a_set(Array *const a, const unsigned int i, data *const e) {
-	return fa_swap(a->items, i, e);
+void a_set(Array *const a, const unsigned int i, data *const e) {
+	if(i < a->size) {
+		fa_set(a->items, i, e);
+		errno = 0;
+	} else {
+		errno = ERANGE;
+	}
 }
 
 int a_add(Array *const a, const unsigned int i, data *const e) {
@@ -96,7 +106,7 @@ data *a_drop(Array *a, const unsigned int i) {
 		return NULL;
 	}
 	errno = 0;
-	data *const e = a_set(a, i, NULL);
+	data *const e = a_get(a, i);
 	/* move the elements to shrink the empty slots */
 	for(unsigned int k = i; k < s - 1; ++k) {
 		fa_set(a->items, k, fa_get(a->items, k + 1));
