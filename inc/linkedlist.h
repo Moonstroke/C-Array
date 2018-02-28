@@ -50,6 +50,7 @@ typedef struct llist LinkedList;
  */
 CTOR LinkedList *ll_new(void);
 
+
 /**
  * \brief Frees a linked list, frees its items with given function, if not
  *        \c NULL.

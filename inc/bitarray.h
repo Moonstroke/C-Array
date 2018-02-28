@@ -51,6 +51,7 @@ typedef struct bitarray BitArray;
  */
 CTOR BitArray *ba_new(unsigned int size);
 
+
 /**
  * \brief Releases memory used by the bit array.
  *
@@ -81,6 +82,7 @@ MEMBER unsigned int ba_size(const BitArray *self) PURE;
  * \return The value in the array, at index \a index.
  */
 MEMBER bool ba_get(const BitArray *self, unsigned int index) PURE;
+
 
 /**
  * \brief Sets the element at position \a index in the bit array to \c true.

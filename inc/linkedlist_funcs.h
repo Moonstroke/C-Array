@@ -19,6 +19,15 @@
 
 
 /**
+ * \brief Applies a function to each element of the structure.
+ *
+ * \param[in,out] list  The linked list
+ * \param[in]     apply The function to apply
+ */
+MEMBER void ll_each(LinkedList *list, void (*apply)(data*)) NOTNULL(2);
+
+
+/**
 * \brief Retrieves an element of the linked list that compares equal to a value
 *        through given comparison function.
 *
@@ -59,15 +68,6 @@ MEMBER data *ll_cond(const LinkedList *list, const data *value, bool (*equals)(c
  * \return The removed element, or \c NULL if none matched.
  */
 MEMBER data *ll_remove(LinkedList *list, const data *item, bool (*eq_func)(const data*, const data*));
-
-
-/**
- * \brief Applies a function to each element of the structure.
- *
- * \param[in,out] list  The linked list
- * \param[in]     apply The function to apply
- */
-MEMBER void ll_each(LinkedList *list, void (*apply)(data*)) NOTNULL(2);
 
 
 /**

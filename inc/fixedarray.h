@@ -48,6 +48,7 @@ typedef struct fixedarray FixedArray;
  */
 CTOR FixedArray *fa_new(unsigned int size);
 
+
 /**
  * \brief Deallocates a fixed array.
 *

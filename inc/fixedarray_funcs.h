@@ -31,6 +31,7 @@
  */
 MEMBER void fa_freer(FixedArray *farray, void (*free_item)(data*)) NOTNULL(2);
 
+
 /**
  * \brief Clears the elements of the array (unset all), optionally freeing the
  *        elements.
@@ -95,6 +96,7 @@ MEMBER INLINE data *fa_unset(FixedArray *const farray, const unsigned int index)
 	return fa_swap(farray, index, NULL);
 }
 
+
 /**
  * \brief Retrieves an element of the array by comparing it with another value,
  *        through a given equality function.
@@ -114,6 +116,7 @@ MEMBER INLINE data *fa_unset(FixedArray *const farray, const unsigned int index)
  * \return The first match
  */
 MEMBER data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value) PURE;
+
 
 /**
  * \brief Unsets and return an element from the fixed array that compares equal

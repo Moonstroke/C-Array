@@ -61,6 +61,7 @@ typedef struct array Array;
  */
 CTOR Array *a_new(unsigned int size);
 
+
 /**
  * \brief Deallocates an array.
  *
@@ -93,6 +94,7 @@ MEMBER unsigned int a_size(const Array *self) PURE;
  * \return The \a index 'th element in the array, or \c NULL.
  */
 MEMBER data *a_get(const Array *self, unsigned int index) PURE;
+
 
 /**
  *\brief Replaces an element of the array.
