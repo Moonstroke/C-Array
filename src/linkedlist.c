@@ -1,6 +1,6 @@
 #include "linkedlist.h"
 
-#include <errno.h> /** errno, ERANGE */
+#include <errno.h> /* errno, ERANGE */
 
 
 
