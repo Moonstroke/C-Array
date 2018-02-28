@@ -28,7 +28,7 @@ static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(in
 
 
 static void init(void) {
-	info("llist = ll_new(%u)", INT_LINKED_LIST_SIZE);
+	info("llist = ll_new()");
 	llist = ll_new();
 	assert(llist != NULL);
 	info("OK\n");
