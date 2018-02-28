@@ -26,6 +26,15 @@ pointers to primitive types, though.
 ## Modules
 
 
+### `arrays.h`
+
+The file `arrays.h` is shared by the other modules. It defines common data and
+is included by all the other files.
+
+It can also serve as the project's main interface (hence the name): if it is
+`#include`d directly, all the project's headers are also included.
+
+
 ### Type modules
 
 #### Array
