@@ -29,12 +29,10 @@ static INLINE Node *newnode(data *const d) {
 	return node;
 }
 
-static INLINE Node *lgoto(const LinkedList *const ll, const unsigned int n) {
+static INLINE Node *ll_goto(const LinkedList *const ll, const unsigned int n) {
 	Node *item = ll->head;
-	unsigned int i;
-	for(i = 0; i < n && item != NULL; ++i) {
+	for(unsigned int i = 0; i < n && item; ++i)
 		item = item->next;
-	}
 	return item;
 }
 
@@ -72,7 +70,7 @@ unsigned int ll_len(const LinkedList *const ll) {
 data *ll_get(const LinkedList *const ll, const unsigned int i) {
 	if(i < ll->len) {
 		errno = 0;
-		return lgoto(ll, i)->value;
+		return ll_goto(ll, i)->value;
 	}
 	errno = ERANGE;
 	return NULL;
@@ -80,7 +78,7 @@ data *ll_get(const LinkedList *const ll, const unsigned int i) {
 
 data *ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
 	if(i < ll->len) {
-		Node *const item = lgoto(ll, i);
+		Node *const item = ll_goto(ll, i);
 		data *const former = item->value;
 		item->value = d;
 		errno = 0;
@@ -100,7 +98,7 @@ int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
 		return -1;
 	} else {
 		Node **plug;
-		plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
+		plug = i == 0 ? &ll->head : &ll_goto(ll, i - 1)->next;
 		item->next = *plug;
 		*plug = item;
 		++ll->len;
@@ -117,7 +115,7 @@ data *ll_drop(LinkedList *const ll, const unsigned int i) {
 	}
 	Node *item, **plug;
 	data *d;
-	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
+	plug = i == 0 ? &ll->head : &ll_goto(ll, i - 1)->next;
 	item = *plug;
 	d = item->value;
 	*plug = item->next;
