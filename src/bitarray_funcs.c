@@ -1,6 +1,6 @@
 #include "bitarray_funcs.h"
 
-#include <stdio.h>
+#include <stdio.h> /* for printf */
 
 
 
