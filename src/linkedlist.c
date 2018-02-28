@@ -111,18 +111,18 @@ int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
 extern int ll_append(LinkedList*, data*);
 
 data *ll_drop(LinkedList *const ll, const unsigned int i) {
-	if(i < ll->len) {
-		Node *item, **plug;
-		data *d;
-		plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
-		item = *plug;
-		d = item->value;
-		*plug = item->next;
-		--ll->len;
-		free(item);
-		errno = 0;
-		return d;
+	if(i >= ll->len) {
+		errno = ERANGE;
+		return NULL;
 	}
-	errno = ERANGE;
-	return NULL;
+	Node *item, **plug;
+	data *d;
+	plug = i == 0 ? &ll->head : &lgoto(ll, i - 1)->next;
+	item = *plug;
+	d = item->value;
+	*plug = item->next;
+	--ll->len;
+	free(item);
+	errno = 0;
+	return d;
 }
