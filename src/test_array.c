@@ -45,7 +45,7 @@ static void test_a_new__0_null(void) {
 	info("a_new(%u)", index);
 	verbose("expected: (nil)");
 	got = a_new(index);
-	verbose("got     : %p", got);
+	verbose("got     : %p", (void*)got);
 	assert(got == NULL);
 	assert(errno == EINVAL);
 	info("OK\n");
@@ -96,7 +96,7 @@ static void test_a_get__valid(void) {
 	data *expected, *got;
 	info("tests a_get -- valid indices");
 	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
-		info("a_get(array, %p)", index);
+		info("a_get(array, %d)", index);
 		expected = VALUES + index;
 		verbose("expected: %p", expected);
 		got = a_get(array, index);

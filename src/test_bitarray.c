@@ -39,7 +39,7 @@ static void test_ba_new__0_null(void) {
 	info("ba_new(0)");
 	verbose("expected: (nil)");
 	got = ba_new(0);
-	verbose("got     : %p", got);
+	verbose("got     : %p", (void*)got);
 	assert(got == NULL);
 	assert(errno == EINVAL);
 	info("OK\n");
@@ -51,7 +51,7 @@ static void test_ba_size(void) {
 	info("ba_size(barray)");
 	verbose("expected: %u", BIT_ARRAY_SIZE);
 	got = ba_size(barray);
-	verbose("got     : ", got);
+	verbose("got     : %u", got);
 	assert(got == BIT_ARRAY_SIZE);
 	info("OK\n");
 }

@@ -48,7 +48,7 @@ static void test_fa_new__0_null(void) {
 	info("test fa_new(0)");
 	verbose("expected: (nil)");
 	got = fa_new(0);
-	verbose("got     : %p", got);
+	verbose("got     : %p", (void*)got);
 	assert(got == NULL);
 	assert(errno == EINVAL);
 	info("OK\n");
@@ -184,7 +184,7 @@ static void test_fa_put__valid(void) {
 	static int extra = 33;
 	data *const param = &extra;
 	int expected, got;
-	info("test fa_put(farray, %d)", param);
+	info("test fa_put(farray, %p)", param);
 	expected = unset_index;
 	verbose("expected: %d", expected);
 	got = fa_put(farray, param);
@@ -230,7 +230,7 @@ static void test_fa_cond__null(void) {
 	expected = VALUES + index;
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, NULL, param);
-	verbose("got     :", got);
+	verbose("got     : %p", got);
 	assert(got == expected);
 	assert(errno == 0);
 	info("OK\n");
@@ -274,7 +274,7 @@ static void test_fa_remove__null(void) {
 	expected = VALUES + index;
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, NULL, param);
-	verbose("got     :", got);
+	verbose("got     : %p", got);
 	assert(got == expected);
 	assert(errno == 0);
 	info("OK\n");
