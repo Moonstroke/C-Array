@@ -113,7 +113,7 @@ MEMBER INLINE data *fa_unset(FixedArray *const farray, const unsigned int index)
  * \param[in] eq_func The condition function
  * \param[in] value   The value to compare to
  *
- * \return The first match
+ * \return The first element to match the value, or \c NULL.
  */
 MEMBER data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value) PURE;
 

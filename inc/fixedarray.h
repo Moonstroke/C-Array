@@ -44,7 +44,7 @@ typedef struct fixedarray FixedArray;
  *
  * \param[in] size The size to set to the array
  *
- * \return A new instance of FixedArray of given size
+ * \return A new instance of FixedArray of given size.
  */
 CTOR FixedArray *fa_new(unsigned int size);
 
@@ -62,7 +62,7 @@ MEMBER void fa_free(FixedArray *self);
  *
  * \param[in] self self The fixed array
  *
- * \return The size of the fixed array
+ * \return The size of the fixed array.
  */
 MEMBER unsigned int fa_size(const FixedArray *self) PURE;
 
@@ -78,7 +78,7 @@ MEMBER unsigned int fa_size(const FixedArray *self) PURE;
  * \param[in] self  The fixed array
  * \param[in] index The index at which to get the element
  *
- * \return The element at given index, or \c NULL if the index is invalid
+ * \return The element at given index, or \c NULL if the index is invalid.
  */
 MEMBER data *fa_get(const FixedArray *self, unsigned int index) PURE;
 

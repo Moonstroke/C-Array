@@ -75,7 +75,7 @@ MEMBER void a_free(Array *self);
  *
  * \param[in] self The array
  *
- * \return The number of elements in the array
+ * \return The number of elements in the array.
  */
 MEMBER unsigned int a_size(const Array *self) PURE;
 
