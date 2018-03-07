@@ -8,6 +8,9 @@ extern void test_linkedlist(void);
 extern void test_bitarray(void);
 
 int main(void) {
+
+	log_setoutputattrs(LOG_OUTPUT_FUNC | LOG_OUTPUT_COLORED);
+
 	info("Launching tests for FixedArray...\n");
 	test_fixedarray();
 	info("\nTests for FixedArray ended correctly.\n\n");
