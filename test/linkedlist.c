@@ -3,7 +3,7 @@
 
 #include <assert.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
-#include <log.h> /* for info(), verbose() */
+#include <clog.h>
 #include <stdio.h> /* for printf() */
 #include <stdlib.h> /* for NULL */
 

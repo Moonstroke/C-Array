@@ -1,4 +1,4 @@
-#include <log.h>
+#include <clog.h>
 #include <stdlib.h> /* for EXIT_SUCCESS */
 
 /* Declarations of the tests suites */
@@ -9,7 +9,7 @@ extern void test_bitarray(void);
 
 int main(void) {
 
-	log_setoutputattrs(LOG_OUTPUT_FUNC | LOG_OUTPUT_COLORED);
+	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_FUNC | CLOG_ATTR_COLORED);
 
 	info("Launching tests for FixedArray...\n");
 	test_fixedarray();

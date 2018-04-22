@@ -4,7 +4,6 @@
 
 
 #include <errno.h> /* for errno, EINVAL, ERANGE */
-#include <log.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdint.h> /* for uint8_t */
