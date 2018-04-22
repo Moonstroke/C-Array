@@ -9,6 +9,7 @@ PROJECT_NAME := arrays
 INC_DIR := inc
 SRC_DIR := src
 OBJ_DIR := obj
+TEST_DIR := test
 
 
 # Documentation
@@ -38,30 +39,32 @@ OPTIM_LVL := 2
 ## VARIABLES ##
 
 
-# Executables
+# Test executable
 TEST_EXEC := test_$(PROJECT_NAME)
 
 # Tests files
-TEST_SRC := $(wildcard $(SRC_DIR)/test*.c)
-TEST_OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRC))
-
+TEST_SRC := $(wildcard $(TEST_DIR)/*.c)
+TEST_OBJ := $(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/test_%.o,$(TEST_SRC))
+TEST_LOG := test.log
 
 # Project sources and object files
-SRC := $(filter-out $(TEST_SRC), $(wildcard $(SRC_DIR)/*.c))
+SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Library archive
 AR_LIB := lib$(PROJECT_NAME).a
 
 
+# Preprocessor flags
+CPPFLAGS := -I$(INC_DIR)
 # Compilation flags
-CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL) -I$(INC_DIR)
+CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL)
 ifeq ($(DEBUG), y)
 	CFLAGS += -g
 endif
 
 # The libraries to link against
-LDLIBS := -llog
+LDLIBS := -lclog
 
 # Linkage flags
 LDFLAGS := -L.
@@ -83,7 +86,12 @@ $(AR_LIB): $(OBJ)
 # File-wise compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) -c $< -o$@ $(CFLAGS)
+	$(CC) -c $< -o$@ $(CPPFLAGS) $(CFLAGS)
+
+# Tests compilation
+$(OBJ_DIR)/test_%.o: $(TEST_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) -c $< -o $@ $(CPPFLAGS) $(CFLAGS)
 
 
 # Remove compiled files (objects)
@@ -109,7 +117,7 @@ test: $(TEST_OBJ) $(AR_LIB)
 
 # Remove test build files
 testclean:
-	@rm -rf $(TEST_OBJ) $(TEST_EXEC)
+	@rm -rf $(TEST_OBJ) $(TEST_EXEC) $(TEST_LOG)
 
 # Install the project for system use
 install:
