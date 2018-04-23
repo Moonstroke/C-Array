@@ -28,11 +28,21 @@ static bool eq_as_int(const data *const e1, const data *const e2) {
 }
 static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
 
+static void print_as_int(const data *const e) {
+	if(e)
+		printf("%d", *(int*)e);
+	else
+		printf("(null)");
+}
+
 
 static void init(void) {
 	info("array = a_new(%u)", INT_ARRAY_SIZE);
 	array = a_new(INT_ARRAY_SIZE);
 	CUTE_runTimeAssert(array != NULL);
+	for(unsigned int i = 0; i < INT_ARRAY_SIZE; ++i) {
+		a_add(array, i, &VALUES[i]);
+	}
 	info("OK\n");
 }
 
@@ -336,13 +346,6 @@ static void test_a_cond__not_found(void) {
 	info("OK\n");
 }
 
-
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
 
 void build_case_array(void) {
 	case_array = CUTE_newTestCase("Tests for Array", 17);

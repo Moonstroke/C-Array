@@ -28,6 +28,9 @@ static void init(void) {
 	info("barray = ba_new(%u)", BIT_ARRAY_SIZE);
 	barray = ba_new(BIT_ARRAY_SIZE);
 	CUTE_runTimeAssert(barray != NULL);
+	for(unsigned int i = 0; i < BIT_ARRAY_SIZE; ++i) {
+		ba_put(barray, i, VALUES[i]);
+	}
 	info("OK\n");
 }
 

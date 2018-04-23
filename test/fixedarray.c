@@ -33,11 +33,21 @@ static bool equal_as_ints(const data *const i, const data *const j) {
 }
 static const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
 
+static void print_as_int(const data *const e) {
+	if(e)
+		printf("%d", *(int*)e);
+	else
+		printf("(null)");
+}
+
 
 static void init(void) {
 	info("farray = fa_new(%u)", INT_FIXED_ARRAY_SIZE);
 	farray = fa_new(INT_FIXED_ARRAY_SIZE);
 	CUTE_runTimeAssert(farray != NULL);
+	for(unsigned int i = 0; i < INT_FIXED_ARRAY_SIZE; ++i) {
+		fa_set(farray, i, &VALUES[i]);
+	}
 	info("OK\n");
 }
 
@@ -316,12 +326,6 @@ static void test_fa_each(void) {
 }
 
 
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
 void build_case_fixedarray(void) {
 	case_fixedarray = CUTE_newTestCase("Tests for FixedArray", 18);
 	CUTE_setCaseBefore(case_fixedarray, init);

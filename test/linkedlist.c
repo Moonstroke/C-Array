@@ -29,12 +29,21 @@ static bool eq_as_int(const data *const e1, const data *const e2) {
 }
 static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
 
+static void print_as_int(const data *const e) {
+	if(e)
+		printf("%d", *(int*)e);
+	else
+		printf("(null)");
+}
 
 
 static void init(void) {
 	info("llist = ll_new()");
 	llist = ll_new();
 	CUTE_runTimeAssert(llist != NULL);
+	for(unsigned int i = 0; i < INT_LINKED_LIST_SIZE; ++i) {
+		ll_add(llist, i, &VALUES[i]);
+	}
 	info("OK\n");
 }
 
@@ -325,12 +334,6 @@ static void test_ll_remove__not_found(void) {
 }
 
 
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
 void build_case_linkedlist(void) {
 	case_linkedlist = CUTE_newTestCase("Tests for LinkedList", 17);
 	CUTE_setCaseBefore(case_linkedlist, init);
