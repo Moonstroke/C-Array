@@ -1,7 +1,7 @@
 #include "array.h"
 #include "array_funcs.h"
 
-#include <assert.h>
+#include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
 #include <stdio.h> /* for printf() */
@@ -12,6 +12,10 @@
 extern int errno;
 
 
+/* The instance of test case */
+CUTE_TestCase *case_array;
+
+
 
 static Array *array;
 
@@ -19,7 +23,7 @@ static const unsigned int INT_ARRAY_SIZE = 10;
 static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
 static bool eq_as_int(const data *const e1, const data *const e2) {
-	assert(e1 != NULL && e2 != NULL);
+	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
 	return *(int*)e1 == *(int*)e2;
 }
 static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
@@ -28,7 +32,7 @@ static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(in
 static void init(void) {
 	info("array = a_new(%u)", INT_ARRAY_SIZE);
 	array = a_new(INT_ARRAY_SIZE);
-	assert(array != NULL);
+	CUTE_runTimeAssert(array != NULL);
 	info("OK\n");
 }
 
@@ -46,8 +50,8 @@ static void test_a_new__0_null(void) {
 	verbose("expected: (nil)");
 	got = a_new(index);
 	verbose("got     : %p", (void*)got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
+	CUTE_assertEquals(got, NULL);
+	CUTE_assertEquals(errno, EINVAL);
 	info("OK\n");
 }
 
@@ -58,7 +62,7 @@ static void test_a_size__empty(void) {
 	verbose("expected: 0");
 	got = a_size(array);
 	verbose("got     : %u", got);
-	assert(got == 0);
+	CUTE_assertEquals(got, 0);
 	info("OK\n");
 }
 
@@ -74,8 +78,8 @@ static void test_a_append(void) {
 		verbose("expected: %d", expected);
 		got = a_append(array, param);
 		verbose("got     : %d", got);
-		assert(got == expected);
-		assert(errno == 0);
+		CUTE_assertEquals(got, expected);
+		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
 }
@@ -88,7 +92,7 @@ static void test_a_size__full(void) {
 	verbose("expected: %u", expected);
 	got = a_size(array);
 	verbose("got     : %u", got);
-	assert(got == expected);
+	CUTE_assertEquals(got, expected);
 	info("OK\n");
 }
 
@@ -101,8 +105,8 @@ static void test_a_get__valid(void) {
 		verbose("expected: %p", expected);
 		got = a_get(array, index);
 		verbose("got     : %p", got);
-		assert(got == expected);
-		assert(errno == 0);
+		CUTE_assertEquals(got, expected);
+		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
 }
@@ -122,8 +126,8 @@ static void test_a_get__invalid(void) {
 		verbose("expected: (nil)");
 		got = a_get(array, index);
 		verbose("got     : %p", got);
-		assert(got == NULL);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, NULL);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -137,7 +141,7 @@ static void test_a_set__valid(void) {
 	verbose("expected errno: 0");
 	a_set(array, index, param);
 	verbose("actual errno  : %d", errno);
-	assert(errno == 0);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -157,7 +161,7 @@ static void test_a_set__invalid(void) {
 		verbose("expected errno: %d", ERANGE);
 		a_set(array, index, param);
 		verbose("actual errno  : %d", errno);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -179,8 +183,8 @@ static void test_a_add__invalid(void) {
 		verbose("expected: -1");
 		got = a_add(array, index, param);
 		verbose("got     : %d", got);
-		assert(got == -1);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, -1);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -195,8 +199,8 @@ static void test_a_append__overflow(void) {
 	verbose("expected: %d", expected);
 	got = a_append(array, param);
 	verbose("got     : %d", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -209,8 +213,8 @@ static void test_a_drop__valid(void) {
 	verbose("expected: %p", expected);
 	got = a_drop(array, index);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -229,8 +233,8 @@ static void test_a_drop__invalid(void) {
 		verbose("expected: (nil)");
 		got = a_drop(array, index);
 		verbose("got     : %p", got);
-		assert(got == NULL);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, NULL);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -247,8 +251,8 @@ void test_a_swap__valid(void) {
 	verbose("expected: %d", expected);
 	got = *(int*)a_swap(array, index, param);
 	verbose("got     : %d", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -269,8 +273,8 @@ static void test_a_swap__invalid(void) {
 		verbose("expected: (nil)");
 		got = a_swap(array, index, param);
 		verbose("got     : %p", got);
-		assert(got == NULL);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, NULL);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -285,8 +289,8 @@ static void test_a_remove__found(void) {
 	verbose("expected: %p", expected);
 	got = a_remove(array, param, eq_as_int);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -299,8 +303,8 @@ static void test_a_remove__not_found(void) {
 	verbose("expected: (nil)");
 	got = a_remove(array, param, eq_as_int);
 	verbose("got     : %p", got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
+	CUTE_assertEquals(got, NULL);
+	CUTE_assertEquals(errno, EINVAL);
 	info("OK\n");
 }
 
@@ -314,8 +318,8 @@ static void test_a_cond__found(void) {
 	verbose("expected: %p", expected);
 	got = a_cond(array, param, eq_as_int);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -328,7 +332,7 @@ static void test_a_cond__not_found(void) {
 	verbose("expected: (nil)");
 	got = a_cond(array, param, eq_as_int);
 	verbose("got     : %p", got);
-	assert(got == NULL);
+	CUTE_assertEquals(got, NULL);
 	info("OK\n");
 }
 
@@ -339,49 +343,27 @@ static void print_as_int(const data *const e) {
 	else
 		printf("(null)");
 }
-void test_array(void) {
 
-	init();
-
-	test_a_new__0_null();
-
-	test_a_size__empty();
-
-	test_a_append();
-	a_printf(array, print_as_int);
-
-	test_a_size__full();
-
-	test_a_get__valid();
-
-	test_a_get__invalid();
-
-	test_a_set__valid();
-	a_printf(array, print_as_int);
-
-	test_a_set__invalid();
-
-	test_a_add__invalid();
-
-	test_a_append__overflow();
-	a_printf(array, print_as_int);
-
-	test_a_drop__valid();
-
-	test_a_drop__invalid();
-
-	test_a_swap__valid();
-	a_printf(array, print_as_int);
-
-	test_a_swap__invalid();
-
-	test_a_remove__found();
-
-	test_a_remove__not_found();
-
-	test_a_cond__found();
-
-	test_a_cond__not_found();
-
-	cleanup();
+void build_case_array(void) {
+	case_array = CUTE_newTestCase("Tests for Array", 17);
+	CUTE_setCaseBefore(case_array, init);
+	CUTE_setCaseAfter(case_array, cleanup);
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_new__0_null));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_size__empty));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_append));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_size__full));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_get__valid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_get__invalid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_set__valid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_set__invalid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_add__invalid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_append__overflow));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_drop__valid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_drop__invalid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_swap__valid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_swap__invalid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_remove__found));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_remove__not_found));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_cond__found));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_cond__not_found));
 }
