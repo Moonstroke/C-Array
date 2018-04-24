@@ -28,11 +28,7 @@
 
 
 
-/**
- * \brief The linked list data structure.
- *
- * Defined opaquely for data encapsulation.
- */
+/** The linked list data structure, defined opaquely for data encapsulation. */
 typedef struct llist LinkedList;
 
 

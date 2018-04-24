@@ -35,7 +35,7 @@ MEMBER void a_freer(Array *array, void (*freeitem)(data*)) NOTNULL(2);
 
 
 /**
- *\brief Replaces an element of the array.
+ * \brief Replaces an element of the array.
  *
  * \note Sets \a errno to \c ERANGE if \a index is invalid.
  *
@@ -46,7 +46,8 @@ MEMBER void a_freer(Array *array, void (*freeitem)(data*)) NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-MEMBER data *a_swap(Array *self, unsigned int index, data *newitem) NODISCARD NOTNULL(3);
+MEMBER data *a_swap(Array *self, unsigned int index, data *newitem)
+NODISCARD NOTNULL(3);
 
 
 /**
@@ -77,7 +78,8 @@ MEMBER void a_each(Array *array, void (*apply)(data*)) NOTNULL(2);
  *
  * \return The first element to satisfy the condition, or \c NULL.
  */
-MEMBER data *a_cond(const Array *array, const data *value, bool (*equals)(const data*, const data*));
+MEMBER data *a_cond(const Array *array, const data *value,
+                    bool (*equals)(const data*, const data*));
 
 
 /**
@@ -102,7 +104,8 @@ MEMBER data *a_cond(const Array *array, const data *value, bool (*equals)(const 
  *
  * \return The removed element, or \c NULL.
  */
-MEMBER data *a_remove(Array *array, const data *value, bool (*equals)(const data*, const data*));
+MEMBER data *a_remove(Array *array, const data *value,
+                      bool (*equals)(const data*, const data*));
 
 
 /**

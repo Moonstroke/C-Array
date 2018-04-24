@@ -80,7 +80,8 @@ MEMBER int fa_put(FixedArray *farray, data *item) NOTNULL(2);
  * \return The former element of the array at given index, or \c NULL if the
  *         provided index is invalid.
  */
-MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item) NODISCARD;
+MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item)
+NODISCARD;
 
 /**
  * \brief Unsets an element of the array (ie. set it to \c NULL) and returns it.
@@ -92,7 +93,8 @@ MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item) NODISCA
  *
  * \return The element just unset, or \c NULL if the index is invalid.
  */
-MEMBER INLINE data *fa_unset(FixedArray *const farray, const unsigned int index) {
+MEMBER INLINE data *fa_unset(FixedArray *const farray,
+                             const unsigned int index) {
 	return fa_swap(farray, index, NULL);
 }
 
@@ -115,7 +117,9 @@ MEMBER INLINE data *fa_unset(FixedArray *const farray, const unsigned int index)
  *
  * \return The first element to match the value, or \c NULL.
  */
-MEMBER data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value) PURE;
+MEMBER data *fa_cond(const FixedArray *farray,
+                     bool (*eq_func)(const data*, const data*),
+                     const data *value) PURE;
 
 
 /**
@@ -135,7 +139,9 @@ MEMBER data *fa_cond(const FixedArray *farray, bool (*eq_func)(const data*, cons
  *
  * \return The first element to match the value, or \c NULL.
  */
-MEMBER data *fa_remove(FixedArray *farray, bool (*eq_func)(const data*, const data*), const data *value);
+MEMBER data *fa_remove(FixedArray *farray,
+                       bool (*eq_func)(const data*, const data*),
+                       const data *value);
 
 
 /**
@@ -164,7 +170,8 @@ MEMBER void fa_each(FixedArray *farray, void (*func)(data*)) NOTNULL(2);
  * \param[in] farray     The array
  * \param[in] print_item The function used to print each element
  */
-MEMBER void fa_printf(const FixedArray *farray, void (*print_item)(const data*));
+MEMBER void fa_printf(const FixedArray *farray,
+                      void (*print_item)(const data*));
 
 
 #endif /* FIXEDARRAY_FUNCS_H */

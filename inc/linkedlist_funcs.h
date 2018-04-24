@@ -28,7 +28,7 @@ MEMBER void ll_each(LinkedList *llist, void (*apply)(data*)) NOTNULL(2);
 
 
 /**
- *\brief Replaces an element of the list.
+ * \brief Replaces an element of the list.
  *
  * \note Sets \a errno to \c ERANGE if \a index is invalid.
  *
@@ -39,29 +39,31 @@ MEMBER void ll_each(LinkedList *llist, void (*apply)(data*)) NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-MEMBER data *ll_swap(LinkedList *llist, unsigned int index, data *newitem) NODISCARD NOTNULL(3);
+MEMBER data *ll_swap(LinkedList *llist, unsigned int index, data *newitem)
+NODISCARD NOTNULL(3);
 
 
 /**
-* \brief Retrieves an element of the linked list that compares equal to a value
-*        through given comparison function.
-*
-* Each element of the list is passed to the comparator function along with the
-* value, the first element that returns \c true is then returned.
-*
-* \note If \a equals is \c NULL, the elements' addresses are compared.
-*
-* \note It is safe to pass \a value as \c NULL, as long as \a equals is not
-*       \c NULL in the same time; in that case, \a errno is set to \c EINVAL
-*       and the function returns \c NULL immediately.
-*
-* \param[in] llist The linked list
-* \param[in] value The value to check against
-* \param[in] equals The comparator function
-*
-* \return The first element to satisfy the condition, or \c NULL.
+ * \brief Retrieves an element of the linked list that compares equal to a value
+ *        through given comparison function.
+ *
+ * Each element of the list is passed to the comparator function along with the
+ * value, the first element that returns \c true is then returned.
+ *
+ * \note If \a equals is \c NULL, the elements' addresses are compared.
+ *
+ * \note It is safe to pass \a value as \c NULL, as long as \a equals is not
+ *       \c NULL in the same time; in that case, \a errno is set to \c EINVAL
+ *       and the function returns \c NULL immediately.
+ *
+ * \param[in] llist The linked list
+ * \param[in] value The value to check against
+ * \param[in] equals The comparator function
+ *
+ * \return The first element to satisfy the condition, or \c NULL.
  */
-MEMBER data *ll_cond(const LinkedList *llist, const data *value, bool (*equals)(const data*, const data*)) PURE;
+MEMBER data *ll_cond(const LinkedList *llist, const data *value,
+                     bool (*equals)(const data*, const data*)) PURE;
 
 
 /**
@@ -82,7 +84,8 @@ MEMBER data *ll_cond(const LinkedList *llist, const data *value, bool (*equals)(
  *
  * \return The removed element, or \c NULL if none matched.
  */
-MEMBER data *ll_remove(LinkedList *llist, const data *item, bool (*eq_func)(const data*, const data*));
+MEMBER data *ll_remove(LinkedList *llist, const data *item,
+                       bool (*eq_func)(const data*, const data*));
 
 
 /**

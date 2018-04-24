@@ -33,14 +33,12 @@
 
 
 
-/**
- * \brief The fixed-size array type.
-*/
+/** The fixed-size array type.*/
 typedef struct fixedarray FixedArray;
 
 
 /**
-  * \brief Constructs a new fixed array.
+ * \brief Constructs a new fixed array.
  *
  * \param[in] size The size to set to the array
  *
@@ -51,9 +49,9 @@ CTOR FixedArray *fa_new(unsigned int size);
 
 /**
  * \brief Deallocates a fixed array.
-*
-* \param[in,out] self The fixed array to free
-*/
+ *
+ * \param[in,out] self The fixed array to free
+ */
 MEMBER void fa_free(FixedArray *self);
 
 
@@ -92,4 +90,4 @@ MEMBER data *fa_get(const FixedArray *self, unsigned int index) PURE;
 MEMBER void fa_set(FixedArray *self, unsigned int index, data *element);
 
 
-# endif /* FIXEDARRAY_H */
+#endif /* FIXEDARRAY_H */

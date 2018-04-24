@@ -14,9 +14,7 @@
 
 
 
-/**
- * \brief Explicit redefinition of the type contained in one of the structures.
-*/
+/** Generic definition of the type contained in the structures. */
 typedef void data;
 
 
@@ -30,7 +28,7 @@ typedef void data;
 
 # warning "ISO C used -- attributes are defined empty"
 
-# define __attribute__(attr) /**< \brief Empty declaration in ISO C */
+# define __attribute__(attr) /**< Empty declaration in ISO C */
 
 # define LIKELY(cond)   (cond)
 # define UNLIKELY(cond) (cond)
@@ -66,17 +64,15 @@ typedef void data;
 #define INLINE __attribute__((__always_inline__)) inline
 
 /**
- * \brief The arguments of the function whose positions (starting from \c 1) are
- *        given must not be \c NULL.
+ * \brief The arguments of the function whose positions (1-indexed) are given
+ *        must not be \c NULL.
  *
  * \note If no argument is given to this attribute, all pointer arguments are
  *       considered affected by this attribute.
  */
 #define NOTNULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
 
-/**
- * \brief Emits a warning if the return value of the function is not used.
- */
+/** Emits a warning if the return value of the function is not used. */
 #define NODISCARD __attribute__((__warn_unused_result__))
 
 /**
@@ -110,9 +106,7 @@ typedef void data;
  */
 #define CTOR __attribute__((__malloc__, __warn_unused_result__))
 
-/**
- * \brief The function is a type method.
- */
+/** The function is a type method. */
 #define MEMBER NOTNULL(1)
 
 
@@ -120,8 +114,8 @@ typedef void data;
     && !defined(ARRAY_H) && !defined(ARRAY_FUNCS_H) \
     && !defined(LINKEDLIST_H) && !defined(LINKEDLIST_FUNCS_H) \
     && !defined(BITARRAY_H) && !defined(BITARRAY_FUNCS_H)
-
-/* The file has been included directly: use it as the project's main interface */
+/* The file has been included directly: use it as the project's main interface
+*/
 
 #include "array.h"
 #include "array_funcs.h"

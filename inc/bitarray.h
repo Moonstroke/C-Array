@@ -33,9 +33,7 @@
 
 
 
-/**
- * \brief A structure that contains a fixed number of binary values.
- */
+/** A structure that contains a fixed number of binary values. */
 typedef struct bitarray BitArray;
 
 
@@ -122,7 +120,8 @@ MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-MEMBER INLINE bool ba_put(BitArray *const self, const unsigned int i, const bool val) {
+MEMBER INLINE bool ba_put(BitArray *const self, const unsigned int i,
+                          const bool val) {
 	return val ? ba_set(self, i) : ba_unset(self, i);
 }
 
