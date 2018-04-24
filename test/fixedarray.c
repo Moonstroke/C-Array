@@ -4,7 +4,7 @@
 #include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
-#include <stdio.h> /* for printf() */
+#include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
 
@@ -26,19 +26,10 @@ static int VALUES[] = {1, 42, 6, 3, 27, 9, 55, 700};
    in fa_unset AND fa_put */
 static const unsigned int unset_index = 3;
 
-/* used for fa_cond and fa_remove */
-static bool equal_as_ints(const data *const i, const data *const j) {
-	CUTE_runTimeAssert(i != NULL && j != NULL);
-	return *(int*)i == *(int*)j;
-}
-static const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
+extern bool equal_as_ints(const data*, const data*);
+extern const char equal_as_ints_repr[];
 
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
+extern void print_as_int(const data*);
 
 
 static void init(void) {

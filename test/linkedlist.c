@@ -4,7 +4,6 @@
 #include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
-#include <stdio.h> /* for printf() */
 #include <stdlib.h> /* for NULL */
 
 
@@ -23,18 +22,10 @@ static LinkedList *llist;
 static int VALUES[] = {42, 3, 7, 13, 6};
 static const unsigned int INT_LINKED_LIST_SIZE = 5;
 
-static bool eq_as_int(const data *const e1, const data *const e2) {
-	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
-	return *(int*)e1 == *(int*)e2;
-}
-static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+extern bool equal_as_ints(const data*, const data*);
+extern const char equal_as_ints_repr[];
 
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
+extern void print_as_int(const data*);
 
 
 static void init(void) {
@@ -282,9 +273,9 @@ static void test_ll_cond__found(void) {
 	data *expected, *got;
 	info("test ll_cond -- found");
 	expected = VALUES + 1;
-	info("ll_cond(array, *%d, %s)", *(int*)param, eq_as_int_repr);
+	info("ll_cond(array, *%d, %s)", *(int*)param, equal_as_ints_repr);
 	verbose("expected: %p", expected);
-	got = ll_cond(llist, param, eq_as_int);
+	got = ll_cond(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertEquals(errno, 0);
@@ -296,9 +287,9 @@ static void test_ll_cond__not_found(void) {
 	data *const param = &value;
 	data *got;
 	info("test ll_cond -- not found");
-	info("ll_cond(array, *%d, %s)", value, eq_as_int_repr);
+	info("ll_cond(array, *%d, %s)", value, equal_as_ints_repr);
 	verbose("expected: (nil)");
-	got = ll_cond(llist, param, eq_as_int);
+	got = ll_cond(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
 	info("OK\n");
@@ -309,10 +300,10 @@ static void test_ll_remove__found(void) {
 	const data *const param = &value;
 	data *expected, *got;
 	info("test ll_remove -- item found");
-	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
+	info("ll_remove(llist, %p, %s)", param, equal_as_ints_repr);
 	expected = VALUES + 3;
 	verbose("expected: %p", expected);
-	got = ll_remove(llist, param, eq_as_int);
+	got = ll_remove(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertEquals(errno, 0);
@@ -324,9 +315,9 @@ static void test_ll_remove__not_found(void) {
 	const data *const param = &value;
 	data *got;
 	info("test ll_remove -- item not found");
-	info("ll_remove(llist, %p, %s)", param, eq_as_int_repr);
+	info("ll_remove(llist, %p, %s)", param, equal_as_ints_repr);
 	verbose("expected: (nil)");
-	got = ll_remove(llist, param, eq_as_int);
+	got = ll_remove(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
 	CUTE_assertEquals(errno, EINVAL);

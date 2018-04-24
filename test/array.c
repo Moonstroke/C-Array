@@ -4,8 +4,6 @@
 #include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
-#include <stdio.h> /* for printf() */
-#include <stdlib.h> /* for NULL */
 
 
 
@@ -22,18 +20,10 @@ static Array *array;
 static const unsigned int INT_ARRAY_SIZE = 10;
 static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
-static bool eq_as_int(const data *const e1, const data *const e2) {
-	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
-	return *(int*)e1 == *(int*)e2;
-}
-static const char eq_as_int_repr[] = "(data *e1, data *e2) -> (*(int*)e1 == *(int*)e2)";
+extern bool equal_as_ints(const data*, const data*);
+extern const char equal_as_ints_repr[];
 
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
+extern void print_as_int(const data*);
 
 
 static void init(void) {
@@ -294,10 +284,10 @@ static void test_a_remove__found(void) {
 	const data *const param = &value;
 	data *expected, *got;
 	info("test a_remove -- item found");
-	info("a_remove(array, *%d, %s)", value, eq_as_int_repr);
+	info("a_remove(array, *%d, %s)", value, equal_as_ints_repr);
 	expected = VALUES + 3;
 	verbose("expected: %p", expected);
-	got = a_remove(array, param, eq_as_int);
+	got = a_remove(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertEquals(errno, 0);
@@ -309,9 +299,9 @@ static void test_a_remove__not_found(void) {
 	const data *const param = &value;
 	data *got;
 	info("test a_remove -- item not found");
-	info("a_remove(array, *%d, %s)", value, eq_as_int_repr);
+	info("a_remove(array, *%d, %s)", value, equal_as_ints_repr);
 	verbose("expected: (nil)");
-	got = a_remove(array, param, eq_as_int);
+	got = a_remove(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
 	CUTE_assertEquals(errno, EINVAL);
@@ -324,9 +314,9 @@ static void test_a_cond__found(void) {
 	data *expected, *got;
 	info("test a_cond -- found");
 	expected = VALUES + 1;
-	info("a_cond(array, *%d, %s)", *(int*)param, eq_as_int_repr);
+	info("a_cond(array, *%d, %s)", *(int*)param, equal_as_ints_repr);
 	verbose("expected: %p", expected);
-	got = a_cond(array, param, eq_as_int);
+	got = a_cond(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertEquals(errno, 0);
@@ -338,9 +328,9 @@ static void test_a_cond__not_found(void) {
 	data *const param = &value;
 	data *got;
 	info("test a_cond -- not found");
-	info("a_cond(array, *%d, %s)", value, eq_as_int_repr);
+	info("a_cond(array, *%d, %s)", value, equal_as_ints_repr);
 	verbose("expected: (nil)");
-	got = a_cond(array, param, eq_as_int);
+	got = a_cond(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
 	info("OK\n");

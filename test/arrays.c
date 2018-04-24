@@ -1,7 +1,26 @@
 #include <clog.h>
 #include <cute.h>
+#include <stdbool.h>
+#include <stdio.h> /* for printf */
 #include <stdlib.h> /* for EXIT_SUCCESS */
 
+#include "arrays.h"
+
+
+
+/* Helper functions */
+bool equal_as_ints(const data *const e1, const data *const e2) {
+	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
+	return *(int*)e1 == *(int*)e2;
+}
+const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
+
+void print_as_int(const void *const e) {
+	if(e)
+		printf("%d", *(int*)e);
+	else
+		printf("(null)");
+}
 
 
 /* Declarations of the tests cases */
@@ -20,7 +39,7 @@ extern void build_case_linkedlist(void);
 
 int main(void) {
 
-	const CUTE_RunResults ** results;
+	const CUTE_RunResults **results;
 
 	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_FUNC | CLOG_ATTR_COLORED);
 	build_case_fixedarray();
