@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Function declared with round parens is exectued in a subshell
+# Functions declared with round parens are exectued in a subshell
 function install_git_repo() (
 	# Fetch the project
 	git clone --quiet "$2" "$1" &&
@@ -12,12 +12,13 @@ function install_git_repo() (
 	echo "Successfully installed \"$1\" from \"$2\""
 )
 
-function clean_git_repo() {
+function clean_git_repos() {
 	# Delete the repo
-	rm -rf "$1" &&
-	echo "Removed clone repo \"$1\""
+	rm -rf "$@" &&
+	echo "Removed cloned repos" "$@"
 }
 
 
-install_git_repo log 'https://github.com/Moonstroke/C-log.git'
-clean_git_repo log
+install_git_repo clog 'https://github.com/Moonstroke/Clog.git'
+install_git_repo cute 'https://github.com/Moonstroke/CUTE.git'
+clean_git_repo clog
