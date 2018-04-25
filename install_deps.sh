@@ -21,4 +21,4 @@ function clean_git_repos() {
 
 install_git_repo clog 'https://github.com/Moonstroke/Clog.git'
 install_git_repo cute 'https://github.com/Moonstroke/CUTE.git'
-clean_git_repo clog
+clean_git_repos clog cute
