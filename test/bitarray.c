@@ -1,15 +1,18 @@
 #include "bitarray.h"
 #include "bitarray_funcs.h"
 
-#include <assert.h>
+#include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include <stdlib.h> /* for NULL */
 
 
 
 extern int errno;
+
+
+/* The instance of test case */
+CUTE_TestCase *case_bitarray;
 
 
 
@@ -23,7 +26,10 @@ static unsigned int COUNT = 5;
 static void init(void) {
 	info("barray = ba_new(%u)", BIT_ARRAY_SIZE);
 	barray = ba_new(BIT_ARRAY_SIZE);
-	assert(barray != NULL);
+	CUTE_runTimeAssert(barray != NULL);
+	for(unsigned int i = 0; i < BIT_ARRAY_SIZE; ++i) {
+		ba_put(barray, i, VALUES[i]);
+	}
 	info("OK\n");
 }
 
@@ -40,8 +46,8 @@ static void test_ba_new__0_null(void) {
 	verbose("expected: (nil)");
 	got = ba_new(0);
 	verbose("got     : %p", (void*)got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
+	CUTE_assertEquals(got, NULL);
+	CUTE_assertEquals(errno, EINVAL);
 	info("OK\n");
 }
 
@@ -52,22 +58,23 @@ static void test_ba_size(void) {
 	verbose("expected: %u", BIT_ARRAY_SIZE);
 	got = ba_size(barray);
 	verbose("got     : %u", got);
-	assert(got == BIT_ARRAY_SIZE);
+	CUTE_assertEquals(got, BIT_ARRAY_SIZE);
 	info("OK\n");
 }
 
 static void test_ba_put__valid(void) {
-	bool got;
+	bool expected, got;
 	bool param;
 	info("test ba_put -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		param = VALUES[index];
 		info("ba_put(barray, %u, %s)", index, BOOL_REPR(param));
-		verbose("expected: false");
+		expected = VALUES[index];
+		verbose("expected: %s", expected ? "true" : "false");
 		got = ba_put(barray, index, param);
 		verbose("got     : %s", BOOL_REPR(got));
-		assert(got == false);
-		assert(errno == 0);
+		CUTE_assertEquals(got, expected);
+		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
 }
@@ -87,8 +94,8 @@ static void test_ba_put__invalid(void) {
 		verbose("expected: false");
 		got = ba_put(barray, index, false);
 		verbose("got     : %s", BOOL_REPR(got));
-		assert(got == false);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, false);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -102,8 +109,8 @@ static void test_ba_get__valid(void) {
 		verbose("expected: %s", BOOL_REPR(expected));
 		got = ba_get(barray, index);
 		verbose("got     : %s", BOOL_REPR(got));
-		assert(got == expected);
-		assert(errno == 0);
+		CUTE_assertEquals(got, expected);
+		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
 }
@@ -122,8 +129,8 @@ static void test_ba_get__invalid(void) {
 		info("ba_get(barray, %u)", index);
 		verbose("expected = false");
 		got = ba_get(barray, index);
-		assert(got == false);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, false);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -137,31 +144,20 @@ static void test_ba_count(void) {
 	verbose("expected: %u", expected);
 	got = ba_count(barray);
 	verbose("got     : %u", got);
-	assert(got == expected);
+	CUTE_assertEquals(got, expected);
 	info("OK\n");
 }
 
 
-void test_bitarray(void) {
-
-	init();
-
-	test_ba_new__0_null();
-
-	test_ba_size();
-
-	test_ba_put__valid();
-
-	test_ba_put__invalid();
-
-	test_ba_get__valid();
-
-	test_ba_get__invalid();
-
-	test_ba_count();
-
-
-	ba_printf(barray);
-
-	cleanup();
+void build_case_bitarray(void) {
+	case_bitarray = CUTE_newTestCase("Tests for BitArray", 7);
+	CUTE_setCaseBefore(case_bitarray, init);
+	CUTE_setCaseAfter(case_bitarray, cleanup);
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_new__0_null));
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_size));
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_put__valid));
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_put__invalid));
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_get__valid));
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_get__invalid));
+	CUTE_addCaseTest(case_bitarray, CUTE_makeTest(test_ba_count));
 }

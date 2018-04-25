@@ -1,15 +1,19 @@
 #include "fixedarray.h"
 #include "fixedarray_funcs.h"
 
-#include <assert.h>
+#include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
-#include <stdio.h> /* for printf() */
+#include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
 
 
 extern int errno;
+
+
+/* Test instance of test case */
+CUTE_TestCase *case_fixedarray;
 
 
 
@@ -18,22 +22,20 @@ static FixedArray *farray;
 static const unsigned int INT_FIXED_ARRAY_SIZE = 8;
 static int VALUES[] = {1, 42, 6, 3, 27, 9, 55, 700};
 
-/* This value must be declared at global level, because it is used
-   in fa_unset AND fa_put */
-static const unsigned int unset_index = 3;
 
-/* used for fa_cond and fa_remove */
-static bool equal_as_ints(const data *const i, const data *const j) {
-	assert(i != NULL && j != NULL);
-	return *(int*)i == *(int*)j;
-}
-static const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
+extern bool equal_as_ints(const data*, const data*);
+extern const char equal_as_ints_repr[];
+
+extern void print_as_int(const data*);
 
 
 static void init(void) {
 	info("farray = fa_new(%u)", INT_FIXED_ARRAY_SIZE);
 	farray = fa_new(INT_FIXED_ARRAY_SIZE);
-	assert(farray != NULL);
+	CUTE_runTimeAssert(farray != NULL);
+	for(unsigned int i = 0; i < INT_FIXED_ARRAY_SIZE; ++i) {
+		fa_set(farray, i, &VALUES[i]);
+	}
 	info("OK\n");
 }
 
@@ -49,8 +51,8 @@ static void test_fa_new__0_null(void) {
 	verbose("expected: (nil)");
 	got = fa_new(0);
 	verbose("got     : %p", (void*)got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
+	CUTE_assertEquals(got, NULL);
+	CUTE_assertEquals(errno, EINVAL);
 	info("OK\n");
 }
 
@@ -61,7 +63,7 @@ static void test_fa_size(void) {
 	verbose("expected: %u", INT_FIXED_ARRAY_SIZE);
 	got = fa_size(farray);
 	verbose("got     : %u", got);
-	assert(got == INT_FIXED_ARRAY_SIZE);
+	CUTE_assertEquals(got, INT_FIXED_ARRAY_SIZE);
 	info("OK\n");
 }
 
@@ -72,7 +74,7 @@ static void test_fa_set__valid(void) {
 		param = VALUES + index;
 		info("fa_set(farray, %u, %p)", index, param);
 		fa_set(farray, index, param);
-		assert(errno == 0);
+		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
 }
@@ -93,7 +95,7 @@ static void test_fa_set__invalid(void) {
 		verbose("expected errno: %d", ERANGE);
 		fa_set(farray, index, param);
 		verbose("got      errno: %d", errno);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
@@ -107,8 +109,8 @@ static void test_fa_get__valid(void) {
 		verbose("expected: %p", expected);
 		got = fa_get(farray, index);
 		verbose("got     : %p", got);
-		assert(got == expected);
-		assert(errno == 0);
+		CUTE_assertEquals(got, expected);
+		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
 }
@@ -128,22 +130,23 @@ static void test_fa_get__invalid(void) {
 		verbose("expected : (nil)");
 		got = fa_get(farray, index);
 		verbose("got      : %p", got);
-		assert(got == NULL);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, NULL);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
 
 static void test_fa_unset__valid(void) {
+	const unsigned int index = 5;
 	data *expected, *got;
 	info("test fa_unset -- valid index");
-	info("fa_unset(farray, %u)", unset_index);
-	expected = VALUES + unset_index;
+	info("fa_unset(farray, %u)", index);
+	expected = VALUES + index;
 	verbose("expected: %p", expected);
-	got = fa_unset(farray, unset_index);
+	got = fa_unset(farray, index);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -162,34 +165,40 @@ static void test_fa_unset__invalid(void) {
 		verbose("expected : (nil)");
 		got = fa_unset(farray, index);
 		verbose("got      : %p", got);
-		assert(got == NULL);
-		assert(errno == ERANGE);
+		CUTE_assertEquals(got, NULL);
+		CUTE_assertEquals(errno, ERANGE);
 	}
 	info("OK\n");
 }
 
 static void test_fa_count(void) {
+	const unsigned int index = 3;
 	unsigned int expected, got;
 	info("test fa_count");
+	verbose("fa_unset(farray, %u)", index);
+	fa_unset(farray, index);
 	info("fa_count(farray)");
 	expected = INT_FIXED_ARRAY_SIZE - 1;
 	verbose("expected: %u", expected);
 	got = fa_count(farray);
 	verbose("got     : %u", got);
-	assert(got == expected);
+	CUTE_assertEquals(got, expected);
 	info("OK\n");
 }
 
 static void test_fa_put__valid(void) {
 	static int extra = 33;
+	const unsigned int index = 4;
 	data *const param = &extra;
 	int expected, got;
+	verbose("fa_unset(farray, %u)", index);
+	fa_unset(farray, index);
 	info("test fa_put(farray, %p)", param);
-	expected = unset_index;
+	expected = index;
 	verbose("expected: %d", expected);
 	got = fa_put(farray, param);
 	verbose("got     : %d", got);
-	assert(got == expected);
+	CUTE_assertEquals(got, expected);
 	info("OK\n");
 }
 
@@ -202,7 +211,7 @@ static void test_fa_put__invalid(void) {
 	verbose("expected: -1");
 	got = fa_put(farray, param);
 	verbose("got     : %d", got);
-	assert(got == -1);
+	CUTE_assertEquals(got, -1);
 	info("OK\n");
 }
 
@@ -216,8 +225,8 @@ static void test_fa_cond__valid(void) {
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -231,8 +240,8 @@ static void test_fa_cond__null(void) {
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, NULL, param);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -245,8 +254,8 @@ static void test_fa_cond__invalid(void) {
 	verbose("expected: (nil)");
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
+	CUTE_assertEquals(got, NULL);
+	CUTE_assertEquals(errno, EINVAL);
 	info("OK\n");
 }
 
@@ -260,8 +269,8 @@ static void test_fa_remove__valid(void) {
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -275,8 +284,8 @@ static void test_fa_remove__null(void) {
 	verbose("expected: %p", expected);
 	got = fa_cond(farray, NULL, param);
 	verbose("got     : %p", got);
-	assert(got == expected);
-	assert(errno == 0);
+	CUTE_assertEquals(got, expected);
+	CUTE_assertEquals(errno, 0);
 	info("OK\n");
 }
 
@@ -289,8 +298,8 @@ static void test_fa_remove__invalid(void) {
 	verbose("expected: (nil)");
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
-	assert(got == NULL);
-	assert(errno == EINVAL);
+	CUTE_assertEquals(got, NULL);
+	CUTE_assertEquals(errno, EINVAL);
 	info("OK\n");
 }
 
@@ -299,69 +308,38 @@ static void inc(data *const v) {
 }
 static const char inc_repr[] = "(int i) {++i;}";
 static void test_fa_each(void) {
-	const int values_after[] = {2, 43, 7, 34, 28, 10, 56, 701};
 	info("test fa_each");
 	info("fa_each(farray, %s)", inc_repr);
 	fa_each(farray, inc);
 	verbose("Checking array elements...");
 	for(unsigned int i = 0; i < INT_FIXED_ARRAY_SIZE; ++i) {
-		assert(*(int*)fa_get(farray, i) == values_after[i]);
+		CUTE_assertEquals(*(int*)fa_get(farray, i), VALUES[i]);
 		verbose("OK for %u", i);
 	}
 	info("OK\n");
 }
 
 
-static void print_as_int(const data *const e) {
-	if(e)
-		printf("%d", *(int*)e);
-	else
-		printf("(null)");
-}
-void test_fixedarray(void) {
-
-	init();
-
-
-	test_fa_new__0_null();
-
-	test_fa_size();
-
-	test_fa_set__valid();
-	fa_printf(farray, print_as_int);
-
-	test_fa_set__invalid();
-
-	test_fa_get__valid();
-
-	test_fa_get__invalid();
-
-	test_fa_unset__valid();
-	fa_printf(farray, print_as_int);
-
-	test_fa_unset__invalid();
-
-	test_fa_count();
-
-	test_fa_put__valid();
-	fa_printf(farray, print_as_int);
-
-	test_fa_put__invalid();
-
-	test_fa_cond__valid();
-
-	test_fa_cond__null();
-
-	test_fa_cond__invalid();
-
-	test_fa_remove__valid();
-
-	test_fa_remove__null();
-
-	test_fa_remove__invalid();
-
-	test_fa_each();
-	fa_printf(farray, print_as_int);
-
-	cleanup();
+void build_case_fixedarray(void) {
+	case_fixedarray = CUTE_newTestCase("Tests for FixedArray", 18);
+	CUTE_setCaseBefore(case_fixedarray, init);
+	CUTE_setCaseAfter(case_fixedarray, cleanup);
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_new__0_null));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_size));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_set__valid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_set__invalid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_get__valid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_get__invalid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_unset__valid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_unset__invalid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_count));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_put__valid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_put__invalid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_cond__valid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_cond__null));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_cond__invalid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_remove__valid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_remove__null));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_remove__invalid));
+	CUTE_addCaseTest(case_fixedarray, CUTE_makeTest(test_fa_each));
 }

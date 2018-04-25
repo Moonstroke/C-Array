@@ -64,7 +64,7 @@ ifeq ($(DEBUG), y)
 endif
 
 # The libraries to link against
-LDLIBS := -lclog
+LDLIBS := -lclog -lcute
 
 # Linkage flags
 LDFLAGS := -L.

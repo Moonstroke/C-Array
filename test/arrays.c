@@ -1,32 +1,59 @@
 #include <clog.h>
+#include <cute.h>
+#include <stdbool.h>
+#include <stdio.h> /* for printf */
 #include <stdlib.h> /* for EXIT_SUCCESS */
 
-/* Declarations of the tests suites */
-extern void test_array(void);
-extern void test_fixedarray(void);
-extern void test_linkedlist(void);
-extern void test_bitarray(void);
+#include "arrays.h"
+
+
+
+/* Helper functions */
+bool equal_as_ints(const data *const e1, const data *const e2) {
+	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
+	return *(int*)e1 == *(int*)e2;
+}
+const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
+
+void print_as_int(const void *const e) {
+	if(e)
+		printf("%d", *(int*)e);
+	else
+		printf("(null)");
+}
+
+
+/* Declarations of the tests cases */
+extern CUTE_TestCase *case_fixedarray;
+extern void build_case_fixedarray(void);
+
+extern CUTE_TestCase *case_array;
+extern void build_case_array(void);
+
+extern CUTE_TestCase *case_bitarray;
+extern void build_case_bitarray(void);
+
+extern CUTE_TestCase *case_linkedlist;
+extern void build_case_linkedlist(void);
+
 
 int main(void) {
 
+	const CUTE_RunResults **results;
+
 	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_FUNC | CLOG_ATTR_COLORED);
+	build_case_fixedarray();
+	build_case_array();
+	build_case_bitarray();
+	build_case_linkedlist();
 
-	info("Launching tests for FixedArray...\n");
-	test_fixedarray();
-	info("\nTests for FixedArray ended correctly.\n\n");
+	CUTE_prepareTestSuite(4, case_fixedarray, case_array, case_bitarray,
+	                      case_linkedlist);
 
-	info("Launching tests for Array...\n");
-	test_array();
-	info("\nTests for Array ended correctly.\n\n");
+	results = CUTE_runTestSuite();
 
-	info("Launching tests for LinkedList...\n");
-	test_linkedlist();
-	info("Tests for LinkedList ended correctly.\n\n");
+	CUTE_printResults(4, results);
 
-	info("Launching tests for BitArray...\n");
-	test_bitarray();
-	info("Tests for BitArray ended correctly.\n\n");
 
-	info("End of tests.");
 	return EXIT_SUCCESS;
 }
