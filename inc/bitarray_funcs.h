@@ -39,5 +39,14 @@ MEMBER unsigned int ba_count(const BitArray *array) PURE;
  */
 MEMBER void ba_printf(const BitArray *array);
 
+/**
+ * \brief Convenient macro to translate a boolean to a string.
+ *
+ * \param[in] b The boolean
+ *
+ * \return The string representation of the given boolean
+ */
+#define BOOL_REPR(b) ((b) ? "true" : "false")
+
 
 #endif /* BITARRAY_FUNCS_H */

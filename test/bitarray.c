@@ -62,10 +62,10 @@ static void test_ba_put__valid(void) {
 	info("test ba_put -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		param = VALUES[index];
-		info("ba_put(barray, %u, %s)", index, param ? "true" : "false");
+		info("ba_put(barray, %u, %s)", index, BOOL_REPR(param));
 		verbose("expected: false");
 		got = ba_put(barray, index, param);
-		verbose("got     : %s", got ? "true" : "false");
+		verbose("got     : %s", BOOL_REPR(got));
 		assert(got == false);
 		assert(errno == 0);
 	}
@@ -86,7 +86,7 @@ static void test_ba_put__invalid(void) {
 		info("ba_put(barray, %u, false)", index);
 		verbose("expected: false");
 		got = ba_put(barray, index, false);
-		verbose("got     : %s", got ? "true" : "false");
+		verbose("got     : %s", BOOL_REPR(got));
 		assert(got == false);
 		assert(errno == ERANGE);
 	}
@@ -99,9 +99,9 @@ static void test_ba_get__valid(void) {
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		info("ba_get(barray, %u)", index);
 		expected = VALUES[index];
-		verbose("expected: %s", expected ? "true" : "false");
+		verbose("expected: %s", BOOL_REPR(expected));
 		got = ba_get(barray, index);
-		verbose("got     : %s", got ? "true" : "false");
+		verbose("got     : %s", BOOL_REPR(got));
 		assert(got == expected);
 		assert(errno == 0);
 	}

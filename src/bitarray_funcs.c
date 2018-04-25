@@ -15,9 +15,9 @@ unsigned int ba_count(const BitArray *const ba) {
 
 void ba_printf(const BitArray *const ba) {
 	const unsigned int s = ba_size(ba);
-	printf("[%se", ba_get(ba, 0) ? "tru" : "fals");
+	printf("[%s", BOOL_REPR(ba_get(ba, 0)));
 	for(unsigned int i = 1; i < s; ++i) {
-		printf(", %se", ba_get(ba, i) ? "tru" : "fals");
+		printf(", %s", BOOL_REPR(ba_get(ba, i)));
 	}
 	printf("]\n");
 }
