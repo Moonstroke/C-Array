@@ -46,30 +46,38 @@ static void cleanup(void) {
 
 
 static void test_ll_len__empty(void) {
+	LinkedList *empty_llist;
 	unsigned int got;
 	info("test ll_len -- empty list");
-	info("ll_len(llist)");
+	verbose("empty_llist = ll_new()");
+	empty_llist = ll_new();
+	info("ll_len(empty_llist)");
 	verbose("expected: 0");
-	got = ll_len(llist);
+	got = ll_len(empty_llist);
 	verbose("got     : %u", got);
 	CUTE_assertEquals(got, 0);
+	ll_free(empty_llist);
 	info("OK\n");
 }
 
 static void test_ll_append(void) {
+	LinkedList *empty_llist;
 	int expected, got;
 	data *param;
 	info("tests ll_append");
+	verbose("empty_llist = ll_new()");
+	empty_llist = ll_new();
 	for(unsigned int n = 0; n < INT_LINKED_LIST_SIZE; ++n) {
 		param = VALUES + n;
-		info("ll_append(llist, %p)", param);
+		info("ll_append(empty_llist, %p)", param);
 		expected = n;
 		verbose("expected: %d", expected);
-		got = ll_append(llist, param);
+		got = ll_append(empty_llist, param);
 		verbose("got     : %d", got);
 		CUTE_assertEquals(got, expected);
 		CUTE_assertEquals(errno, 0);
 	}
+	ll_free(empty_llist);
 	info("OK\n");
 }
 
@@ -237,7 +245,7 @@ static void test_ll_swap__valid(void) {
 	info("ll_swap(llist, %u, %p)", index, param);
 	expected = VALUES + index;
 	verbose("expected: %p = %d", expected, *(int*)expected);
-	got = ll_swap(llist, index - 1, param); /* -1 because of ll_drop */
+	got = ll_swap(llist, index, param);
 	verbose("got     : %p = %d", got, *(int*)got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertEquals(errno, 0);

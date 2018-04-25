@@ -56,31 +56,39 @@ static void test_a_new__0_null(void) {
 }
 
 static void test_a_size__empty(void) {
+	Array *empty_array;
 	unsigned int got;
 	info("test a_size -- empty array");
-	info("a_size(array)");
+	verbose("empty_array = a_new(%u)", INT_ARRAY_SIZE);
+	empty_array = a_new(INT_ARRAY_SIZE);
+	info("a_size(empty_array)");
 	verbose("expected: 0");
-	got = a_size(array);
+	got = a_size(empty_array);
 	verbose("got     : %u", got);
+	a_free(empty_array);
 	CUTE_assertEquals(got, 0);
 	info("OK\n");
 }
 
 static void test_a_append(void) {
+	Array *empty_array;
 	data *param;
 	int expected, got;
 	info("test a_append");
+	verbose("empty_array = a_new(%u)", INT_ARRAY_SIZE);
+	empty_array = a_new(INT_ARRAY_SIZE);
 	verbose("VALUES = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
 	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
 		param = VALUES + index;
 		info("a_append(array, %p)", param);
 		expected = index;
 		verbose("expected: %d", expected);
-		got = a_append(array, param);
+		got = a_append(empty_array, param);
 		verbose("got     : %d", got);
 		CUTE_assertEquals(got, expected);
 		CUTE_assertEquals(errno, 0);
 	}
+	a_free(empty_array);
 	info("OK\n");
 }
 

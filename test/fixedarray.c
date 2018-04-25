@@ -22,9 +22,6 @@ static FixedArray *farray;
 static const unsigned int INT_FIXED_ARRAY_SIZE = 8;
 static int VALUES[] = {1, 42, 6, 3, 27, 9, 55, 700};
 
-/* This value must be declared at global level, because it is used
-   in fa_unset AND fa_put */
-static const unsigned int unset_index = 3;
 
 extern bool equal_as_ints(const data*, const data*);
 extern const char equal_as_ints_repr[];
@@ -140,12 +137,13 @@ static void test_fa_get__invalid(void) {
 }
 
 static void test_fa_unset__valid(void) {
+	const unsigned int index = 5;
 	data *expected, *got;
 	info("test fa_unset -- valid index");
-	info("fa_unset(farray, %u)", unset_index);
-	expected = VALUES + unset_index;
+	info("fa_unset(farray, %u)", index);
+	expected = VALUES + index;
 	verbose("expected: %p", expected);
-	got = fa_unset(farray, unset_index);
+	got = fa_unset(farray, index);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertEquals(errno, 0);
@@ -174,8 +172,11 @@ static void test_fa_unset__invalid(void) {
 }
 
 static void test_fa_count(void) {
+	const unsigned int index = 3;
 	unsigned int expected, got;
 	info("test fa_count");
+	verbose("fa_unset(farray, %u)", index);
+	fa_unset(farray, index);
 	info("fa_count(farray)");
 	expected = INT_FIXED_ARRAY_SIZE - 1;
 	verbose("expected: %u", expected);
@@ -187,10 +188,13 @@ static void test_fa_count(void) {
 
 static void test_fa_put__valid(void) {
 	static int extra = 33;
+	const unsigned int index = 4;
 	data *const param = &extra;
 	int expected, got;
+	verbose("fa_unset(farray, %u)", index);
+	fa_unset(farray, index);
 	info("test fa_put(farray, %p)", param);
-	expected = unset_index;
+	expected = index;
 	verbose("expected: %d", expected);
 	got = fa_put(farray, param);
 	verbose("got     : %d", got);
@@ -304,13 +308,12 @@ static void inc(data *const v) {
 }
 static const char inc_repr[] = "(int i) {++i;}";
 static void test_fa_each(void) {
-	const int values_after[] = {2, 43, 7, 34, 28, 10, 56, 701};
 	info("test fa_each");
 	info("fa_each(farray, %s)", inc_repr);
 	fa_each(farray, inc);
 	verbose("Checking array elements...");
 	for(unsigned int i = 0; i < INT_FIXED_ARRAY_SIZE; ++i) {
-		CUTE_assertEquals(*(int*)fa_get(farray, i), values_after[i]);
+		CUTE_assertEquals(*(int*)fa_get(farray, i), VALUES[i]);
 		verbose("OK for %u", i);
 	}
 	info("OK\n");

@@ -63,16 +63,17 @@ static void test_ba_size(void) {
 }
 
 static void test_ba_put__valid(void) {
-	bool got;
+	bool expected, got;
 	bool param;
 	info("test ba_put -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		param = VALUES[index];
 		info("ba_put(barray, %u, %s)", index, param ? "true" : "false");
-		verbose("expected: false");
+		expected = VALUES[index];
+		verbose("expected: %s", expected ? "true" : "false");
 		got = ba_put(barray, index, param);
 		verbose("got     : %s", got ? "true" : "false");
-		CUTE_assertEquals(got, false);
+		CUTE_assertEquals(got, expected);
 		CUTE_assertEquals(errno, 0);
 	}
 	info("OK\n");
