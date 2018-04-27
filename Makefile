@@ -128,7 +128,3 @@ install:
 uninstall:
 	@rm -f $(patsubst $(INC_DIR)/%,$(INST_DIR)/include/%,$(wildcard $(INC_DIR)/*))
 	@rm -f $(INST_DIR)/lib/$(AR_LIB)
-
-# Install the project dependencies
-get-deps:
-	@./install_deps.sh

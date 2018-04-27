@@ -1,3 +1,4 @@
+# Generate two builds with both GCC and Clang
 language: c
 compiler:
   - gcc
@@ -10,11 +11,12 @@ branches:
     - master
 
 
-# We need to be root to install the dependencies
-sudo: true
+# Use Docker image containing my other repos Clog and CUTE
+services:
+  - docker
+before_install:
+  - docker pull joh1/clog_cute
 
-install:
-  - make get-deps
 
 script:
   - make
