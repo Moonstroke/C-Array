@@ -4,6 +4,8 @@
 #include <cute.h>
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
+#include <stdbool.h>
+#include <stdlib.h> /* for NULL */
 
 
 

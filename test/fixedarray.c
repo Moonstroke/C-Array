@@ -12,7 +12,7 @@
 extern int errno;
 
 
-/* Test instance of test case */
+/* The instance of test case */
 CUTE_TestCase *case_fixedarray;
 
 
