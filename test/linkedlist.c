@@ -2,14 +2,10 @@
 #include "linkedlist_funcs.h"
 
 #include <cute.h>
-#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
 #include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
-
-
-extern int errno;
 
 
 /* The instance of test case */
@@ -32,7 +28,7 @@ extern void print_as_int(const data*);
 static void init(void) {
 	info("llist = ll_new()");
 	llist = ll_new();
-	CUTE_runTimeAssert(llist != NULL);
+	CUTE_assertNotEquals(llist, NULL);
 	for(unsigned int i = 0; i < INT_LINKED_LIST_SIZE; ++i) {
 		ll_add(llist, i, &VALUES[i]);
 	}
@@ -76,7 +72,7 @@ static void test_ll_append(void) {
 		got = ll_append(empty_llist, param);
 		verbose("got     : %d", got);
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	ll_free(empty_llist);
 	info("OK\n");
@@ -103,7 +99,7 @@ static void test_ll_get__valid(void) {
 		got = ll_get(llist, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	info("OK\n");
 }
@@ -124,7 +120,7 @@ static void test_ll_get__invalid(void) {
 		got = ll_get(llist, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -138,7 +134,7 @@ static void test_ll_set__valid(void) {
 	verbose("expected errno: 0");
 	ll_set(llist, index, param);
 	verbose("actual errno  : %d", errno);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -158,7 +154,7 @@ static void test_ll_set__invalid(void) {
 		verbose("expected errno: %d", ERANGE);
 		ll_set(llist, index, param);
 		verbose("actual errno  : %d", errno);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -175,7 +171,7 @@ static void test_ll_add__valid(void) {
 	got = ll_add(llist, index, param);
 	verbose("got     : %d", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -197,7 +193,7 @@ static void test_ll_add__invalid(void) {
 		got = ll_add(llist, index, param);
 		verbose("got     : %d", got);
 		CUTE_assertEquals(got, -1);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -212,7 +208,7 @@ static void test_ll_drop__valid(void) {
 	got = ll_drop(llist, index);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -232,7 +228,7 @@ static void test_ll_drop__invalid(void) {
 		got = ll_drop(llist, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -249,7 +245,7 @@ static void test_ll_swap__valid(void) {
 	got = ll_swap(llist, index, param);
 	verbose("got     : %p = %d", got, *(int*)got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -271,7 +267,7 @@ static void test_ll_swap__invalid(void) {
 		got = ll_swap(llist, index, param);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -287,7 +283,7 @@ static void test_ll_cond__found(void) {
 	got = ll_cond(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -315,7 +311,7 @@ static void test_ll_remove__found(void) {
 	got = ll_remove(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -329,7 +325,7 @@ static void test_ll_remove__not_found(void) {
 	got = ll_remove(llist, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 

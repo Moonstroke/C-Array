@@ -2,13 +2,9 @@
 #include "bitarray_funcs.h"
 
 #include <cute.h>
-#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
 #include <stdlib.h> /* for NULL */
 
-
-
-extern int errno;
 
 
 /* The instance of test case */
@@ -26,7 +22,7 @@ static unsigned int COUNT = 5;
 static void init(void) {
 	info("barray = ba_new(%u)", BIT_ARRAY_SIZE);
 	barray = ba_new(BIT_ARRAY_SIZE);
-	CUTE_runTimeAssert(barray != NULL);
+	CUTE_assertNotEquals(barray, NULL);
 	for(unsigned int i = 0; i < BIT_ARRAY_SIZE; ++i) {
 		ba_put(barray, i, VALUES[i]);
 	}
@@ -47,7 +43,7 @@ static void test_ba_new__0_null(void) {
 	got = ba_new(0);
 	verbose("got     : %p", (void*)got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 
@@ -74,7 +70,7 @@ static void test_ba_put__valid(void) {
 		got = ba_put(barray, index, param);
 		verbose("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	info("OK\n");
 }
@@ -95,7 +91,7 @@ static void test_ba_put__invalid(void) {
 		got = ba_put(barray, index, false);
 		verbose("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, false);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -110,7 +106,7 @@ static void test_ba_get__valid(void) {
 		got = ba_get(barray, index);
 		verbose("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	info("OK\n");
 }
@@ -130,7 +126,7 @@ static void test_ba_get__invalid(void) {
 		verbose("expected = false");
 		got = ba_get(barray, index);
 		CUTE_assertEquals(got, false);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }

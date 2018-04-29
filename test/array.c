@@ -2,14 +2,10 @@
 #include "array_funcs.h"
 
 #include <cute.h>
-#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
 #include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
-
-
-extern int errno;
 
 
 /* The instance of test case */
@@ -31,7 +27,7 @@ extern void print_as_int(const data*);
 static void init(void) {
 	info("array = a_new(%u)", INT_ARRAY_SIZE);
 	array = a_new(INT_ARRAY_SIZE);
-	CUTE_runTimeAssert(array != NULL);
+	CUTE_assertNotEquals(array, NULL);
 	for(unsigned int i = 0; i < INT_ARRAY_SIZE; ++i) {
 		a_add(array, i, &VALUES[i]);
 	}
@@ -53,7 +49,7 @@ static void test_a_new__0_null(void) {
 	got = a_new(index);
 	verbose("got     : %p", (void*)got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 
@@ -88,7 +84,7 @@ static void test_a_append(void) {
 		got = a_append(empty_array, param);
 		verbose("got     : %d", got);
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	a_free(empty_array);
 	info("OK\n");
@@ -116,7 +112,7 @@ static void test_a_get__valid(void) {
 		got = a_get(array, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	info("OK\n");
 }
@@ -137,7 +133,7 @@ static void test_a_get__invalid(void) {
 		got = a_get(array, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -151,7 +147,7 @@ static void test_a_set__valid(void) {
 	verbose("expected errno: 0");
 	a_set(array, index, param);
 	verbose("actual errno  : %d", errno);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -171,7 +167,7 @@ static void test_a_set__invalid(void) {
 		verbose("expected errno: %d", ERANGE);
 		a_set(array, index, param);
 		verbose("actual errno  : %d", errno);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -194,7 +190,7 @@ static void test_a_add__invalid(void) {
 		got = a_add(array, index, param);
 		verbose("got     : %d", got);
 		CUTE_assertEquals(got, -1);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -210,7 +206,7 @@ static void test_a_append__overflow(void) {
 	got = a_append(array, param);
 	verbose("got     : %d", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -224,7 +220,7 @@ static void test_a_drop__valid(void) {
 	got = a_drop(array, index);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -244,7 +240,7 @@ static void test_a_drop__invalid(void) {
 		got = a_drop(array, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -262,7 +258,7 @@ void test_a_swap__valid(void) {
 	got = *(int*)a_swap(array, index, param);
 	verbose("got     : %d", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -284,7 +280,7 @@ static void test_a_swap__invalid(void) {
 		got = a_swap(array, index, param);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -300,7 +296,7 @@ static void test_a_remove__found(void) {
 	got = a_remove(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -314,7 +310,7 @@ static void test_a_remove__not_found(void) {
 	got = a_remove(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 
@@ -329,7 +325,7 @@ static void test_a_cond__found(void) {
 	got = a_cond(array, param, equal_as_ints);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 

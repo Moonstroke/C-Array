@@ -2,14 +2,10 @@
 #include "fixedarray_funcs.h"
 
 #include <cute.h>
-#include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <clog.h>
 #include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
-
-
-extern int errno;
 
 
 /* The instance of test case */
@@ -32,7 +28,7 @@ extern void print_as_int(const data*);
 static void init(void) {
 	info("farray = fa_new(%u)", INT_FIXED_ARRAY_SIZE);
 	farray = fa_new(INT_FIXED_ARRAY_SIZE);
-	CUTE_runTimeAssert(farray != NULL);
+	CUTE_assertNotEquals(farray, NULL);
 	for(unsigned int i = 0; i < INT_FIXED_ARRAY_SIZE; ++i) {
 		fa_set(farray, i, &VALUES[i]);
 	}
@@ -52,7 +48,7 @@ static void test_fa_new__0_null(void) {
 	got = fa_new(0);
 	verbose("got     : %p", (void*)got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 
@@ -74,7 +70,7 @@ static void test_fa_set__valid(void) {
 		param = VALUES + index;
 		info("fa_set(farray, %u, %p)", index, param);
 		fa_set(farray, index, param);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	info("OK\n");
 }
@@ -95,7 +91,7 @@ static void test_fa_set__invalid(void) {
 		verbose("expected errno: %d", ERANGE);
 		fa_set(farray, index, param);
 		verbose("got      errno: %d", errno);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -110,7 +106,7 @@ static void test_fa_get__valid(void) {
 		got = fa_get(farray, index);
 		verbose("got     : %p", got);
 		CUTE_assertEquals(got, expected);
-		CUTE_assertEquals(errno, 0);
+		CUTE_assertNoError();
 	}
 	info("OK\n");
 }
@@ -131,7 +127,7 @@ static void test_fa_get__invalid(void) {
 		got = fa_get(farray, index);
 		verbose("got      : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -146,7 +142,7 @@ static void test_fa_unset__valid(void) {
 	got = fa_unset(farray, index);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -166,7 +162,7 @@ static void test_fa_unset__invalid(void) {
 		got = fa_unset(farray, index);
 		verbose("got      : %p", got);
 		CUTE_assertEquals(got, NULL);
-		CUTE_assertEquals(errno, ERANGE);
+		CUTE_assertErrnoEquals(ERANGE);
 	}
 	info("OK\n");
 }
@@ -226,7 +222,7 @@ static void test_fa_cond__valid(void) {
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -241,7 +237,7 @@ static void test_fa_cond__null(void) {
 	got = fa_cond(farray, NULL, param);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -255,7 +251,7 @@ static void test_fa_cond__invalid(void) {
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 
@@ -270,7 +266,7 @@ static void test_fa_remove__valid(void) {
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -285,7 +281,7 @@ static void test_fa_remove__null(void) {
 	got = fa_cond(farray, NULL, param);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, expected);
-	CUTE_assertEquals(errno, 0);
+	CUTE_assertNoError();
 	info("OK\n");
 }
 
@@ -299,7 +295,7 @@ static void test_fa_remove__invalid(void) {
 	got = fa_cond(farray, equal_as_ints, param);
 	verbose("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
-	CUTE_assertEquals(errno, EINVAL);
+	CUTE_assertErrnoEquals(EINVAL);
 	info("OK\n");
 }
 
