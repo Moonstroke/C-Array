@@ -28,7 +28,8 @@
  * \param[in,out] farray    The fixed array
  * \param[in]     free_item The function to free each item with
  */
-MEMBER void fa_freer(FixedArray *farray, void (*free_item)(data*)) NOTNULL(2);
+CODS_MEMBER void fa_freer(FixedArray *farray, void (*free_item)(data*))
+CODS_NOTNULL(2);
 
 
 /**
@@ -40,7 +41,7 @@ MEMBER void fa_freer(FixedArray *farray, void (*free_item)(data*)) NOTNULL(2);
  * \param[in,out] farray    The fixed array
  * \param[in]     free_item The function to free the items
  */
-MEMBER void fa_clear(FixedArray *farray, void (*free_item)(data*));
+CODS_MEMBER void fa_clear(FixedArray *farray, void (*free_item)(data*));
 
 
 /**
@@ -50,7 +51,7 @@ MEMBER void fa_clear(FixedArray *farray, void (*free_item)(data*));
  *
  * \return The number of elements that are not \c NULL.
  */
-MEMBER unsigned int fa_count(const FixedArray *farray) PURE;
+CODS_MEMBER unsigned int fa_count(const FixedArray *farray) CODS_PURE;
 
 
 /**
@@ -63,7 +64,7 @@ MEMBER unsigned int fa_count(const FixedArray *farray) PURE;
  * \return The index where the element was put, or \c -1 i the element could not
  *         be placed.
  */
-MEMBER int fa_put(FixedArray *farray, data *item) NOTNULL(2);
+CODS_MEMBER int fa_put(FixedArray *farray, data *item) CODS_NOTNULL(2);
 
 
 /**
@@ -79,8 +80,8 @@ MEMBER int fa_put(FixedArray *farray, data *item) NOTNULL(2);
  * \return The former element of the array at given index, or \c NULL if the
  *         provided index is invalid.
  */
-MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item)
-NODISCARD;
+CODS_MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item)
+CODS_NODISCARD;
 
 /**
  * \brief Unsets an element of the array (ie. set it to \c NULL) and returns it.
@@ -92,8 +93,8 @@ NODISCARD;
  *
  * \return The element just unset, or \c NULL if the index is invalid.
  */
-MEMBER INLINE data *fa_unset(FixedArray *const farray,
-                             const unsigned int index) {
+CODS_MEMBER CODS_INLINE
+data *fa_unset(FixedArray *const farray, const unsigned int index) {
 	return fa_swap(farray, index, NULL);
 }
 
@@ -116,9 +117,9 @@ MEMBER INLINE data *fa_unset(FixedArray *const farray,
  *
  * \return The first element to match the value, or \c NULL.
  */
-MEMBER data *fa_cond(const FixedArray *farray,
-                     bool (*eq_func)(const data*, const data*),
-                     const data *value) PURE;
+CODS_MEMBER data *fa_cond(const FixedArray *farray,
+                          bool (*eq_func)(const data*, const data*),
+                          const data *value) CODS_PURE;
 
 
 /**
@@ -138,9 +139,9 @@ MEMBER data *fa_cond(const FixedArray *farray,
  *
  * \return The first element to match the value, or \c NULL.
  */
-MEMBER data *fa_remove(FixedArray *farray,
-                       bool (*eq_func)(const data*, const data*),
-                       const data *value);
+CODS_MEMBER data *fa_remove(FixedArray *farray,
+                            bool (*eq_func)(const data*, const data*),
+                            const data *value);
 
 
 /**
@@ -150,7 +151,8 @@ MEMBER data *fa_remove(FixedArray *farray,
  * \param[in,out] farray The array
  * \param[in]     func   The function to apply
  */
-MEMBER void fa_each(FixedArray *farray, void (*func)(data*)) NOTNULL(2);
+CODS_MEMBER void fa_each(FixedArray *farray, void (*func)(data*))
+CODS_NOTNULL(2);
 
 
 /**
@@ -169,8 +171,8 @@ MEMBER void fa_each(FixedArray *farray, void (*func)(data*)) NOTNULL(2);
  * \param[in] farray     The array
  * \param[in] print_item The function used to print each element
  */
-MEMBER void fa_printf(const FixedArray *farray,
-                      void (*print_item)(const data*));
+CODS_MEMBER void fa_printf(const FixedArray *farray,
+                           void (*print_item)(const data*));
 
 
-#endif /* FIXEDARRAY_FUNCS_H */
+#endif /* CODS_FIXEDARRAY_FUNCS_H */

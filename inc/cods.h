@@ -20,8 +20,8 @@ typedef void data;
 
 #ifdef __GNUC__
 
-# define LIKELY(cond)   __builtin_expect((cond), 1)
-# define UNLIKELY(cond) __builtin_expect((cond), 0)
+# define CODS_LIKELY(cond)   __builtin_expect((cond), 1)
+# define CODS_UNLIKELY(cond) __builtin_expect((cond), 0)
 
 
 #else /* GNU C */
@@ -30,13 +30,13 @@ typedef void data;
 
 # define __attribute__(attr) /**< Empty declaration in ISO C */
 
-# define LIKELY(cond)   (cond)
-# define UNLIKELY(cond) (cond)
+# define CODS_LIKELY(cond)   (cond)
+# define CODS_UNLIKELY(cond) (cond)
 
 #endif
 
 /**
- * \def LIKELY(cond)
+ * \def CODS_LIKELY(cond)
  *
  * \brief The given boolean expression has a high probability of evaluating to
  *        \c true.
@@ -47,7 +47,7 @@ typedef void data;
  */
 
 /**
- * \def UNLIKELY(cond)
+ * \def CODS_UNLIKELY(cond)
  *
  * \brief The given boolean expression has a high probability of evaluating to
  *        \c false.
@@ -61,7 +61,7 @@ typedef void data;
  * \brief An attribute specifying that the function calls should be replaced by
  *        its code.
  */
-#define INLINE __attribute__((__always_inline__)) inline
+#define CODS_INLINE __attribute__((__always_inline__)) inline
 
 /**
  * \brief The arguments of the function whose positions (1-indexed) are given
@@ -70,10 +70,10 @@ typedef void data;
  * \note If no argument is given to this attribute, all pointer arguments are
  *       considered affected by this attribute.
  */
-#define NOTNULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
+#define CODS_NOTNULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
 
 /** Emits a warning if the return value of the function is not used. */
-#define NODISCARD __attribute__((__warn_unused_result__))
+#define CODS_NODISCARD __attribute__((__warn_unused_result__))
 
 /**
  * \brief The value returned is only function of the provided arguments and
@@ -84,7 +84,7 @@ typedef void data;
  *
  * \note This attribute implies \a NODISCARD.
  */
-#define PURE __attribute__((__pure__, __warn_unused_result__))
+#define CODS_PURE __attribute__((__pure__, __warn_unused_result__))
 
 /**
  * \brief The function does not affect external data; the return value is only
@@ -96,7 +96,7 @@ typedef void data;
  *
  * \note This attribute implies \a NODISCARD.
  */
-#define CONSTEXPR __attribute__((__const__, __warn_unused_result__))
+#define CODS_CONSTEXPR __attribute__((__const__, __warn_unused_result__))
 
 /**
  * \brief The function returns a pointer to a block of memory dynamically
@@ -104,16 +104,16 @@ typedef void data;
  *
  * \note This attribute implies \a NODISCARD.
  */
-#define CTOR __attribute__((__malloc__, __warn_unused_result__))
+#define CODS_CTOR __attribute__((__malloc__, __warn_unused_result__))
 
 /** The function is a type method. */
-#define MEMBER NOTNULL(1)
+#define CODS_MEMBER CODS_NOTNULL(1)
 
 
-#if !defined(FIXEDARRAY_H) && !defined(FIXEDARRAY_FUNCS_H) \
-    && !defined(ARRAY_H) && !defined(ARRAY_FUNCS_H) \
-    && !defined(LINKEDLIST_H) && !defined(LINKEDLIST_FUNCS_H) \
-    && !defined(BITARRAY_H) && !defined(BITARRAY_FUNCS_H)
+#if !defined(CODS_FIXEDARRAY_H) && !defined(CODS_FIXEDARRAY_FUNCS_H) \
+    && !defined(CODS_ARRAY_H) && !defined(CODS_ARRAY_FUNCS_H) \
+    && !defined(CODS_LINKEDLIST_H) && !defined(CODS_LINKEDLIST_FUNCS_H) \
+    && !defined(CODS_BITARRAY_H) && !defined(CODS_BITARRAY_FUNCS_H)
 /* The file has been included directly: use it as the project's main interface
 */
 

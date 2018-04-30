@@ -25,8 +25,8 @@
  *   array).
  */
 
-#ifndef FIXEDARRAY_H
-#define FIXEDARRAY_H
+#ifndef CODS_FIXEDARRAY_H
+#define CODS_FIXEDARRAY_H
 
 
 #include "cods.h" /* for function attrs, data */
@@ -44,7 +44,7 @@ typedef struct fixedarray FixedArray;
  *
  * \return A new instance of FixedArray of given size.
  */
-CTOR FixedArray *fa_new(unsigned int size);
+CODS_CTOR FixedArray *fa_new(unsigned int size);
 
 
 /**
@@ -52,7 +52,7 @@ CTOR FixedArray *fa_new(unsigned int size);
  *
  * \param[in,out] self The fixed array to free
  */
-MEMBER void fa_free(FixedArray *self);
+CODS_MEMBER void fa_free(FixedArray *self);
 
 
 /**
@@ -62,7 +62,7 @@ MEMBER void fa_free(FixedArray *self);
  *
  * \return The size of the fixed array.
  */
-MEMBER unsigned int fa_size(const FixedArray *self) PURE;
+CODS_MEMBER unsigned int fa_size(const FixedArray *self) CODS_PURE;
 
 
 /**
@@ -78,7 +78,7 @@ MEMBER unsigned int fa_size(const FixedArray *self) PURE;
  *
  * \return The element at given index, or \c NULL if the index is invalid.
  */
-MEMBER data *fa_get(const FixedArray *self, unsigned int index) PURE;
+CODS_MEMBER data *fa_get(const FixedArray *self, unsigned int index) CODS_PURE;
 
 /**
  * \brief Overwrites an element of the fixed array.
@@ -87,7 +87,7 @@ MEMBER data *fa_get(const FixedArray *self, unsigned int index) PURE;
  * \param[in]     index   The index at which to set the element
  * \param[in]     element The value to set
  */
-MEMBER void fa_set(FixedArray *self, unsigned int index, data *element);
+CODS_MEMBER void fa_set(FixedArray *self, unsigned int index, data *element);
 
 
-#endif /* FIXEDARRAY_H */
+#endif /* CODS_FIXEDARRAY_H */

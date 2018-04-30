@@ -8,8 +8,8 @@
  * This file contains additional functions related to the \a Array structure.
  */
 
-#ifndef ARRAY_FUNCS_H
-#define ARRAY_FUNCS_H
+#ifndef CODS_ARRAY_FUNCS_H
+#define CODS_ARRAY_FUNCS_H
 
 
 #include <stdbool.h>
@@ -30,7 +30,7 @@
  * \param[in,out] array    The array to free recursively
  * \param[in]     freeitem The function to use to free each item
  */
-MEMBER void a_freer(Array *array, void (*freeitem)(data*)) NOTNULL(2);
+CODS_MEMBER void a_freer(Array *array, void (*freeitem)(data*)) CODS_NOTNULL(2);
 
 
 /**
@@ -45,8 +45,8 @@ MEMBER void a_freer(Array *array, void (*freeitem)(data*)) NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-MEMBER data *a_swap(Array *self, unsigned int index, data *newitem)
-NODISCARD NOTNULL(3);
+CODS_MEMBER data *a_swap(Array *self, unsigned int index, data *newitem)
+CODS_NODISCARD CODS_NOTNULL(3);
 
 
 /**
@@ -55,7 +55,7 @@ NODISCARD NOTNULL(3);
  * \param[in,out] array The array to iterate over
  * \param[in]     apply The function to apply to each element
  */
-MEMBER void a_each(Array *array, void (*apply)(data*)) NOTNULL(2);
+CODS_MEMBER void a_each(Array *array, void (*apply)(data*)) CODS_NOTNULL(2);
 
 
 /**
@@ -77,7 +77,7 @@ MEMBER void a_each(Array *array, void (*apply)(data*)) NOTNULL(2);
  *
  * \return The first element to satisfy the condition, or \c NULL.
  */
-MEMBER data *a_cond(const Array *array, const data *value,
+CODS_MEMBER data *a_cond(const Array *array, const data *value,
                     bool (*equals)(const data*, const data*));
 
 
@@ -103,7 +103,7 @@ MEMBER data *a_cond(const Array *array, const data *value,
  *
  * \return The removed element, or \c NULL.
  */
-MEMBER data *a_remove(Array *array, const data *value,
+CODS_MEMBER data *a_remove(Array *array, const data *value,
                       bool (*equals)(const data*, const data*));
 
 
@@ -123,7 +123,7 @@ MEMBER data *a_remove(Array *array, const data *value,
  * \return An \a Array filled with the given items, or \c NULL if an error
  *         occured, or \a n equals \c 0.
  */
-CTOR Array *a_make(unsigned int n, data *const elements[static n]);
+CODS_CTOR Array *a_make(unsigned int n, data *const elements[static n]);
 
 
 /**
@@ -142,7 +142,7 @@ CTOR Array *a_make(unsigned int n, data *const elements[static n]);
  * \param[in,out] array     The array
  * \param[in]     printitem The function to print each element with
  */
-MEMBER void a_printf(const Array *array, void (*printitem)(const data*));
+CODS_MEMBER void a_printf(const Array *array, void (*printitem)(const data*));
 
 
-#endif /* ARRAY_FUNCS_H */
+#endif /* CODS_ARRAY_FUNCS_H */

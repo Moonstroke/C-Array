@@ -19,7 +19,7 @@ struct llist {
 };
 
 
-static INLINE Node *newnode(data *const d) {
+static CODS_INLINE Node *newnode(data *const d) {
 	Node *const node = malloc(sizeof(Node));
 	if(!node) {
 		return NULL;
@@ -29,7 +29,8 @@ static INLINE Node *newnode(data *const d) {
 	return node;
 }
 
-static INLINE Node *ll_goto(const LinkedList *const ll, const unsigned int n) {
+static CODS_INLINE Node *ll_goto(const LinkedList *const ll,
+                                 const unsigned int n) {
 	Node *item = ll->head;
 	for(unsigned int i = 0; i < n && item; ++i)
 		item = item->next;

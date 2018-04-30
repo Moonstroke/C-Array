@@ -24,8 +24,8 @@
  *   array).
  */
 
-#ifndef ARRAY_H
-#define ARRAY_H
+#ifndef CODS_ARRAY_H
+#define CODS_ARRAY_H
 
 
 #include "cods.h" /* for function attrs, data */
@@ -59,7 +59,7 @@ typedef struct array Array;
  * \return A new instance of \a Array, with \a size elements slots, or \c NULL
  *         if an error occurred.
  */
-CTOR Array *a_new(unsigned int size);
+CODS_CTOR Array *a_new(unsigned int size);
 
 
 /**
@@ -67,7 +67,7 @@ CTOR Array *a_new(unsigned int size);
  *
  * \param[in,out] self The array to free
  */
-MEMBER void a_free(Array *self);
+CODS_MEMBER void a_free(Array *self);
 
 
 /**
@@ -77,7 +77,7 @@ MEMBER void a_free(Array *self);
  *
  * \return The number of elements in the array.
  */
-MEMBER unsigned int a_size(const Array *self) PURE;
+CODS_MEMBER unsigned int a_size(const Array *self) CODS_PURE;
 
 
 /**
@@ -93,7 +93,7 @@ MEMBER unsigned int a_size(const Array *self) PURE;
  *
  * \return The \a index 'th element in the array, or \c NULL.
  */
-MEMBER data *a_get(const Array *self, unsigned int index) PURE;
+CODS_MEMBER data *a_get(const Array *self, unsigned int index) CODS_PURE;
 
 
 /**
@@ -105,7 +105,8 @@ MEMBER data *a_get(const Array *self, unsigned int index) PURE;
  * \param[in]     index   The index at which to update the element
  * \param[in]     newitem The new element to set
  */
-MEMBER void a_set(Array *self, unsigned int index, data *newitem) NOTNULL(3);
+CODS_MEMBER void a_set(Array *self, unsigned int index, data *newitem)
+CODS_NOTNULL(3);
 
 
 /**
@@ -120,7 +121,8 @@ MEMBER void a_set(Array *self, unsigned int index, data *newitem) NOTNULL(3);
  * \param[in]     newitem The element to add
  * \return The new size of the array or \c -1.
  */
-MEMBER int a_add(Array *self, unsigned int index, data *newitem) NOTNULL(3);
+CODS_MEMBER int a_add(Array *self, unsigned int index, data *newitem)
+CODS_NOTNULL(3);
 
 /**
  * \brief Adds an item to the end of the array.
@@ -135,7 +137,8 @@ MEMBER int a_add(Array *self, unsigned int index, data *newitem) NOTNULL(3);
  *
  * \sa a_add
  */
-MEMBER INLINE NOTNULL(2) int a_append(Array *self, data *item) {
+CODS_MEMBER CODS_INLINE CODS_NOTNULL(2)
+int a_append(Array *self, data *item) {
 	return a_add(self, a_size(self), item);
 }
 
@@ -151,6 +154,6 @@ MEMBER INLINE NOTNULL(2) int a_append(Array *self, data *item) {
  * \return The element just removed, or \c NULL if an error occurred (\a index
  *         is invalid).
  */
-MEMBER data *a_drop(Array *self, unsigned int index);
+CODS_MEMBER data *a_drop(Array *self, unsigned int index);
 
-#endif /* ARRAY_H */
+#endif /* CODS_ARRAY_H */

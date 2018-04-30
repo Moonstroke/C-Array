@@ -23,8 +23,8 @@
  * invalid (ie. greater or equal to the size of the array).
  */
 
-#ifndef BITARRAY_H
-#define BITARRAY_H
+#ifndef CODS_BITARRAY_H
+#define CODS_BITARRAY_H
 
 
 #include <stdbool.h>
@@ -47,7 +47,7 @@ typedef struct bitarray BitArray;
  *
  * \return A pointer to a bit array of \a size elements, or \c NULL.
  */
-CTOR BitArray *ba_new(unsigned int size);
+CODS_CTOR BitArray *ba_new(unsigned int size);
 
 
 /**
@@ -55,7 +55,7 @@ CTOR BitArray *ba_new(unsigned int size);
  *
  * \param[in] self The bit array to free
  */
-MEMBER void ba_free(BitArray *self);
+CODS_MEMBER void ba_free(BitArray *self);
 
 
 /**
@@ -65,7 +65,7 @@ MEMBER void ba_free(BitArray *self);
  *
  * \return The size of the bit array.
  */
-MEMBER unsigned int ba_size(const BitArray *self) PURE;
+CODS_MEMBER unsigned int ba_size(const BitArray *self) CODS_PURE;
 
 
 /**
@@ -79,7 +79,8 @@ MEMBER unsigned int ba_size(const BitArray *self) PURE;
  *
  * \return The value in the array, at index \a index.
  */
-MEMBER bool ba_get(const BitArray *self, unsigned int index) PURE;
+CODS_MEMBER bool ba_get(const BitArray *self, unsigned int index)
+CODS_PURE;
 
 
 /**
@@ -93,7 +94,7 @@ MEMBER bool ba_get(const BitArray *self, unsigned int index) PURE;
  *
  * \return The former value of the element, or \c false.
  */
-MEMBER bool ba_set(BitArray *const self, const unsigned int index);
+CODS_MEMBER bool ba_set(BitArray *const self, const unsigned int index);
 
 /**
  * \brief Sets the element at position \a index in the bit array to \c false.
@@ -106,7 +107,7 @@ MEMBER bool ba_set(BitArray *const self, const unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
+CODS_MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
 
 /**
  * \brief Gives an element of the bit array the given value.
@@ -120,10 +121,10 @@ MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-MEMBER INLINE bool ba_put(BitArray *const self, const unsigned int i,
-                          const bool val) {
+CODS_MEMBER CODS_INLINE
+bool ba_put(BitArray *const self, const unsigned int i, const bool val) {
 	return val ? ba_set(self, i) : ba_unset(self, i);
 }
 
 
-#endif /* BITARRAY_H */
+#endif /* CODS_BITARRAY_H */

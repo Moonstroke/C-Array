@@ -15,7 +15,8 @@ struct bitarray {
 };
 
 
-static INLINE bool ba_replace(BitArray *const ba, const unsigned int i, const uint8_t v) {
+static CODS_INLINE bool ba_replace(BitArray *const ba, const unsigned int i,
+                                   const uint8_t v) {
 	const bool b = ba_get(ba, i);
 	if(!errno) {
 		ba->data[i / 8] = v;

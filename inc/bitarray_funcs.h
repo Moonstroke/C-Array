@@ -9,8 +9,8 @@
  * \a BitArray.
  */
 
-#ifndef BITARRAY_FUNCS_H
-#define BITARRAY_FUNCS_H
+#ifndef CODS_BITARRAY_FUNCS_H
+#define CODS_BITARRAY_FUNCS_H
 
 
 #include "bitarray.h"
@@ -25,7 +25,7 @@
  *
  * \return The number of elements set to \c true in the bit array.
  */
-MEMBER unsigned int ba_count(const BitArray *array) PURE;
+CODS_MEMBER unsigned int ba_count(const BitArray *array) CODS_PURE;
 
 
 /**
@@ -36,7 +36,7 @@ MEMBER unsigned int ba_count(const BitArray *array) PURE;
  *
  * \param[in] array The bit array
  */
-MEMBER void ba_printf(const BitArray *array);
+CODS_MEMBER void ba_printf(const BitArray *array);
 
 /**
  * \brief Convenient macro to translate a boolean to a string.
@@ -48,4 +48,4 @@ MEMBER void ba_printf(const BitArray *array);
 #define BOOL_REPR(b) ((b) ? "true" : "false")
 
 
-#endif /* BITARRAY_FUNCS_H */
+#endif /* CODS_BITARRAY_FUNCS_H */

@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef LINKEDLIST_FUNCS_H
-#define LINKEDLIST_FUNCS_H
+#ifndef CODS_LINKEDLIST_FUNCS_H
+#define CODS_LINKEDLIST_FUNCS_H
 
 
 #include <stdbool.h>
@@ -23,7 +23,8 @@
  * \param[in,out] llist  The linked list
  * \param[in]     apply The function to apply
  */
-MEMBER void ll_each(LinkedList *llist, void (*apply)(data*)) NOTNULL(2);
+CODS_MEMBER void ll_each(LinkedList *llist, void (*apply)(data*))
+CODS_NOTNULL(2);
 
 
 /**
@@ -38,8 +39,8 @@ MEMBER void ll_each(LinkedList *llist, void (*apply)(data*)) NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-MEMBER data *ll_swap(LinkedList *llist, unsigned int index, data *newitem)
-NODISCARD NOTNULL(3);
+CODS_MEMBER data *ll_swap(LinkedList *llist, unsigned int index, data *newitem)
+CODS_NODISCARD CODS_NOTNULL(3);
 
 
 /**
@@ -61,8 +62,8 @@ NODISCARD NOTNULL(3);
  *
  * \return The first element to satisfy the condition, or \c NULL.
  */
-MEMBER data *ll_cond(const LinkedList *llist, const data *value,
-                     bool (*equals)(const data*, const data*)) PURE;
+CODS_MEMBER data *ll_cond(const LinkedList *llist, const data *value,
+                          bool (*equals)(const data*, const data*)) CODS_PURE;
 
 
 /**
@@ -83,8 +84,8 @@ MEMBER data *ll_cond(const LinkedList *llist, const data *value,
  *
  * \return The removed element, or \c NULL if none matched.
  */
-MEMBER data *ll_remove(LinkedList *llist, const data *item,
-                       bool (*eq_func)(const data*, const data*));
+CODS_MEMBER data *ll_remove(LinkedList *llist, const data *item,
+                            bool (*eq_func)(const data*, const data*));
 
 
 /**
@@ -102,7 +103,8 @@ MEMBER data *ll_remove(LinkedList *llist, const data *item,
  * output will be:
  * \verbatim (42.3, 6.0, 19.5) \endverbatim
  */
-MEMBER void ll_printf(const LinkedList *llist, void (*printitem)(const data*));
+CODS_MEMBER void ll_printf(const LinkedList *llist,
+                           void (*printitem)(const data*));
 
 
 #endif /* LINKEDLIST_FUNCS_H */
