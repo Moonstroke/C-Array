@@ -13,7 +13,6 @@
 #define BITARRAY_FUNCS_H
 
 
-#include "arrays.h" /* for function attrs */
 #include "bitarray.h"
 
 

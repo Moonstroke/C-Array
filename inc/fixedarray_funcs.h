@@ -16,7 +16,6 @@
 #include <stdbool.h>
 #include <stdlib.h> /* for NULL */
 
-#include "arrays.h" /* for function attrs, data */
 #include "fixedarray.h"
 
 

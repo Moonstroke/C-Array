@@ -13,7 +13,6 @@
 
 #include <stdbool.h>
 
-#include "arrays.h" /* for function attrs, data */
 #include "linkedlist.h"
 
 
