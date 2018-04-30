@@ -20,59 +20,57 @@ static unsigned int COUNT = 5;
 
 
 static void init(void) {
-	info("barray = ba_new(%u)", BIT_ARRAY_SIZE);
+	verbose("barray = ba_new(%u)", BIT_ARRAY_SIZE);
 	barray = ba_new(BIT_ARRAY_SIZE);
 	CUTE_assertNotEquals(barray, NULL);
 	for(unsigned int i = 0; i < BIT_ARRAY_SIZE; ++i) {
 		ba_put(barray, i, VALUES[i]);
 	}
-	info("OK\n");
 }
 
 static void cleanup(void) {
-	info("ba_free(barray)");
+	verbose("ba_free(barray)");
 	ba_free(barray);
-	info("Bye\n");
 }
 
 static void test_ba_new__0_null(void) {
 	BitArray *got;
-	info("test ba_new -- size of 0 => NULL bit array");
-	info("ba_new(0)");
-	verbose("expected: (nil)");
+	notice("test ba_new -- size of 0 => NULL bit array");
+	verbose("ba_new(0)");
+	info("expected: (nil)");
 	got = ba_new(0);
-	verbose("got     : %p", (void*)got);
+	info("got     : %p", (void*)got); /* necessary cast because of GCC warning */
 	CUTE_assertEquals(got, NULL);
 	CUTE_assertErrnoEquals(EINVAL);
-	info("OK\n");
+	verbose("OK");
 }
 
 static void test_ba_size(void) {
 	unsigned int got;
-	info("test ba_size");
-	info("ba_size(barray)");
-	verbose("expected: %u", BIT_ARRAY_SIZE);
+	notice("test ba_size");
+	verbose("ba_size(barray)");
+	info("expected: %u", BIT_ARRAY_SIZE);
 	got = ba_size(barray);
-	verbose("got     : %u", got);
+	info("got     : %u", got);
 	CUTE_assertEquals(got, BIT_ARRAY_SIZE);
-	info("OK\n");
+	verbose("OK");
 }
 
 static void test_ba_put__valid(void) {
 	bool expected, got;
 	bool param;
-	info("test ba_put -- valid indices");
+	notice("test ba_put -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		param = VALUES[index];
-		info("ba_put(barray, %u, %s)", index, BOOL_REPR(param));
+		verbose("ba_put(barray, %u, %s)", index, BOOL_REPR(param));
 		expected = VALUES[index];
-		verbose("expected: %s", expected ? "true" : "false");
+		info("expected: %s", expected ? "true" : "false");
 		got = ba_put(barray, index, param);
-		verbose("got     : %s", BOOL_REPR(got));
+		info("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, expected);
 		CUTE_assertNoError();
 	}
-	info("OK\n");
+	verbose("OK");
 }
 
 static void test_ba_put__invalid(void) {
@@ -83,32 +81,32 @@ static void test_ba_put__invalid(void) {
 	};
 	bool got;
 	unsigned int index;
-	info("test ba_put -- invalid indices");
+	notice("test ba_put -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		info("ba_put(barray, %u, false)", index);
-		verbose("expected: false");
+		verbose("ba_put(barray, %u, false)", index);
+		info("expected: false");
 		got = ba_put(barray, index, false);
-		verbose("got     : %s", BOOL_REPR(got));
+		info("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, false);
 		CUTE_assertErrnoEquals(ERANGE);
 	}
-	info("OK\n");
+	verbose("OK");
 }
 
 static void test_ba_get__valid(void) {
 	bool expected, got;
-	info("test ba_get -- valid indices");
+	notice("test ba_get -- valid indices");
 	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
-		info("ba_get(barray, %u)", index);
+		verbose("ba_get(barray, %u)", index);
 		expected = VALUES[index];
-		verbose("expected: %s", BOOL_REPR(expected));
+		info("expected: %s", BOOL_REPR(expected));
 		got = ba_get(barray, index);
-		verbose("got     : %s", BOOL_REPR(got));
+		info("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, expected);
 		CUTE_assertNoError();
 	}
-	info("OK\n");
+	verbose("OK");
 }
 
 static void test_ba_get__invalid(void) {
@@ -119,29 +117,30 @@ static void test_ba_get__invalid(void) {
 	};
 	unsigned int index;
 	bool got;
-	info("test ba_get -- invalid indices");
+	notice("test ba_get -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		info("ba_get(barray, %u)", index);
-		verbose("expected = false");
+		verbose("ba_get(barray, %u)", index);
+		info("expected: false");
 		got = ba_get(barray, index);
+		info("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, false);
 		CUTE_assertErrnoEquals(ERANGE);
 	}
-	info("OK\n");
+	verbose("OK");
 }
 
 
 static void test_ba_count(void) {
 	unsigned int expected, got;
-	info("test ba_count");
-	info("ba_count(barray)");
+	notice("test ba_count");
+	verbose("ba_count(barray)");
 	expected = COUNT;
-	verbose("expected: %u", expected);
+	info("expected: %u", expected);
 	got = ba_count(barray);
-	verbose("got     : %u", got);
+	info("got     : %u", got);
 	CUTE_assertEquals(got, expected);
-	info("OK\n");
+	verbose("OK");
 }
 
 
