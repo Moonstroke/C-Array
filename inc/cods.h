@@ -87,18 +87,6 @@ typedef void data;
 #define CODS_PURE __attribute__((__pure__, __warn_unused_result__))
 
 /**
- * \brief The function does not affect external data; the return value is only
- *        function of its arguments.
- *
- * \note This attribute semantically implies \a PURE, and is more stricter:
- *       global data must not be affected, (pointer arguments must not even be
- *       dereferenced).
- *
- * \note This attribute implies \a NODISCARD.
- */
-#define CODS_CONSTEXPR __attribute__((__const__, __warn_unused_result__))
-
-/**
  * \brief The function returns a pointer to a block of memory dynamically
  *        allocated with no other pointer to it.
  *
