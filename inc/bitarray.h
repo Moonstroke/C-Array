@@ -29,7 +29,7 @@
 
 #include <stdbool.h>
 
-#include "arrays.h" /* for function attrs */
+#include "cods.h" /* for function attrs */
 
 
 

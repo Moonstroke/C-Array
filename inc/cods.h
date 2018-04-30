@@ -9,8 +9,8 @@
  * based on GNU C attributes.
  */
 
-#ifndef ARRAYS_H
-#define ARRAYS_H
+#ifndef CODS_H
+#define CODS_H
 
 
 
@@ -128,4 +128,4 @@ typedef void data;
 
 #endif /* main project file */
 
-#endif /* ARRAYS_H */
+#endif /* CODS_H */

@@ -2,7 +2,7 @@
 
 
 # Project name
-PROJECT_NAME := arrays
+PROJECT_NAME := CODS
 
 
 # Project directories

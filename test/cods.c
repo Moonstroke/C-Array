@@ -4,7 +4,7 @@
 #include <stdio.h> /* for printf */
 #include <stdlib.h> /* for EXIT_SUCCESS */
 
-#include "arrays.h"
+#include "cods.h"
 
 
 

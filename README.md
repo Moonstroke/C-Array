@@ -1,10 +1,17 @@
-# C / Arrays
+# CODS
 
-## Dynamic array types implemented in C
+## C Opaque Data Structures
 
 
 [![Build Status](https://travis-ci.org/Moonstroke/C-Arrays.svg?branch=master)
 ](https://travis-ci.org/Moonstroke/C-Arrays)
+
+
+![One cod](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
+![Two cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
+![Three cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
+![Four cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
+![Five cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
 
 
 This repo defines structures for dynamically-allocated arrays.
@@ -26,9 +33,9 @@ pointers to primitive types, though.
 ## Modules
 
 
-### `arrays.h`
+### `cods.h`
 
-The file `arrays.h` is shared by the other modules. It defines common data and
+The file `cods.h` is shared by the other modules. It defines common data and
 is included by all the other files.
 
 It can also serve as the project's main interface (hence the name): if it is

@@ -4,9 +4,9 @@
 # Project related configuration options
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = "C / Arrays"
+PROJECT_NAME           = "CODS"
 PROJECT_NUMBER         = 0.1
-PROJECT_BRIEF          = "Dynamic array types implemented in C"
+PROJECT_BRIEF          = "C Opaque Data Structures"
 PROJECT_LOGO           =
 OUTPUT_DIRECTORY       = doc
 CREATE_SUBDIRS         = NO

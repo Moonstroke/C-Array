@@ -24,7 +24,7 @@
 
 #include <stdlib.h> /* for NULL */
 
-#include "arrays.h" /* for function attrs, data */
+#include "cods.h" /* for function attrs, data */
 
 
 

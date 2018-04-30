@@ -1,9 +1,9 @@
 # Compiled files
-test_arrays
+test_CODS
 obj/
 
 # Library archive
-libarrays.a
+libCODS.a
 
 # Documentation directory
 doc/
