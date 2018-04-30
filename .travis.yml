@@ -1,23 +1,31 @@
-# Generate two builds with both GCC and Clang
+# This is a C project
 language: c
+
+# Generate two builds with both GCC and Clang
 compiler:
   - gcc
   - clang
-
 
 # Activate builds only for master
 branches:
   only:
     - master
 
-
-# Use Docker image containing my other repos Clog and CUTE
+# Enable Docker
 services:
   - docker
+
+
+# Use Docker image containing my other repos Clog & CUTE
 before_install:
   - docker pull joh1/clog_cute
+  - docker run --detach --interactive --name clog_cute joh1/clog_cute
+
+# Fetch the project from github inside the container
+install:
+  - docker exec clog_cute git clone https://github.com/Moonstroke/C-Arrays.git c-arrays
 
 
+# Launch the tests from the container
 script:
-  - make
-  - make test
+  - docker exec clog_cute /bin/sh -c 'cd c-arrays && make && make test'
