@@ -1,7 +1,7 @@
 #include "bitarray.h"
 #include "bitarray_funcs.h"
 
-#include <cute.h>
+#include <CUTE/cute.h>
 #include <clog.h>
 #include <stdlib.h> /* for NULL */
 

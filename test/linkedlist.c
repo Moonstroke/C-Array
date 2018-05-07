@@ -1,7 +1,7 @@
 #include "linkedlist.h"
 #include "linkedlist_funcs.h"
 
-#include <cute.h>
+#include <CUTE/cute.h>
 #include <clog.h>
 #include <stdbool.h>
 #include <stdlib.h> /* for NULL */

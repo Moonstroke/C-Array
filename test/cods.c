@@ -1,5 +1,5 @@
 #include <clog.h>
-#include <cute.h>
+#include <CUTE/cute.h>
 #include <stdbool.h>
 #include <stdio.h> /* for printf */
 #include <stdlib.h> /* for EXIT_SUCCESS */
