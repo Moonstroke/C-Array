@@ -23,9 +23,9 @@ before_install:
 
 # Fetch the project from github inside the container
 install:
-  - docker exec clog_cute git clone https://github.com/Moonstroke/C-Arrays.git c-arrays
+  - docker exec clog_cute git clone https://github.com/Moonstroke/CODS.git cods
 
 
 # Launch the tests from the container
 script:
-  - docker exec clog_cute /bin/sh -c 'cd c-arrays && make && make test'
+  - docker exec clog_cute /bin/sh -c 'cd cods && make && make test'
