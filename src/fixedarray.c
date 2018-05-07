@@ -3,7 +3,6 @@
 #include <errno.h> /* for errno, EINVAL, ERANGE */
 #include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for NULL, malloc(), calloc(), free() */
-#include <string.h> /* for memset() */
 
 
 
@@ -26,7 +25,9 @@ FixedArray *fa_new(const unsigned int s) {
 		return NULL;
 	}
 	fa->size = s;
-	memset(fa->items, 0, s);
+	for(unsigned int i = 0; i < s; ++i) {
+		fa->items[i] = NULL;
+	}
 	return fa;
 }
 
