@@ -2,7 +2,7 @@
 #include "bitarray_funcs.h"
 
 #include <CUTE/cute.h>
-#include <clog.h>
+#include <clog.h> /* for logging macros */
 #include <stdlib.h> /* for NULL */
 
 

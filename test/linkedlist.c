@@ -2,8 +2,7 @@
 #include "linkedlist_funcs.h"
 
 #include <CUTE/cute.h>
-#include <clog.h>
-#include <stdbool.h>
+#include <clog.h> /* for logging macros */
 #include <stdlib.h> /* for NULL */
 
 
@@ -15,11 +14,11 @@ CUTE_TestCase *case_linkedlist;
 
 static LinkedList *llist;
 
-
 static int VALUES[] = {42, 3, 7, 13, 6};
 static const unsigned int INT_LINKED_LIST_SIZE = 5;
 
-extern bool equal_as_ints(const data*, const data*);
+
+extern _Bool equal_as_ints(const data*, const data*);
 extern const char equal_as_ints_repr[];
 
 extern void print_as_int(const data*);

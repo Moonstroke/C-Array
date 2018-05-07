@@ -2,8 +2,7 @@
 #include "array_funcs.h"
 
 #include <CUTE/cute.h>
-#include <clog.h>
-#include <stdbool.h>
+#include <clog.h> /* for logging macros */
 #include <stdlib.h> /* for NULL */
 
 
@@ -18,7 +17,8 @@ static Array *array;
 static const unsigned int INT_ARRAY_SIZE = 10;
 static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
-extern bool equal_as_ints(const data*, const data*);
+
+extern _Bool equal_as_ints(const data*, const data*);
 extern const char equal_as_ints_repr[];
 
 extern void print_as_int(const data*);

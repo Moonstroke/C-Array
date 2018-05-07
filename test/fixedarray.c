@@ -2,8 +2,7 @@
 #include "fixedarray_funcs.h"
 
 #include <CUTE/cute.h>
-#include <clog.h>
-#include <stdbool.h>
+#include <clog.h> /* for logging macros */
 #include <stdlib.h> /* for NULL */
 
 
@@ -19,7 +18,7 @@ static const unsigned int INT_FIXED_ARRAY_SIZE = 8;
 static int VALUES[] = {1, 42, 6, 3, 27, 9, 55, 700};
 
 
-extern bool equal_as_ints(const data*, const data*);
+extern _Bool equal_as_ints(const data*, const data*);
 extern const char equal_as_ints_repr[];
 
 extern void print_as_int(const data*);
