@@ -3,6 +3,7 @@
 
 #include <CUTE/cute.h>
 #include <clog.h> /* for logging macros */
+#include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for NULL */
 
 
@@ -14,7 +15,7 @@ CUTE_TestCase *case_array;
 
 static Array *array;
 
-static const unsigned int INT_ARRAY_SIZE = 10;
+static const size_t INT_ARRAY_SIZE = 10;
 static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
 
@@ -25,10 +26,10 @@ extern void print_as_int(const data_t*);
 
 
 static void init(void) {
-	verbose("array = a_new(%u)", INT_ARRAY_SIZE);
+	verbose("array = a_new(%zu)", INT_ARRAY_SIZE);
 	array = a_new(INT_ARRAY_SIZE);
 	CUTE_assertNotEquals(array, NULL);
-	for(unsigned int i = 0; i < INT_ARRAY_SIZE; ++i) {
+	for(size_t i = 0; i < INT_ARRAY_SIZE; ++i) {
 		a_add(array, i, &VALUES[i]);
 	}
 }
@@ -40,11 +41,11 @@ static void cleanup(void) {
 
 
 static void test_a_new__0_null(void) {
-	unsigned int index;
+	size_t index;
 	Array *got;
 	notice("test a_new -- size 0 => NULL array");
 	index = 0;
-	verbose("a_new(%u)", index);
+	verbose("a_new(%zu)", index);
 	info("expected: (nil)");
 	got = a_new(index);
 	info("got     : %p", (void*)got); /* necessary cast because of GCC warning */
@@ -55,14 +56,14 @@ static void test_a_new__0_null(void) {
 
 static void test_a_size__empty(void) {
 	Array *empty_array;
-	unsigned int got;
+	size_t got;
 	notice("test a_size -- empty array");
-	verbose("empty_array = a_new(%u)", INT_ARRAY_SIZE);
+	verbose("empty_array = a_new(%zu)", INT_ARRAY_SIZE);
 	empty_array = a_new(INT_ARRAY_SIZE);
 	verbose("a_size(empty_array)");
 	info("expected: 0");
 	got = a_size(empty_array);
-	info("got     : %u", got);
+	info("got     : %zu", got);
 	a_free(empty_array);
 	CUTE_assertEquals(got, 0);
 	verbose("OK");
@@ -71,18 +72,18 @@ static void test_a_size__empty(void) {
 static void test_a_append(void) {
 	Array *empty_array;
 	data_t *param;
-	int expected, got;
+	ssize_t expected, got;
 	notice("test a_append");
-	verbose("empty_array = a_new(%u)", INT_ARRAY_SIZE);
+	verbose("empty_array = a_new(%zu)", INT_ARRAY_SIZE);
 	empty_array = a_new(INT_ARRAY_SIZE);
 	verbose("VALUES = [-1, 42, 666, 13, 28, -54, 0, 7, 6, 5]");
-	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
+	for(size_t index = 0; index < INT_ARRAY_SIZE; ++index) {
 		param = VALUES + index;
 		verbose("a_append(array, %p)", param);
 		expected = index;
-		info("expected: %d", expected);
+		info("expected: %zd", expected);
 		got = a_append(empty_array, param);
-		info("got     : %d", got);
+		info("got     : %zd", got);
 		CUTE_assertEquals(got, expected);
 		CUTE_assertNoError();
 	}
@@ -91,13 +92,13 @@ static void test_a_append(void) {
 }
 
 static void test_a_size__full(void) {
-	unsigned int expected, got;
+	size_t expected, got;
 	notice("test a_size -- array full");
 	verbose("a_size(array)");
 	expected = INT_ARRAY_SIZE;
-	info("expected: %u", expected);
+	info("expected: %zu", expected);
 	got = a_size(array);
-	info("got     : %u", got);
+	info("got     : %zu", got);
 	CUTE_assertEquals(got, expected);
 	verbose("OK");
 }
@@ -105,8 +106,8 @@ static void test_a_size__full(void) {
 static void test_a_get__valid(void) {
 	data_t *expected, *got;
 	notice("tests a_get -- valid indices");
-	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
-		verbose("a_get(array, %d)", index);
+	for(size_t index = 0; index < INT_ARRAY_SIZE; ++index) {
+		verbose("a_get(array, %zu)", index);
 		expected = VALUES + index;
 		info("expected: %p", expected);
 		got = a_get(array, index);
@@ -118,17 +119,17 @@ static void test_a_get__valid(void) {
 }
 
 static void test_a_get__invalid(void) {
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
 		73 /* big "arbitrary" value */
 	};
-	unsigned int index;
+	size_t index;
 	data_t *got;
 	notice("tests a_get -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("a_get(array, %u)", index);
+		verbose("a_get(array, %zu)", index);
 		info("expected: (nil)");
 		got = a_get(array, index);
 		info("got     : %p", got);
@@ -141,9 +142,9 @@ static void test_a_get__invalid(void) {
 static void test_a_set__valid(void) {
 	static int extra = 64;
 	data_t *const param = &extra;
-	const unsigned int index = 7;
+	const size_t index = 7;
 	notice("test a_set -- valid index");
-	verbose("a_set(array, %u, %p)", index, param);
+	verbose("a_set(array, %zu, %p)", index, param);
 	info("expected errno: 0");
 	a_set(array, index, param);
 	info("actual errno  : %d", errno);
@@ -154,16 +155,16 @@ static void test_a_set__valid(void) {
 static void test_a_set__invalid(void) {
 	static int extra = 23;
 	data_t *const param = &extra;
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
 		73 /* big "arbitrary" value */
 	};
-	unsigned int index;
+	size_t index;
 	notice("tests a_set -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("a_set(array, %u, %p)", index, param);
+		verbose("a_set(array, %zu, %p)", index, param);
 		info("expected errno: %d", ERANGE);
 		a_set(array, index, param);
 		info("actual errno  : %d", errno);
@@ -174,18 +175,18 @@ static void test_a_set__invalid(void) {
 
 static void test_a_add__invalid(void) {
 	int value = 42;
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		a_size(array) + 1,
 		a_size(array) + 2,
 		73
 	};
 	int got;
 	data_t *const param = &value;
-	unsigned int index;
+	size_t index;
 	notice("tests a_add -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("a_add(array, %u, %p)", index, param);
+		verbose("a_add(array, %zu, %p)", index, param);
 		info("expected: -1");
 		got = a_add(array, index, param);
 		info("got     : %d", got);
@@ -211,10 +212,10 @@ static void test_a_append__overflow(void) {
 }
 
 static void test_a_drop__valid(void) {
-	const unsigned int index = 4;
+	const size_t index = 4;
 	data_t *expected, *got;
 	notice("test a_drop -- valid index");
-	verbose("a_drop(array, %u)", index);
+	verbose("a_drop(array, %zu)", index);
 	expected = VALUES + index;
 	info("expected: %p", expected);
 	got = a_drop(array, index);
@@ -225,17 +226,17 @@ static void test_a_drop__valid(void) {
 }
 
 static void test_a_drop__invalid(void) {
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
 		73
 	};
 	data_t *got;
-	unsigned int index;
+	size_t index;
 	notice("tests a_drop -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("a_drop(array, %u)", index);
+		verbose("a_drop(array, %zu)", index);
 		info("expected: (nil)");
 		got = a_drop(array, index);
 		info("got     : %p", got);
@@ -249,10 +250,10 @@ void test_a_swap__valid(void) {
 	static int extra = 777;
 	data_t *const param = &extra;
 	int expected, got;
-	unsigned int index;
+	size_t index;
 	notice("test a_swap -- valid indices");
 	index = 2;
-	verbose("a_swap(array, %u, %p)", index, param);
+	verbose("a_swap(array, %zu, %p)", index, param);
 	expected = VALUES[index];
 	info("expected: %d", expected);
 	got = *(int*)a_swap(array, index, param);
@@ -264,18 +265,18 @@ void test_a_swap__valid(void) {
 
 static void test_a_swap__invalid(void) {
 	int value = 42;
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
 		73
 	};
 	data_t *const param = &value;
-	unsigned int index;
+	size_t index;
 	data_t *got;
 	notice("tests a_swap -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("a_swap(array, %u, %p)", index, param);
+		verbose("a_swap(array, %zu, %p)", index, param);
 		info("expected: (nil)");
 		got = a_swap(array, index, param);
 		info("got     : %p", got);

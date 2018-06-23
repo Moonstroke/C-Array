@@ -3,6 +3,7 @@
 
 #include <CUTE/cute.h>
 #include <clog.h> /* for logging macros */
+#include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for NULL */
 
 
@@ -14,16 +15,16 @@ CUTE_TestCase *case_bitarray;
 
 static BitArray *barray;
 
-static const unsigned int BIT_ARRAY_SIZE = 10;
+static const size_t BIT_ARRAY_SIZE = 10;
 static bool VALUES[] = {true, false, false, true, false, true, true, false, true, false};
-static unsigned int COUNT = 5;
+static size_t COUNT = 5;
 
 
 static void init(void) {
-	verbose("barray = ba_new(%u)", BIT_ARRAY_SIZE);
+	verbose("barray = ba_new(%zu)", BIT_ARRAY_SIZE);
 	barray = ba_new(BIT_ARRAY_SIZE);
 	CUTE_assertNotEquals(barray, NULL);
-	for(unsigned int i = 0; i < BIT_ARRAY_SIZE; ++i) {
+	for(size_t i = 0; i < BIT_ARRAY_SIZE; ++i) {
 		ba_put(barray, i, VALUES[i]);
 	}
 }
@@ -46,12 +47,12 @@ static void test_ba_new__0_null(void) {
 }
 
 static void test_ba_size(void) {
-	unsigned int got;
+	size_t got;
 	notice("test ba_size");
 	verbose("ba_size(barray)");
-	info("expected: %u", BIT_ARRAY_SIZE);
+	info("expected: %zu", BIT_ARRAY_SIZE);
 	got = ba_size(barray);
-	info("got     : %u", got);
+	info("got     : %zu", got);
 	CUTE_assertEquals(got, BIT_ARRAY_SIZE);
 	verbose("OK");
 }
@@ -60,9 +61,9 @@ static void test_ba_put__valid(void) {
 	bool expected, got;
 	bool param;
 	notice("test ba_put -- valid indices");
-	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
+	for(size_t index = 0; index < BIT_ARRAY_SIZE; ++index) {
 		param = VALUES[index];
-		verbose("ba_put(barray, %u, %s)", index, BOOL_REPR(param));
+		verbose("ba_put(barray, %zu, %s)", index, BOOL_REPR(param));
 		expected = VALUES[index];
 		info("expected: %s", expected ? "true" : "false");
 		got = ba_put(barray, index, param);
@@ -74,17 +75,17 @@ static void test_ba_put__valid(void) {
 }
 
 static void test_ba_put__invalid(void) {
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		BIT_ARRAY_SIZE,
 		BIT_ARRAY_SIZE + 1,
 		42
 	};
 	bool got;
-	unsigned int index;
+	size_t index;
 	notice("test ba_put -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("ba_put(barray, %u, false)", index);
+		verbose("ba_put(barray, %zu, false)", index);
 		info("expected: false");
 		got = ba_put(barray, index, false);
 		info("got     : %s", BOOL_REPR(got));
@@ -97,8 +98,8 @@ static void test_ba_put__invalid(void) {
 static void test_ba_get__valid(void) {
 	bool expected, got;
 	notice("test ba_get -- valid indices");
-	for(unsigned int index = 0; index < BIT_ARRAY_SIZE; ++index) {
-		verbose("ba_get(barray, %u)", index);
+	for(size_t index = 0; index < BIT_ARRAY_SIZE; ++index) {
+		verbose("ba_get(barray, %zu)", index);
 		expected = VALUES[index];
 		info("expected: %s", BOOL_REPR(expected));
 		got = ba_get(barray, index);
@@ -110,17 +111,17 @@ static void test_ba_get__valid(void) {
 }
 
 static void test_ba_get__invalid(void) {
-	const unsigned int invalid_indices[3] = {
+	const size_t invalid_indices[3] = {
 		BIT_ARRAY_SIZE,
 		BIT_ARRAY_SIZE + 1,
 		8 * BIT_ARRAY_SIZE
 	};
-	unsigned int index;
+	size_t index;
 	bool got;
 	notice("test ba_get -- invalid indices");
-	for(unsigned int i = 0; i < 3; ++i) {
+	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("ba_get(barray, %u)", index);
+		verbose("ba_get(barray, %zu)", index);
 		info("expected: false");
 		got = ba_get(barray, index);
 		info("got     : %s", BOOL_REPR(got));
@@ -132,13 +133,13 @@ static void test_ba_get__invalid(void) {
 
 
 static void test_ba_count(void) {
-	unsigned int expected, got;
+	size_t expected, got;
 	notice("test ba_count");
 	verbose("ba_count(barray)");
 	expected = COUNT;
-	info("expected: %u", expected);
+	info("expected: %zu", expected);
 	got = ba_count(barray);
-	info("got     : %u", got);
+	info("got     : %zu", got);
 	CUTE_assertEquals(got, expected);
 	verbose("OK");
 }
