@@ -23,7 +23,8 @@ CODS_MEMBER ssize_t sa_add(SortedArray *self, data_t *item);
 
 CODS_MEMBER data_t *sa_get(const SortedArray *self, size_t index) CODS_PURE;
 
-CODS_MEMBER ssize_t sa_indexof(const SortedArray *self, const data_t *value);
+CODS_MEMBER ssize_t sa_indexof(const SortedArray *self, const data_t *value)
+CODS_PURE;
 
 CODS_MEMBER CODS_INLINE CODS_NOTNULL(2) CODS_PURE
 data_t *sa_geteq(const SortedArray *const self, const data_t *other) {
