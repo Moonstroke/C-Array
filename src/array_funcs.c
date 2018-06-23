@@ -8,22 +8,22 @@
 extern int errno;
 
 
-static bool _equals(const data *const e1, const data *const e2) {
+static bool _equals(const data_t *const e1, const data_t *const e2) {
 	return e1 == e2;
 }
 
-static void _printitem(const data *item) {
+static void _printitem(const data_t *item) {
 	printf("%p", item);
 }
 
 
-void a_freer(Array *a, void (*const f)(data*)) {
+void a_freer(Array *a, void (*const f)(data_t*)) {
 	a_each(a, f);
 	a_free(a);
 }
 
-data *a_swap(Array *const a, const size_t i, data *const e) {
-	data *const former = a_get(a, i);
+data_t *a_swap(Array *const a, const size_t i, data_t *const e) {
+	data_t *const former = a_get(a, i);
 	if(errno) {
 		return NULL;
 	} else {
@@ -32,16 +32,16 @@ data *a_swap(Array *const a, const size_t i, data *const e) {
 	}
 }
 
-void a_each(Array *const a, void (*f)(data*)) {
+void a_each(Array *const a, void (*f)(data_t*)) {
 	const size_t s = a_size(a);
 	for(size_t i = 0; i < s; ++i) {
 		f(a_get(a, i));
 	}
 }
 
-data *a_cond(const Array *a, const data *const e, bool (*f)(const data*, const data*)) {
+data_t *a_cond(const Array *a, const data_t *const e, bool (*f)(const data_t*, const data_t*)) {
 	const size_t s = a_size(a);
-	data *item;
+	data_t *item;
 	if(!f) {
 		if(!e) {
 			errno = EINVAL;
@@ -58,7 +58,7 @@ data *a_cond(const Array *a, const data *const e, bool (*f)(const data*, const d
 	return NULL;
 }
 
-data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const data*)) {
+data_t *a_remove(Array *const a, const data_t *const e, bool (*f)(const data_t*, const data_t*)) {
 	if(!f) {
 		if(!e) {
 			errno = EINVAL;
@@ -77,7 +77,7 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 	return NULL;
 }
 
-Array *a_make(const size_t n, data *const elements[static n]) {
+Array *a_make(const size_t n, data_t *const elements[static n]) {
 	Array *const arr = a_new(n);
 	if(!arr) {
 		return NULL;
@@ -88,7 +88,7 @@ Array *a_make(const size_t n, data *const elements[static n]) {
 	return arr;
 }
 
-void a_printf(const Array *a, void (*print)(const data*)) {
+void a_printf(const Array *a, void (*print)(const data_t*)) {
 	const size_t n = a_size(a);
 	printf("[");
 	if(n) {

@@ -23,7 +23,7 @@
  * \param[in,out] llist  The linked list
  * \param[in]     apply The function to apply
  */
-CODS_MEMBER void ll_each(LinkedList *llist, void (*apply)(data*))
+CODS_MEMBER void ll_each(LinkedList *llist, void (*apply)(data_t*))
 CODS_NOTNULL(2);
 
 
@@ -39,7 +39,7 @@ CODS_NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-CODS_MEMBER data *ll_swap(LinkedList *llist, size_t index, data *newitem)
+CODS_MEMBER data_t *ll_swap(LinkedList *llist, size_t index, data_t *newitem)
 CODS_NODISCARD CODS_NOTNULL(3);
 
 
@@ -62,8 +62,9 @@ CODS_NODISCARD CODS_NOTNULL(3);
  *
  * \return The first element to satisfy the condition, or \c NULL.
  */
-CODS_MEMBER data *ll_cond(const LinkedList *llist, const data *value,
-                          bool (*equals)(const data*, const data*)) CODS_PURE;
+CODS_MEMBER
+data_t *ll_cond(const LinkedList *llist, const data_t *value,
+                bool (*equals)(const data_t*, const data_t*)) CODS_PURE;
 
 
 /**
@@ -84,8 +85,8 @@ CODS_MEMBER data *ll_cond(const LinkedList *llist, const data *value,
  *
  * \return The removed element, or \c NULL if none matched.
  */
-CODS_MEMBER data *ll_remove(LinkedList *llist, const data *item,
-                            bool (*eq_func)(const data*, const data*));
+CODS_MEMBER data_t *ll_remove(LinkedList *llist, const data_t *item,
+                              bool (*eq_func)(const data_t*, const data_t*));
 
 
 /**
@@ -104,7 +105,7 @@ CODS_MEMBER data *ll_remove(LinkedList *llist, const data *item,
  * \verbatim (42.3, 6.0, 19.5) \endverbatim
  */
 CODS_MEMBER void ll_printf(const LinkedList *llist,
-                           void (*printitem)(const data*));
+                           void (*printitem)(const data_t*));
 
 
 #endif /* LINKEDLIST_FUNCS_H */

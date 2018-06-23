@@ -9,13 +9,13 @@
 
 
 /* Helper functions */
-bool equal_as_ints(const data *const e1, const data *const e2) {
+bool equal_as_ints(const data_t *const e1, const data_t *const e2) {
 	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
 	return *(int*)e1 == *(int*)e2;
 }
 const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
 
-void print_as_int(const void *const e) {
+void print_as_int(const data_t *const e) {
 	if(e)
 		printf("%d", *(int*)e);
 	else

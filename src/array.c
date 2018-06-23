@@ -58,7 +58,7 @@ size_t a_size(const Array *const a) {
 	return a->size;
 }
 
-data *a_get(const Array *const a, const size_t i) {
+data_t *a_get(const Array *const a, const size_t i) {
 	if(i < a->size) {
 		errno = 0;
 		return fa_get(a->items, i);
@@ -68,7 +68,7 @@ data *a_get(const Array *const a, const size_t i) {
 	}
 }
 
-void a_set(Array *const a, const size_t i, data *const e) {
+void a_set(Array *const a, const size_t i, data_t *const e) {
 	if(i < a->size) {
 		fa_set(a->items, i, e);
 		errno = 0;
@@ -77,7 +77,7 @@ void a_set(Array *const a, const size_t i, data *const e) {
 	}
 }
 
-ssize_t a_add(Array *const a, const size_t i, data *const e) {
+ssize_t a_add(Array *const a, const size_t i, data_t *const e) {
 	const size_t s = a->size;
 	if(i > s) {
 		errno = ERANGE;
@@ -94,16 +94,16 @@ ssize_t a_add(Array *const a, const size_t i, data *const e) {
 	++a->size;
 	return i;
 }
-extern ssize_t a_append(Array*, data*);
+extern ssize_t a_append(Array*, data_t*);
 
-data *a_drop(Array *a, const size_t i) {
+data_t *a_drop(Array *a, const size_t i) {
 	const size_t s = a->size;
 	if(i >= s) {
 		errno = ERANGE;
 		return NULL;
 	}
 	errno = 0;
-	data *const e = a_get(a, i);
+	data_t *const e = a_get(a, i);
 	/* move the elements to shrink the empty slots */
 	for(size_t k = i; k < s - 1; ++k) {
 		fa_set(a->items, k, fa_get(a->items, k + 1));

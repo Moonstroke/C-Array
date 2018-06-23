@@ -15,7 +15,7 @@
 
 
 /** Generic definition of the type contained in the structures. */
-typedef void data;
+typedef void data_t;
 
 
 #ifdef __GNUC__

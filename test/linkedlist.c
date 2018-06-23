@@ -18,10 +18,10 @@ static int VALUES[] = {42, 3, 7, 13, 6};
 static const unsigned int INT_LINKED_LIST_SIZE = 5;
 
 
-extern _Bool equal_as_ints(const data*, const data*);
+extern _Bool equal_as_ints(const data_t*, const data_t*);
 extern const char equal_as_ints_repr[];
 
-extern void print_as_int(const data*);
+extern void print_as_int(const data_t*);
 
 
 static void init(void) {
@@ -57,7 +57,7 @@ static void test_ll_len__empty(void) {
 static void test_ll_append(void) {
 	LinkedList *empty_llist;
 	int expected, got;
-	data *param;
+	data_t *param;
 	notice("tests ll_append");
 	verbose("empty_llist = ll_new()");
 	empty_llist = ll_new();
@@ -87,7 +87,7 @@ static void test_ll_len__full(void) {
 }
 
 static void test_ll_get__valid(void) {
-	data *expected, *got;
+	data_t *expected, *got;
 	notice("test ll_get -- valid indices");
 	for(unsigned int index = 0; index < INT_LINKED_LIST_SIZE; ++index) {
 		verbose("ll_get(llist, %u)", index);
@@ -107,7 +107,7 @@ static void test_ll_get__invalid(void) {
 		ll_len(llist) + 1,
 		42
 	};
-	data *got;
+	data_t *got;
 	unsigned int index;
 	notice("test ll_get -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
@@ -124,7 +124,7 @@ static void test_ll_get__invalid(void) {
 
 static void test_ll_set__valid(void) {
 	static int extra = 64;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int index = 4;
 	notice("test ll_set -- valid index");
 	verbose("ll_set(llist, %u, %p)", index, param);
@@ -137,7 +137,7 @@ static void test_ll_set__valid(void) {
 
 static void test_ll_set__invalid(void) {
 	static int extra = 23;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist),
 		ll_len(llist) + 1,
@@ -158,7 +158,7 @@ static void test_ll_set__invalid(void) {
 
 static void test_ll_add__valid(void) {
 	static int extra = 8;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	int expected, got;
 	const unsigned int index = 3;
 	notice("test ll_add -- valid index");
@@ -174,7 +174,7 @@ static void test_ll_add__valid(void) {
 
 static void test_ll_add__invalid(void) {
 	int extra = 9;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist) + 1,
 		ll_len(llist) + 2,
@@ -196,7 +196,7 @@ static void test_ll_add__invalid(void) {
 }
 
 static void test_ll_drop__valid(void) {
-	data *expected, *got;
+	data_t *expected, *got;
 	const unsigned int index = 0;
 	notice("test ll_drop -- valid index");
 	info("ll_drop(llist, %u)", index);
@@ -215,7 +215,7 @@ static void test_ll_drop__invalid(void) {
 		ll_len(llist) + 1,
 		99
 	};
-	data *got;
+	data_t *got;
 	unsigned int index;
 	notice("test ll_drop -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
@@ -232,9 +232,9 @@ static void test_ll_drop__invalid(void) {
 
 static void test_ll_swap__valid(void) {
 	static int extra = -32;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int index = 2;
-	data *expected, *got;
+	data_t *expected, *got;
 	notice("test ll_swap -- valid index");
 	verbose("ll_swap(llist, %u, %p)", index, param);
 	expected = VALUES + index;
@@ -248,13 +248,13 @@ static void test_ll_swap__valid(void) {
 
 static void test_ll_swap__invalid(void) {
 	int extra = 4;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		ll_len(llist),
 		ll_len(llist) + 1,
 		13
 	};
-	data *got;
+	data_t *got;
 	unsigned int index;
 	notice("test ll_swap -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
@@ -271,8 +271,8 @@ static void test_ll_swap__invalid(void) {
 
 static void test_ll_cond__found(void) {
 	const int value = VALUES[1];
-	const data *const param = &value;
-	data *expected, *got;
+	const data_t *const param = &value;
+	data_t *expected, *got;
 	notice("test ll_cond -- found");
 	expected = VALUES + 1;
 	verbose("ll_cond(array, *%d, %s)", *(int*)param, equal_as_ints_repr);
@@ -286,8 +286,8 @@ static void test_ll_cond__found(void) {
 
 static void test_ll_cond__not_found(void) {
 	static int value = 1024;
-	data *const param = &value;
-	data *got;
+	data_t *const param = &value;
+	data_t *got;
 	notice("test ll_cond -- not found");
 	verbose("ll_cond(array, *%d, %s)", value, equal_as_ints_repr);
 	info("expected: (nil)");
@@ -299,8 +299,8 @@ static void test_ll_cond__not_found(void) {
 
 static void test_ll_remove__found(void) {
 	const int value = 13;
-	const data *const param = &value;
-	data *expected, *got;
+	const data_t *const param = &value;
+	data_t *expected, *got;
 	notice("test ll_remove -- item found");
 	verbose("ll_remove(llist, %p, %s)", param, equal_as_ints_repr);
 	expected = VALUES + 3;
@@ -314,8 +314,8 @@ static void test_ll_remove__found(void) {
 
 static void test_ll_remove__not_found(void) {
 	const int value = 4096;
-	const data *const param = &value;
-	data *got;
+	const data_t *const param = &value;
+	data_t *got;
 	notice("test ll_remove -- item not found");
 	verbose("ll_remove(llist, %p, %s)", param, equal_as_ints_repr);
 	info("expected: (nil)");

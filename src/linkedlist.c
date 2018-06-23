@@ -8,7 +8,7 @@ extern int errno;
 
 typedef struct node Node;
 struct node {
-	data *value;
+	data_t *value;
 	Node *next;
 };
 
@@ -18,7 +18,7 @@ struct llist {
 };
 
 
-static CODS_INLINE Node *newnode(data *const d) {
+static CODS_INLINE Node *newnode(data_t *const d) {
 	Node *const node = malloc(sizeof(Node));
 	if(!node) {
 		return NULL;
@@ -46,7 +46,7 @@ LinkedList *ll_new(void) {
 	return ll;
 }
 
-void ll_freer(LinkedList *const ll, void (*const f)(data*)) {
+void ll_freer(LinkedList *const ll, void (*const f)(data_t*)) {
 	if(ll->head) {
 		Node *item = ll->head, *next;
 		if(f != NULL)
@@ -66,7 +66,7 @@ size_t ll_len(const LinkedList *const ll) {
 	return ll->len;
 }
 
-data *ll_get(const LinkedList *const ll, const size_t i) {
+data_t *ll_get(const LinkedList *const ll, const size_t i) {
 	if(i < ll->len) {
 		errno = 0;
 		return ll_goto(ll, i)->value;
@@ -75,7 +75,7 @@ data *ll_get(const LinkedList *const ll, const size_t i) {
 	return NULL;
 }
 
-void ll_set(LinkedList *const ll, const size_t i, data *const d) {
+void ll_set(LinkedList *const ll, const size_t i, data_t *const d) {
 	if(i >= ll->len) {
 		errno = ERANGE;
 	} else {
@@ -84,7 +84,7 @@ void ll_set(LinkedList *const ll, const size_t i, data *const d) {
 	}
 }
 
-int ll_add(LinkedList *const ll, const size_t i, data *const d) {
+int ll_add(LinkedList *const ll, const size_t i, data_t *const d) {
 	Node *item;
 	if(i > ll->len) {
 		errno = ERANGE;
@@ -102,15 +102,15 @@ int ll_add(LinkedList *const ll, const size_t i, data *const d) {
 		return i;
 	}
 }
-extern int ll_append(LinkedList*, data*);
+extern int ll_append(LinkedList*, data_t*);
 
-data *ll_drop(LinkedList *const ll, const size_t i) {
+data_t *ll_drop(LinkedList *const ll, const size_t i) {
 	if(i >= ll->len) {
 		errno = ERANGE;
 		return NULL;
 	}
 	Node *item, **plug;
-	data *d;
+	data_t *d;
 	plug = i == 0 ? &ll->head : &ll_goto(ll, i - 1)->next;
 	item = *plug;
 	d = item->value;

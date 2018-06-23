@@ -9,7 +9,7 @@ extern int errno;
 
 struct fixedarray {
 	size_t size;
-	data *items[];
+	data_t *items[];
 };
 
 
@@ -18,7 +18,7 @@ FixedArray *fa_new(const size_t s) {
 		errno = EINVAL;
 		return NULL;
 	}
-	FixedArray *const fa = malloc(sizeof(FixedArray) + s * sizeof(data*));
+	FixedArray *const fa = malloc(sizeof(FixedArray) + s * sizeof(data_t*));
 	if(!fa) {
 		return NULL;
 	}
@@ -37,7 +37,7 @@ size_t fa_size(const FixedArray *const fa) {
 	return fa->size;
 }
 
-data *fa_get(const FixedArray *const fa, const size_t i) {
+data_t *fa_get(const FixedArray *const fa, const size_t i) {
 	if(i < fa->size) {
 		errno = 0;
 		return fa->items[i];
@@ -46,7 +46,7 @@ data *fa_get(const FixedArray *const fa, const size_t i) {
 	return NULL;
 }
 
-void fa_set(FixedArray *const fa, const size_t i, data *const d) {
+void fa_set(FixedArray *const fa, const size_t i, data_t *const d) {
 	if(i < fa->size) {
 		fa->items[i] = d;
 		errno = 0;

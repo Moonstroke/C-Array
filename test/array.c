@@ -18,10 +18,10 @@ static const unsigned int INT_ARRAY_SIZE = 10;
 static int VALUES[] = {-1, 42, 666, 13, 28, -54, 0, 7 , 6, 5};
 
 
-extern _Bool equal_as_ints(const data*, const data*);
+extern _Bool equal_as_ints(const data_t*, const data_t*);
 extern const char equal_as_ints_repr[];
 
-extern void print_as_int(const data*);
+extern void print_as_int(const data_t*);
 
 
 static void init(void) {
@@ -70,7 +70,7 @@ static void test_a_size__empty(void) {
 
 static void test_a_append(void) {
 	Array *empty_array;
-	data *param;
+	data_t *param;
 	int expected, got;
 	notice("test a_append");
 	verbose("empty_array = a_new(%u)", INT_ARRAY_SIZE);
@@ -103,7 +103,7 @@ static void test_a_size__full(void) {
 }
 
 static void test_a_get__valid(void) {
-	data *expected, *got;
+	data_t *expected, *got;
 	notice("tests a_get -- valid indices");
 	for(unsigned int index = 0; index < INT_ARRAY_SIZE; ++index) {
 		verbose("a_get(array, %d)", index);
@@ -124,7 +124,7 @@ static void test_a_get__invalid(void) {
 		73 /* big "arbitrary" value */
 	};
 	unsigned int index;
-	data *got;
+	data_t *got;
 	notice("tests a_get -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
@@ -140,7 +140,7 @@ static void test_a_get__invalid(void) {
 
 static void test_a_set__valid(void) {
 	static int extra = 64;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int index = 7;
 	notice("test a_set -- valid index");
 	verbose("a_set(array, %u, %p)", index, param);
@@ -153,7 +153,7 @@ static void test_a_set__valid(void) {
 
 static void test_a_set__invalid(void) {
 	static int extra = 23;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	const unsigned int invalid_indices[3] = {
 		a_size(array),
 		a_size(array) + 1,
@@ -180,7 +180,7 @@ static void test_a_add__invalid(void) {
 		73
 	};
 	int got;
-	data *const param = &value;
+	data_t *const param = &value;
 	unsigned int index;
 	notice("tests a_add -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
@@ -198,7 +198,7 @@ static void test_a_add__invalid(void) {
 static void test_a_append__overflow(void) {
 	static int extra = 73;
 	int expected, got;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	notice("test a_append -- overflow size (=> realloc)");
 	verbose("a_append(array, %p)", param);
 	expected = INT_ARRAY_SIZE;
@@ -212,7 +212,7 @@ static void test_a_append__overflow(void) {
 
 static void test_a_drop__valid(void) {
 	const unsigned int index = 4;
-	data *expected, *got;
+	data_t *expected, *got;
 	notice("test a_drop -- valid index");
 	verbose("a_drop(array, %u)", index);
 	expected = VALUES + index;
@@ -230,7 +230,7 @@ static void test_a_drop__invalid(void) {
 		a_size(array) + 1,
 		73
 	};
-	data *got;
+	data_t *got;
 	unsigned int index;
 	notice("tests a_drop -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
@@ -247,7 +247,7 @@ static void test_a_drop__invalid(void) {
 
 void test_a_swap__valid(void) {
 	static int extra = 777;
-	data *const param = &extra;
+	data_t *const param = &extra;
 	int expected, got;
 	unsigned int index;
 	notice("test a_swap -- valid indices");
@@ -269,9 +269,9 @@ static void test_a_swap__invalid(void) {
 		a_size(array) + 1,
 		73
 	};
-	data *const param = &value;
+	data_t *const param = &value;
 	unsigned int index;
-	data *got;
+	data_t *got;
 	notice("tests a_swap -- invalid indices");
 	for(unsigned int i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
@@ -287,8 +287,8 @@ static void test_a_swap__invalid(void) {
 
 static void test_a_remove__found(void) {
 	const int value = VALUES[3];
-	const data *const param = &value;
-	data *expected, *got;
+	const data_t *const param = &value;
+	data_t *expected, *got;
 	notice("test a_remove -- item found");
 	verbose("a_remove(array, *%d, %s)", value, equal_as_ints_repr);
 	expected = VALUES + 3;
@@ -302,8 +302,8 @@ static void test_a_remove__found(void) {
 
 static void test_a_remove__not_found(void) {
 	const int value = -42;
-	const data *const param = &value;
-	data *got;
+	const data_t *const param = &value;
+	data_t *got;
 	notice("test a_remove -- item not found");
 	verbose("a_remove(array, *%d, %s)", value, equal_as_ints_repr);
 	info("expected: (nil)");
@@ -316,8 +316,8 @@ static void test_a_remove__not_found(void) {
 
 static void test_a_cond__found(void) {
 	const int value = VALUES[1];
-	const data *const param = &value;
-	data *expected, *got;
+	const data_t *const param = &value;
+	data_t *expected, *got;
 	notice("test a_cond -- found");
 	expected = VALUES + 1;
 	verbose("a_cond(array, *%d, %s)", *(int*)param, equal_as_ints_repr);
@@ -331,8 +331,8 @@ static void test_a_cond__found(void) {
 
 static void test_a_cond__not_found(void) {
 	static int value = 1024;
-	data *const param = &value;
-	data *got;
+	data_t *const param = &value;
+	data_t *got;
 	notice("test a_cond -- not found");
 	verbose("a_cond(array, *%d, %s)", value, equal_as_ints_repr);
 	info("expected: (nil)");

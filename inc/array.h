@@ -28,7 +28,7 @@
 #define CODS_ARRAY_H
 
 
-#include "cods.h" /* for function attrs, data */
+#include "cods.h" /* for function attrs, data_t */
 #include <stddef.h> /* for size_t */
 #include <unistd.h> /* for ssize_t */
 
@@ -95,7 +95,7 @@ CODS_MEMBER size_t a_size(const Array *self) CODS_PURE;
  *
  * \return The \a index 'th element in the array, or \c NULL.
  */
-CODS_MEMBER data *a_get(const Array *self, size_t index) CODS_PURE;
+CODS_MEMBER data_t *a_get(const Array *self, size_t index) CODS_PURE;
 
 
 /**
@@ -107,7 +107,7 @@ CODS_MEMBER data *a_get(const Array *self, size_t index) CODS_PURE;
  * \param[in]     index   The index at which to update the element
  * \param[in]     newitem The new element to set
  */
-CODS_MEMBER void a_set(Array *self, size_t index, data *newitem)
+CODS_MEMBER void a_set(Array *self, size_t index, data_t *newitem)
 CODS_NOTNULL(3);
 
 
@@ -123,7 +123,7 @@ CODS_NOTNULL(3);
  * \param[in]     newitem The element to add
  * \return The new size of the array or \c -1.
  */
-CODS_MEMBER ssize_t a_add(Array *self, size_t index, data *newitem)
+CODS_MEMBER ssize_t a_add(Array *self, size_t index, data_t *newitem)
 CODS_NOTNULL(3);
 
 /**
@@ -140,7 +140,7 @@ CODS_NOTNULL(3);
  * \sa a_add
  */
 CODS_MEMBER CODS_INLINE CODS_NOTNULL(2)
-ssize_t a_append(Array *self, data *item) {
+ssize_t a_append(Array *self, data_t *item) {
 	return a_add(self, a_size(self), item);
 }
 
@@ -156,6 +156,6 @@ ssize_t a_append(Array *self, data *item) {
  * \return The element just removed, or \c NULL if an error occurred (\a index
  *         is invalid).
  */
-CODS_MEMBER data *a_drop(Array *self, size_t index);
+CODS_MEMBER data_t *a_drop(Array *self, size_t index);
 
 #endif /* CODS_ARRAY_H */

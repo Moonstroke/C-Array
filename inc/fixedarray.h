@@ -29,7 +29,7 @@
 #define CODS_FIXEDARRAY_H
 
 
-#include "cods.h" /* for function attrs, data */
+#include "cods.h" /* for function attrs, data_t */
 
 #include <stddef.h> /* for size_t */
 
@@ -80,7 +80,7 @@ CODS_MEMBER size_t fa_size(const FixedArray *self) CODS_PURE;
  *
  * \return The element at given index, or \c NULL if the index is invalid.
  */
-CODS_MEMBER data *fa_get(const FixedArray *self, size_t index) CODS_PURE;
+CODS_MEMBER data_t *fa_get(const FixedArray *self, size_t index) CODS_PURE;
 
 /**
  * \brief Overwrites an element of the fixed array.
@@ -89,7 +89,7 @@ CODS_MEMBER data *fa_get(const FixedArray *self, size_t index) CODS_PURE;
  * \param[in]     index   The index at which to set the element
  * \param[in]     element The value to set
  */
-CODS_MEMBER void fa_set(FixedArray *self, size_t index, data *element);
+CODS_MEMBER void fa_set(FixedArray *self, size_t index, data_t *element);
 
 
 #endif /* CODS_FIXEDARRAY_H */

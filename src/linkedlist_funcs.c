@@ -9,24 +9,24 @@
 extern int errno;
 
 
-static bool _equals(const data *const e1, const data* const e2) {
+static bool _equals(const data_t *const e1, const data_t* const e2) {
 	return e1 == e2;
 }
 
-static void _printitem(const data *const e) {
+static void _printitem(const data_t *const e) {
 	printf("%p", e);
 }
 
 
-void ll_each(LinkedList *const ll, void (*const f)(data*)) {
-	data *item;
+void ll_each(LinkedList *const ll, void (*const f)(data_t*)) {
+	data_t *item;
 	for(size_t i = 0; (item = ll_get(ll, i)); ++i) {
 		f(item);
 	}
 }
 
-data *ll_swap(LinkedList *const ll, const size_t i, data *const d) {
-	data *const e = ll_get(ll, i);
+data_t *ll_swap(LinkedList *const ll, const size_t i, data_t *const d) {
+	data_t *const e = ll_get(ll, i);
 	if(errno) {
 		return NULL;
 	}
@@ -35,10 +35,10 @@ data *ll_swap(LinkedList *const ll, const size_t i, data *const d) {
 }
 
 
-data *ll_cond(const LinkedList *const ll, const data *const e,
-              bool (*f)(const data*, const data*)) {
+data_t *ll_cond(const LinkedList *const ll, const data_t *const e,
+              bool (*f)(const data_t*, const data_t*)) {
 	const size_t l = ll_len(ll);
-	data *item;
+	data_t *item;
 	if(!f) {
 		if(!e) {
 			errno = EINVAL;
@@ -56,8 +56,8 @@ data *ll_cond(const LinkedList *const ll, const data *const e,
 }
 
 
-data *ll_remove(LinkedList *const ll, const data *const e,
-                bool (*f)(const data*, const data*)) {
+data_t *ll_remove(LinkedList *const ll, const data_t *const e,
+                bool (*f)(const data_t*, const data_t*)) {
 	if(!f) {
 		f = _equals;
 	}
@@ -72,13 +72,13 @@ data *ll_remove(LinkedList *const ll, const data *const e,
 	return NULL;
 }
 
-void ll_printf(const LinkedList *const ll, void (*f)(const data*)) {
+void ll_printf(const LinkedList *const ll, void (*f)(const data_t*)) {
 	printf("(");
 	if(!f)
 		f = _printitem;
 	if(ll_len(ll) > 0)
 		f(ll_get(ll, 0));
-	data *item;
+	data_t *item;
 	size_t i;
 	for(i = 1; (item = ll_get(ll, i)); ++i) {
 			printf(", ");
