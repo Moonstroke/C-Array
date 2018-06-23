@@ -13,7 +13,7 @@
 typedef struct sortedarray SortedArray;
 
 CODS_CTOR
-SortedArray *sa_new(size_t size, int (*cmp)(const data_t *, const data_t*));
+SortedArray *sa_new(size_t size, int (*cmp)(const data_t*, const data_t*));
 
 CODS_MEMBER void sa_free(SortedArray *self);
 
@@ -27,7 +27,7 @@ CODS_MEMBER ssize_t sa_indexof(const SortedArray *self, const data_t *value)
 CODS_PURE;
 
 CODS_MEMBER CODS_INLINE CODS_NOTNULL(2) CODS_PURE
-data_t *sa_geteq(const SortedArray *const self, const data_t *other) {
+data_t *sa_geteq(const SortedArray *const self, const data_t *const other) {
 	const ssize_t index = sa_indexof(self, value);
 	return index == -1 ? NULL : sa_indexof(sa_get(self, index));
 }
