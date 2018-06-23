@@ -101,7 +101,8 @@ typedef void data_t;
 #if !defined(CODS_FIXEDARRAY_H) && !defined(CODS_FIXEDARRAY_FUNCS_H) \
     && !defined(CODS_ARRAY_H) && !defined(CODS_ARRAY_FUNCS_H) \
     && !defined(CODS_LINKEDLIST_H) && !defined(CODS_LINKEDLIST_FUNCS_H) \
-    && !defined(CODS_BITARRAY_H) && !defined(CODS_BITARRAY_FUNCS_H)
+    && !defined(CODS_BITARRAY_H) && !defined(CODS_BITARRAY_FUNCS_H)\
+    && !defined(CODS_SORTEDARRAY_H)
 /* The file has been included directly: use it as the project's main interface
 */
 
@@ -113,6 +114,7 @@ typedef void data_t;
 #include "fixedarray_funcs.h"
 #include "linkedlist.h"
 #include "linkedlist_funcs.h"
+#include "sortedarray.h"
 
 #endif /* main project file */
 
