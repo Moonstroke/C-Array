@@ -45,7 +45,7 @@ CODS_MEMBER void a_freer(Array *array, void (*freeitem)(data*)) CODS_NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-CODS_MEMBER data *a_swap(Array *self, unsigned int index, data *newitem)
+CODS_MEMBER data *a_swap(Array *self, size_t index, data *newitem)
 CODS_NODISCARD CODS_NOTNULL(3);
 
 
@@ -123,7 +123,7 @@ CODS_MEMBER data *a_remove(Array *array, const data *value,
  * \return An \a Array filled with the given items, or \c NULL if an error
  *         occured, or \a n equals \c 0.
  */
-CODS_CTOR Array *a_make(unsigned int n, data *const elements[static n]);
+CODS_CTOR Array *a_make(size_t n, data *const elements[static n]);
 
 
 /**

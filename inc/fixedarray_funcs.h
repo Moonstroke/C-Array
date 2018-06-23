@@ -14,7 +14,9 @@
 
 
 #include <stdbool.h>
+#include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for NULL */
+#include <unistd.h> /* for ssize_t */
 
 #include "fixedarray.h"
 
@@ -51,7 +53,7 @@ CODS_MEMBER void fa_clear(FixedArray *farray, void (*free_item)(data*));
  *
  * \return The number of elements that are not \c NULL.
  */
-CODS_MEMBER unsigned int fa_count(const FixedArray *farray) CODS_PURE;
+CODS_MEMBER size_t fa_count(const FixedArray *farray) CODS_PURE;
 
 
 /**
@@ -64,7 +66,7 @@ CODS_MEMBER unsigned int fa_count(const FixedArray *farray) CODS_PURE;
  * \return The index where the element was put, or \c -1 i the element could not
  *         be placed.
  */
-CODS_MEMBER int fa_put(FixedArray *farray, data *item) CODS_NOTNULL(2);
+CODS_MEMBER ssize_t fa_put(FixedArray *farray, data *item) CODS_NOTNULL(2);
 
 
 /**
@@ -80,7 +82,7 @@ CODS_MEMBER int fa_put(FixedArray *farray, data *item) CODS_NOTNULL(2);
  * \return The former element of the array at given index, or \c NULL if the
  *         provided index is invalid.
  */
-CODS_MEMBER data *fa_swap(FixedArray *farray, unsigned int index, data *item)
+CODS_MEMBER data *fa_swap(FixedArray *farray, size_t index, data *item)
 CODS_NODISCARD;
 
 /**
@@ -94,7 +96,7 @@ CODS_NODISCARD;
  * \return The element just unset, or \c NULL if the index is invalid.
  */
 CODS_MEMBER CODS_INLINE
-data *fa_unset(FixedArray *const farray, const unsigned int index) {
+data *fa_unset(FixedArray *const farray, const size_t index) {
 	return fa_swap(farray, index, NULL);
 }
 

@@ -22,7 +22,7 @@ void a_freer(Array *a, void (*const f)(data*)) {
 	a_free(a);
 }
 
-data *a_swap(Array *const a, const unsigned int i, data *const e) {
+data *a_swap(Array *const a, const size_t i, data *const e) {
 	data *const former = a_get(a, i);
 	if(errno) {
 		return NULL;
@@ -33,14 +33,14 @@ data *a_swap(Array *const a, const unsigned int i, data *const e) {
 }
 
 void a_each(Array *const a, void (*f)(data*)) {
-	const unsigned int s = a_size(a);
-	for(unsigned int i = 0; i < s; ++i) {
+	const size_t s = a_size(a);
+	for(size_t i = 0; i < s; ++i) {
 		f(a_get(a, i));
 	}
 }
 
 data *a_cond(const Array *a, const data *const e, bool (*f)(const data*, const data*)) {
-	const unsigned int s = a_size(a);
+	const size_t s = a_size(a);
 	data *item;
 	if(!f) {
 		if(!e) {
@@ -49,7 +49,7 @@ data *a_cond(const Array *a, const data *const e, bool (*f)(const data*, const d
 		}
 		f = _equals;
 	}
-	for(unsigned int i = 0; i < s; ++i) {
+	for(size_t i = 0; i < s; ++i) {
 		item = a_get(a, i);
 		if(f(item, e))
 			return item;
@@ -66,8 +66,8 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 		}
 		f = _equals;
 	}
-	const unsigned int s = a_size(a);
-	for(unsigned int i = 0; i < s; ++i) {
+	const size_t s = a_size(a);
+	for(size_t i = 0; i < s; ++i) {
 		if(f(a_get(a, i), e)) {
 			errno = 0;
 			return a_drop(a, i);
@@ -77,25 +77,25 @@ data *a_remove(Array *const a, const data *const e, bool (*f)(const data*, const
 	return NULL;
 }
 
-Array *a_make(const unsigned int n, data *const elements[static n]) {
+Array *a_make(const size_t n, data *const elements[static n]) {
 	Array *const arr = a_new(n);
 	if(!arr) {
 		return NULL;
 	}
-	for(unsigned int i = 0; i < n; ++i) {
+	for(size_t i = 0; i < n; ++i) {
 		a_append(arr, elements[i]);
 	}
 	return arr;
 }
 
 void a_printf(const Array *a, void (*print)(const data*)) {
-	const unsigned int n = a_size(a);
+	const size_t n = a_size(a);
 	printf("[");
 	if(n) {
 		if(!print)
 			print = _printitem;
 		print(a_get(a, 0));
-		for(unsigned int i = 1; i < n; ++i) {
+		for(size_t i = 1; i < n; ++i) {
 			printf(", ");
 			print(a_get(a, i));
 		}

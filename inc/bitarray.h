@@ -28,6 +28,7 @@
 
 
 #include <stdbool.h>
+#include <stddef.h> /* for size_t */
 
 #include "cods.h" /* for function attrs */
 
@@ -47,7 +48,7 @@ typedef struct bitarray BitArray;
  *
  * \return A pointer to a bit array of \a size elements, or \c NULL.
  */
-CODS_CTOR BitArray *ba_new(unsigned int size);
+CODS_CTOR BitArray *ba_new(size_t size);
 
 
 /**
@@ -65,7 +66,7 @@ CODS_MEMBER void ba_free(BitArray *self);
  *
  * \return The size of the bit array.
  */
-CODS_MEMBER unsigned int ba_size(const BitArray *self) CODS_PURE;
+CODS_MEMBER size_t ba_size(const BitArray *self) CODS_PURE;
 
 
 /**
@@ -79,8 +80,7 @@ CODS_MEMBER unsigned int ba_size(const BitArray *self) CODS_PURE;
  *
  * \return The value in the array, at index \a index.
  */
-CODS_MEMBER bool ba_get(const BitArray *self, unsigned int index)
-CODS_PURE;
+CODS_MEMBER bool ba_get(const BitArray *self, size_t index) CODS_PURE;
 
 
 /**
@@ -94,7 +94,7 @@ CODS_PURE;
  *
  * \return The former value of the element, or \c false.
  */
-CODS_MEMBER bool ba_set(BitArray *const self, const unsigned int index);
+CODS_MEMBER bool ba_set(BitArray *const self, const size_t index);
 
 /**
  * \brief Sets the element at position \a index in the bit array to \c false.
@@ -107,7 +107,7 @@ CODS_MEMBER bool ba_set(BitArray *const self, const unsigned int index);
  *
  * \return The former value of the element, or \c false.
  */
-CODS_MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
+CODS_MEMBER bool ba_unset(BitArray *const self, const size_t index);
 
 /**
  * \brief Gives an element of the bit array the given value.
@@ -122,7 +122,7 @@ CODS_MEMBER bool ba_unset(BitArray *const self, const unsigned int index);
  * \return The former value of the element, or \c false.
  */
 CODS_MEMBER CODS_INLINE
-bool ba_put(BitArray *const self, const unsigned int i, const bool val) {
+bool ba_put(BitArray *const self, const size_t i, const bool val) {
 	return val ? ba_set(self, i) : ba_unset(self, i);
 }
 

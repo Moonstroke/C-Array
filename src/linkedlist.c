@@ -14,8 +14,7 @@ struct node {
 
 struct llist {
 	Node *head;
-	unsigned int len;
-	char _padding[4];
+	size_t len;
 };
 
 
@@ -29,10 +28,9 @@ static CODS_INLINE Node *newnode(data *const d) {
 	return node;
 }
 
-static CODS_INLINE Node *ll_goto(const LinkedList *const ll,
-                                 const unsigned int n) {
+static CODS_INLINE Node *ll_goto(const LinkedList *const ll, const size_t n) {
 	Node *item = ll->head;
-	for(unsigned int i = 0; i < n && item; ++i)
+	for(size_t i = 0; i < n && item; ++i)
 		item = item->next;
 	return item;
 }
@@ -64,11 +62,11 @@ void ll_freer(LinkedList *const ll, void (*const f)(data*)) {
 }
 extern void ll_free(LinkedList*);
 
-unsigned int ll_len(const LinkedList *const ll) {
+size_t ll_len(const LinkedList *const ll) {
 	return ll->len;
 }
 
-data *ll_get(const LinkedList *const ll, const unsigned int i) {
+data *ll_get(const LinkedList *const ll, const size_t i) {
 	if(i < ll->len) {
 		errno = 0;
 		return ll_goto(ll, i)->value;
@@ -77,7 +75,7 @@ data *ll_get(const LinkedList *const ll, const unsigned int i) {
 	return NULL;
 }
 
-void ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
+void ll_set(LinkedList *const ll, const size_t i, data *const d) {
 	if(i >= ll->len) {
 		errno = ERANGE;
 	} else {
@@ -86,7 +84,7 @@ void ll_set(LinkedList *const ll, const unsigned int i, data *const d) {
 	}
 }
 
-int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
+int ll_add(LinkedList *const ll, const size_t i, data *const d) {
 	Node *item;
 	if(i > ll->len) {
 		errno = ERANGE;
@@ -106,7 +104,7 @@ int ll_add(LinkedList *const ll, const unsigned int i, data *const d) {
 }
 extern int ll_append(LinkedList*, data*);
 
-data *ll_drop(LinkedList *const ll, const unsigned int i) {
+data *ll_drop(LinkedList *const ll, const size_t i) {
 	if(i >= ll->len) {
 		errno = ERANGE;
 		return NULL;

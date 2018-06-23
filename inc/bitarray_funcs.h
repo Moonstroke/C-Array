@@ -25,7 +25,7 @@
  *
  * \return The number of elements set to \c true in the bit array.
  */
-CODS_MEMBER unsigned int ba_count(const BitArray *array) CODS_PURE;
+CODS_MEMBER size_t ba_count(const BitArray *array) CODS_PURE;
 
 
 /**

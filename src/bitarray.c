@@ -10,12 +10,12 @@
 extern int errno;
 
 struct bitarray {
-	unsigned int size;
+	size_t size;
 	uint8_t data[];
 };
 
 
-static CODS_INLINE bool ba_replace(BitArray *const ba, const unsigned int i,
+static CODS_INLINE bool ba_replace(BitArray *const ba, const size_t i,
                                    const uint8_t v) {
 	const bool b = ba_get(ba, i);
 	if(!errno) {
@@ -25,7 +25,7 @@ static CODS_INLINE bool ba_replace(BitArray *const ba, const unsigned int i,
 }
 
 
-BitArray *ba_new(const unsigned int s) {
+BitArray *ba_new(const size_t s) {
 	if(!s) {
 		errno = EINVAL;
 		return NULL;
@@ -43,11 +43,11 @@ void ba_free(BitArray *const ba) {
 	free(ba);
 }
 
-unsigned int ba_size(const BitArray *const ba) {
+size_t ba_size(const BitArray *const ba) {
 	return ba->size;
 }
 
-bool ba_get(const BitArray *const ba, const unsigned int i) {
+bool ba_get(const BitArray *const ba, const size_t i) {
 	if(i < ba->size) {
 		errno = 0;
 		return (ba->data[i / 8] & 1 << (i % 8)) != 0;
@@ -56,10 +56,10 @@ bool ba_get(const BitArray *const ba, const unsigned int i) {
 	return false;
 }
 
-bool ba_set(BitArray *const ba, const unsigned int i) {
+bool ba_set(BitArray *const ba, const size_t i) {
 	return ba_replace(ba, i, ba->data[i / 8] | 1 << i % 8);
 }
-bool ba_unset(BitArray *const ba, const unsigned int i) {
+bool ba_unset(BitArray *const ba, const size_t i) {
 	return ba_replace(ba, i, ba->data[i / 8] & ~(1 << i % 8));
 }
-extern bool ba_put(BitArray*, unsigned int, bool);
+extern bool ba_put(BitArray*, size_t, bool);

@@ -1,7 +1,6 @@
 #include "fixedarray.h"
 
 #include <errno.h> /* for errno, EINVAL, ERANGE */
-#include <stdint.h> /* for uint8_t */
 #include <stdlib.h> /* for NULL, malloc(), calloc(), free() */
 
 
@@ -9,13 +8,12 @@
 extern int errno;
 
 struct fixedarray {
-	unsigned int size;
-	uint8_t _padding[4];
+	size_t size;
 	data *items[];
 };
 
 
-FixedArray *fa_new(const unsigned int s) {
+FixedArray *fa_new(const size_t s) {
 	if(!s) {
 		errno = EINVAL;
 		return NULL;
@@ -25,7 +23,7 @@ FixedArray *fa_new(const unsigned int s) {
 		return NULL;
 	}
 	fa->size = s;
-	for(unsigned int i = 0; i < s; ++i) {
+	for(size_t i = 0; i < s; ++i) {
 		fa->items[i] = NULL;
 	}
 	return fa;
@@ -35,11 +33,11 @@ void fa_free(FixedArray *const fa) {
 	free(fa);
 }
 
-unsigned int fa_size(const FixedArray *const fa) {
+size_t fa_size(const FixedArray *const fa) {
 	return fa->size;
 }
 
-data *fa_get(const FixedArray *const fa, const unsigned int i) {
+data *fa_get(const FixedArray *const fa, const size_t i) {
 	if(i < fa->size) {
 		errno = 0;
 		return fa->items[i];
@@ -48,7 +46,7 @@ data *fa_get(const FixedArray *const fa, const unsigned int i) {
 	return NULL;
 }
 
-void fa_set(FixedArray *const fa, const unsigned int i, data *const d) {
+void fa_set(FixedArray *const fa, const size_t i, data *const d) {
 	if(i < fa->size) {
 		fa->items[i] = d;
 		errno = 0;

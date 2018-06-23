@@ -22,6 +22,7 @@
 #define CODS_LINKEDLIST_H
 
 
+#include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for NULL */
 
 #include "cods.h" /* for function attrs, data */
@@ -77,7 +78,7 @@ CODS_MEMBER CODS_INLINE void ll_free(LinkedList *const self) {
  *
  * \return The number of elements in the list.
  */
-CODS_MEMBER unsigned int ll_len(const LinkedList *self) CODS_PURE;
+CODS_MEMBER size_t ll_len(const LinkedList *self) CODS_PURE;
 
 
 /**
@@ -92,7 +93,7 @@ CODS_MEMBER unsigned int ll_len(const LinkedList *self) CODS_PURE;
  * \return The \a index 'th element in the list, or \c NULL if the index is
  *         invalid.
  */
-CODS_MEMBER data *ll_get(const LinkedList *self, unsigned int index) CODS_PURE;
+CODS_MEMBER data *ll_get(const LinkedList *self, size_t index) CODS_PURE;
 
 /**
  * \brief Updates an element of the list.
@@ -104,7 +105,7 @@ CODS_MEMBER data *ll_get(const LinkedList *self, unsigned int index) CODS_PURE;
  * \param[in]     index The index where to update the element
  * \param[in]     item  The element to set
  */
-CODS_MEMBER void ll_set(LinkedList *self, unsigned int index, data *item)
+CODS_MEMBER void ll_set(LinkedList *self, size_t index, data *item)
 CODS_NOTNULL(3);
 
 
@@ -122,7 +123,7 @@ CODS_NOTNULL(3);
  * \return The index of the element, or \c -1 in case of error: memory
  *         allocation failed, or the \a index is invalid.
  */
-CODS_MEMBER int ll_add(LinkedList *self, unsigned int index, data *item)
+CODS_MEMBER int ll_add(LinkedList *self, size_t index, data *item)
 CODS_NOTNULL(3);
 
 /**
@@ -153,7 +154,7 @@ int ll_append(LinkedList *self, data *item) {
  * \return The removed element, of NULL if no element was removed (\a i.e.
  *         \a index has an invalid value).
  */
-CODS_MEMBER data *ll_drop(LinkedList *self, unsigned int index);
+CODS_MEMBER data *ll_drop(LinkedList *self, size_t index);
 
 
 #endif /* LINKEDLIST_H */

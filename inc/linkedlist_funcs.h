@@ -39,7 +39,7 @@ CODS_NOTNULL(2);
  * \return The former element found at index \a index, or \c NULL if the index
  *         is invalid.
  */
-CODS_MEMBER data *ll_swap(LinkedList *llist, unsigned int index, data *newitem)
+CODS_MEMBER data *ll_swap(LinkedList *llist, size_t index, data *newitem)
 CODS_NODISCARD CODS_NOTNULL(3);
 
 
