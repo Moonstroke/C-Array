@@ -16,11 +16,11 @@ SortedArray *sa_new(size_t size, int (*cmp)(const data_t *, const data_t*));
 
 CODS_MEMBER void sa_free(SortedArray *self);
 
-CODS_MEMBER size_t sa_size(const SortedArray *self);
+CODS_MEMBER size_t sa_size(const SortedArray *self) CODS_PURE;
 
 CODS_MEMBER ssize_t sa_add(SortedArray *self, data_t *item);
 
-CODS_MEMBER data_t *sa_get(const SortedArray *self, size_t index);
+CODS_MEMBER data_t *sa_get(const SortedArray *self, size_t index) CODS_PURE;
 
 CODS_MEMBER ssize_t sa_indexof(const SortedArray *self, const data_t *value);
 
