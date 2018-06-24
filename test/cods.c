@@ -53,7 +53,6 @@ int main(void) {
 	const CUTE_RunResults **results;
 
 	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_FUNC | CLOG_ATTR_COLORED);
-	clog_setfilterlevel(CLOG_FILTER_NONE);
 	build_case_fixedarray();
 	build_case_array();
 	build_case_bitarray();
