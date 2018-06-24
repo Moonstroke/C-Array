@@ -77,16 +77,31 @@ static void test_sa_size(void) {
 	verbose("OK");
 }
 
+static void test_is_sorted(void) {
+	int prev = *(int*)sa_get(sortedarray, 0), item;
+	const size_t s = sa_size(sortedarray);
+	notice("test sortedarray is actually sorted");
+	for(size_t i = 1; i < s; ++i) {
+		item = *(int*)sa_get(sortedarray, i);
+		verbose("sortedarray[%zu] = %d <? sortedarray[%zu] = %d", i - 1, prev,
+		        i, item);
+		CUTE_runTimeAssert(prev < item);
+		verbose("OK");
+		prev = item;
+	}
+}
+
 // TODO
 
 
 void build_case_sortedarray(void) {
-	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 3);
+	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 4);
 	CUTE_setCaseBefore(case_sortedarray, init);
 	CUTE_setCaseAfter(case_sortedarray, cleanup);
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_new__0_null));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size__empty));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size));
+	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted));
 	// TODO
 }
 
