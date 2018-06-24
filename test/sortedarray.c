@@ -54,8 +54,9 @@ static void test_sa_size__empty(void) {
 	SortedArray *empty_sarray;
 	size_t got;
 	notice("test sa_size -- empty SortedArray == 0");
-	info("empty_sarray = sa_new(0, %s)", cmp_as_ints_repr);
-	empty_sarray = sa_new(0, cmp_as_ints);
+	info("empty_sarray = sa_new(%zu, %s)", INT_SORTED_ARRAY_SIZE,
+	     cmp_as_ints_repr);
+	empty_sarray = sa_new(INT_SORTED_ARRAY_SIZE, cmp_as_ints);
 	verbose("sa_size(empty_sarray)");
 	info("expected: 0");
 	got = sa_size(empty_sarray);
