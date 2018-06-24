@@ -87,8 +87,8 @@ ssize_t a_add(Array *const a, const size_t i, data_t *const e) {
 		/* errno set in a_grow */
 		return -1;
 	}
-	for(size_t k = s; k > i; --k) {
-		fa_set(a->items, k + 1, fa_get(a->items, k));
+	for(size_t k = s + 1; k > i; --k) {
+		fa_set(a->items, k, fa_get(a->items, k - 1));
 	}
 	fa_set(a->items, i, e);
 	++a->size;
