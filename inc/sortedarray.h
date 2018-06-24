@@ -13,7 +13,8 @@
 typedef struct sortedarray SortedArray;
 
 CODS_CTOR
-SortedArray *sa_new(size_t size, int (*cmp)(const data_t*, const data_t*));
+SortedArray *sa_new(size_t size, int (*cmp)(const data_t*, const data_t*))
+CODS_NOTNULL(2);
 
 CODS_MEMBER void sa_free(SortedArray *self);
 
