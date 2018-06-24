@@ -43,7 +43,7 @@ static void test_sa_new__0_null(void) {
 	notice("test sa_new -- size 0 => NULL sortedarray");
 	verbose("sa_new(0, NULL)");
 	info("expected: (nil)");
-	got = sa_new(0, NULL);
+	got = sa_new(0, cmp_as_ints);
 	info("got     : %p", (void*)got); /* necessary cast because of GCC warning */
 	CUTE_assertEquals(got, NULL);
 	CUTE_assertErrnoEquals(EINVAL);
