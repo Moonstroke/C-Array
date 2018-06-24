@@ -94,30 +94,22 @@ $(OBJ_DIR)/test_%.o: $(TEST_DIR)/%.c
 	$(CC) -c $< -o $@ $(CPPFLAGS) $(CFLAGS)
 
 
-# Remove compiled files (objects)
+# Remove compiled files (objects, archives, executables)
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR) $(AR_LIB) $(TEST_EXEC)
 
 # Reset the project to its initial state
-distclean: clean docclean testclean
-	@rm -rf $(AR_LIB)
+distclean: clean testclean
+	@rm -rf $(DOC_DIR) $(TEST_LOG)
 
 # (Re)generate documentation
 doc:
 	@$(DOC_PRG) $(DOC_CFG)
 
-# Remove documentation
-docclean:
-	@rm -rf $(DOC_DIR)
-
 # Build and launch tests
 test: $(TEST_OBJ) $(AR_LIB)
 	$(CC) -o$(TEST_EXEC) $^ $(LDLIBS) $(LDFLAGS)
 	./$(TEST_EXEC)
-
-# Remove test build files
-testclean:
-	@rm -rf $(TEST_OBJ) $(TEST_EXEC) $(TEST_LOG)
 
 # Install the project for system use
 install:
