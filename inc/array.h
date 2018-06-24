@@ -83,15 +83,14 @@ CODS_MEMBER size_t a_size(const Array *self) CODS_PURE;
 
 
 /**
- * \brief Retrieves an element of an array from its position (ie. \a index), or
- *        \c NULL if the \a index is invalid.
+ * \brief Retrieves an element of an array from its position (ie. \a index)
  *
- * \note An index is valid if an only if it is strictly less than the size of
- *       the array. If the index is greater than this value, \a errno is set to
- *       \c ERANGE and \c NULL is returned.
+ * \note An index is valid if an only if it is strictly lower than the size of
+ *       the array. If the index is invalid, \a errno is set to \c ERANGE and
+ *       \c NULL is returned.
  *
  * \param[in] self  The array
- * \param[in] index The index at which to look for an element
+ * \param[in] index The index
  *
  * \return The \a index 'th element in the array, or \c NULL.
  */
@@ -103,27 +102,29 @@ CODS_MEMBER data_t *a_get(const Array *self, size_t index) CODS_PURE;
  *
  * \note Sets \a errno to \c ERANGE if \a index is invalid.
  *
- * \param[in,out] self    The array
- * \param[in]     index   The index at which to update the element
- * \param[in]     newitem The new element to set
+ * \param[in,out] self  The array
+ * \param[in]     index The index at which to update the element
+ * \param[in]     item  The new element to set
  */
-CODS_MEMBER void a_set(Array *self, size_t index, data_t *newitem)
+CODS_MEMBER void a_set(Array *self, size_t index, data_t *item)
 CODS_NOTNULL(3);
 
 
 /**
  * \brief Inserts an element at \a index'th position.
  *
- * \note This function sets \a errno to \c ENOMEM if the memory allocation fails
- *       or \c ERANGE if the \a index is strictly greater than the size of the
- *       array. In these cases, \c -1 i returned.
+ * \note This function sets \a errno to \c ENOMEM if the array has to be resized
+ *       but the memory allocation fails or \c ERANGE if the \a index is
+ *       strictly greater than the size of the array. In both of these cases,
+ *       \c -1 is returned.
  *
- * \param[in,out] self    The array
- * \param[in]     index   The index at which to insert an element
- * \param[in]     newitem The element to add
+ * \param[in,out] self  The array
+ * \param[in]     index The index at which to insert an element
+ * \param[in]     item  The element to add
+ *
  * \return The new size of the array or \c -1.
  */
-CODS_MEMBER ssize_t a_add(Array *self, size_t index, data_t *newitem)
+CODS_MEMBER ssize_t a_add(Array *self, size_t index, data_t *item)
 CODS_NOTNULL(3);
 
 /**
