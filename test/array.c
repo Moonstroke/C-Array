@@ -173,6 +173,29 @@ static void test_a_set__invalid(void) {
 	verbose("OK");
 }
 
+static void test_a_add__middle(void) {
+	static int extra = 33;
+	data_t *const param = &extra;
+	const size_t index = INT_ARRAY_SIZE - 3;
+	ssize_t r;
+	notice("test a_add() in middle of array");
+	verbose("a_add(array, %zu, %p)", index, param);
+	r = a_add(array, index, param);
+	CUTE_assertEquals(r, index);
+	CUTE_assertNoError();
+	for(size_t i = 0; i < index; ++i) {
+		const int expected = VALUES[i], got = *(int*)a_get(array, i);
+		CUTE_assertEquals(got, expected);
+		verbose("%d == %d", got, expected);
+	}
+	for(size_t i = index; i < INT_ARRAY_SIZE; ++i) {
+		const int expected = VALUES[i], got = *(int*)a_get(array, i + 1);
+		CUTE_assertEquals(got, expected);
+		verbose("%d == %d", got, expected);
+	}
+	verbose("OK");
+}
+
 static void test_a_add__invalid(void) {
 	int value = 42;
 	const size_t invalid_indices[3] = {
@@ -345,7 +368,7 @@ static void test_a_cond__not_found(void) {
 
 
 void build_case_array(void) {
-	case_array = CUTE_newTestCase("Tests for Array", 17);
+	case_array = CUTE_newTestCase("Tests for Array", 18);
 	CUTE_setCaseBefore(case_array, init);
 	CUTE_setCaseAfter(case_array, cleanup);
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_new__0_null));
@@ -356,6 +379,7 @@ void build_case_array(void) {
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_get__invalid));
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_set__valid));
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_set__invalid));
+	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_add__middle));
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_add__invalid));
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_append__overflow));
 	CUTE_addCaseTest(case_array, CUTE_makeTest(test_a_drop__valid));
