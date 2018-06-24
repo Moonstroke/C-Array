@@ -28,7 +28,8 @@ static void init(void) {
 	sortedarray = sa_new(INT_SORTED_ARRAY_SIZE, cmp_as_ints);
 	CUTE_assertNotEquals(sortedarray, NULL);
 	for(size_t i = 0; i < INT_SORTED_ARRAY_SIZE; ++i) {
-		sa_add(sortedarray, &VALUES[i]);
+		const ssize_t r = sa_add(sortedarray, &VALUES[i]);
+		CUTE_runTimeAssert(r >= 0);
 	}
 }
 
