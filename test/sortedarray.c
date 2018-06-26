@@ -20,6 +20,7 @@ extern const char cmp_as_ints_repr[];
 
 static const size_t INT_SORTED_ARRAY_SIZE = 10;
 static int VALUES[] = {9 ,7, 1, 5, 40, 95, 65, 13, 27, 82};
+static const int VALUES_SORTED[] = {1, 5, 7, 9, 13, 27, 40, 65, 82, 95};
 
 
 static void init(void) {
@@ -91,46 +92,30 @@ static void test_is_sorted(void) {
 	}
 }
 
+static void test_indexof(void) {
+	size_t expected, got;
+	notice("test sa_indexof");
+	for(size_t i = 0; i < INT_SORTED_ARRAY_SIZE; ++i) {
+		verbose("sa_indexof(sortedarray, %zu)", i);
+		expected = i;
+		info("expected: %zu", expected);
+		got = sa_indexof(sortedarray, &VALUES_SORTED[i]);
+		info("got     : %zu", got);
+		CUTE_assertEquals(got, expected);
+	}
+	verbose("OK");
+}
+
 // TODO
 
 
 void build_case_sortedarray(void) {
-	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 4);
+	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 5);
 	CUTE_setCaseBefore(case_sortedarray, init);
 	CUTE_setCaseAfter(case_sortedarray, cleanup);
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_new__0_null));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size__empty));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted));
-	// TODO
+	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_indexof));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
