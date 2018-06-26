@@ -20,7 +20,7 @@ extern const char cmp_as_ints_repr[];
 
 static const size_t INT_SORTED_ARRAY_SIZE = 10;
 static int VALUES[] = {9 ,7, 1, 5, 40, 95, 65, 13, 27, 82};
-static const int VALUES_SORTED[] = {1, 5, 7, 9, 13, 27, 40, 65, 82, 95};
+static int VALUES_SORTED[] = {1, 5, 7, 9, 13, 27, 40, 65, 82, 95};
 
 
 static void init(void) {
@@ -78,18 +78,19 @@ static void test_sa_size(void) {
 	verbose("OK");
 }
 
-static void test_is_sorted(void) {
-	int prev = *(int*)sa_get(sortedarray, 0), item;
+static void test_is_sorted__sa_get(void) {
 	const size_t s = sa_size(sortedarray);
+	int *expected, *got;
 	notice("test sortedarray is actually sorted");
-	for(size_t i = 1; i < s; ++i) {
-		item = *(int*)sa_get(sortedarray, i);
-		verbose("sortedarray[%zu] = %d <? sortedarray[%zu] = %d", i - 1, prev,
-		        i, item);
-		CUTE_runTimeAssert(prev < item);
-		verbose("OK");
-		prev = item;
+	for(size_t i = 0; i < s; ++i) {
+		verbose("sa_get(sortedarray, %zu)", i);
+		expected = &VALUES_SORTED[i];
+		info("expected: %d", *expected);
+		got = sa_get(sortedarray, i);
+		info("got     : %d", *got);
+		CUTE_assertEqualsUsing(got, expected, cmp_as_ints, 0);
 	}
+	verbose("OK");
 }
 
 static void test_indexof(void) {
@@ -116,6 +117,6 @@ void build_case_sortedarray(void) {
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_new__0_null));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size__empty));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size));
-	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted));
+	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted__sa_get));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_indexof));
 }
