@@ -93,7 +93,7 @@ static void test_is_sorted__sa_get(void) {
 	verbose("OK");
 }
 
-static void test_indexof(void) {
+static void test_sa_indexof(void) {
 	size_t expected, got;
 	notice("test sa_indexof");
 	for(size_t i = 0; i < INT_SORTED_ARRAY_SIZE; ++i) {
@@ -118,5 +118,5 @@ void build_case_sortedarray(void) {
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size__empty));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted__sa_get));
-	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_indexof));
+	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_indexof));
 }
