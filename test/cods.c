@@ -12,14 +12,12 @@
 int cmp_as_ints(const data_t *const e1, const data_t *const e2) {
 	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
 	const int i1 = *(int*)e1, i2 = *(int*)e2;
-	return i1 < i2 ? -1 : i1 > i2 ? 1 : 0;
+	return (i1 > i2) - (i1 < i2);
 }
-const char cmp_as_ints_repr[] = "(int *i, int *j) -> *i < *j ? -1 :"
-                                " *i > *j ? 1 : 0";
+const char cmp_as_ints_repr[] = "(int *i, int *j) -> (*i > *j) - (*i < *j)";
 
 bool equal_as_ints(const data_t *const e1, const data_t *const e2) {
-	CUTE_runTimeAssert(e1 != NULL && e2 != NULL);
-	return *(int*)e1 == *(int*)e2;
+	return cmp_as_ints(e1, e2) == 0;
 }
 const char equal_as_ints_repr[] = "(int *i, int *j) -> *i == *j";
 
