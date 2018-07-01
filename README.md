@@ -3,8 +3,8 @@
 ## C Opaque Data Structures
 
 
-[![Build Status](https://travis-ci.org/Moonstroke/C-Arrays.svg?branch=master)
-](https://travis-ci.org/Moonstroke/C-Arrays)
+[![Build Status](https://travis-ci.org/Moonstroke/CODS.svg?branch=master)
+](https://travis-ci.org/Moonstroke/CODS)
 
 
 ![One cod](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
