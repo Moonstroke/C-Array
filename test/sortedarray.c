@@ -107,11 +107,26 @@ static void test_sa_indexof(void) {
 	verbose("OK");
 }
 
-// TODO
-
+static void test_sa_add__last(void) {
+	static int extra = 1024;
+	data_t *const param = &extra;
+	ssize_t expected, got;
+	notice("test sa_add() -- add item last in array");
+	verbose("sa_add(sortedarray, %p)", param);
+	expected = INT_SORTED_ARRAY_SIZE;
+	info("expected: %zu", expected);
+	got = sa_add(sortedarray, param);
+	info("got     : %zu", got);
+	CUTE_assertEquals(got, expected);
+	verbose("OK");
+	// a-posteriori check of the value actually set
+	info("A posteriori validity check: sa_get(sortedarray, %zu) == %p",
+	     INT_SORTED_ARRAY_SIZE, param);
+	CUTE_assertEquals(sa_get(sortedarray, INT_SORTED_ARRAY_SIZE), param);
+}
 
 void build_case_sortedarray(void) {
-	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 5);
+	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 6);
 	CUTE_setCaseBefore(case_sortedarray, init);
 	CUTE_setCaseAfter(case_sortedarray, cleanup);
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_new__0_null));
@@ -119,4 +134,5 @@ void build_case_sortedarray(void) {
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_size));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted__sa_get));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_indexof));
+	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_add__last));
 }
