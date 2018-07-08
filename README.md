@@ -78,6 +78,11 @@ dedicated to and the action it is designed to perform are immediately exposed).
 
 The file `cods.h` is shared by the other modules. It defines common data and
 is included by all the other files.
+It also defines function attributes, this is a GNU extension, and when compiling
+without GNU-C compliance these attributes are defined as empty macros; however
+they can carry semantics for the user (e.g. a function with attribute `CTOR` is
+expected to return a new instance o the desired type, as an object-oriented
+constructor).
 
 It can also serve as the project's main interface (hence the name): if it is
 `#include`d directly, all the project's headers are also included.
