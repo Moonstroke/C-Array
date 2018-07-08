@@ -125,8 +125,22 @@ static void test_sa_add__last(void) {
 	CUTE_assertEquals(sa_get(sortedarray, INT_SORTED_ARRAY_SIZE), param);
 }
 
+static void test_sa_add_dup(void) {
+	static int extra = 13;
+	data_t *const param = &extra;
+	ssize_t expected, got;
+	notice("test sa_add() -- duplicate item is not added");
+	verbose("sa_add(sortedarray, %p)", param);
+	expected = -1;
+	info("expected: %zu", expected);
+	got = sa_add(sortedarray, param);
+	info("got     : %zu", got);
+	CUTE_assertEquals(got, expected);
+	verbose("OK");
+}
+
 void build_case_sortedarray(void) {
-	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 6);
+	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 7);
 	CUTE_setCaseBefore(case_sortedarray, init);
 	CUTE_setCaseAfter(case_sortedarray, cleanup);
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_new__0_null));
@@ -135,4 +149,5 @@ void build_case_sortedarray(void) {
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_is_sorted__sa_get));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_indexof));
 	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_add__last));
+	CUTE_addCaseTest(case_sortedarray, CUTE_makeTest(test_sa_add_dup));
 }
