@@ -7,11 +7,11 @@
 ](https://travis-ci.org/Moonstroke/CODS)
 
 
-![One cod](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
-![Two cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
-![Three cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
-![Four cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
-![Five cods](https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!")
+![One cod][1]
+![Two cods][1]
+![Three cods][1]
+![Four cods][1]
+![Five cods][1]
 
 
 This repo defines structures for dynamically-allocated arrays.
@@ -127,3 +127,6 @@ functions concerning the structure *Array*.
 
 The file `test_fixedarray.c` contains a set of tests for the structure
 *FixedArray*.
+
+
+[1]: https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!"
