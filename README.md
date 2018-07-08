@@ -91,6 +91,31 @@ modify each of these bits.
 The module **bitarray_funcs** declares extraneous functions for this type.
 
 
+#### SortedArray
+
+The module **sortedarray**, and its associated extension **sortedarray_funcs**,
+declare the type `SortedArray` and a set of functions to handle it.
+This type of array sorts its elements at the time of inclusion, using a function
+given at its creation to discriminate the elements. The profile for the function
+is:
+
+    int SortFunction(const data_t*, const data_t*);
+
+The function is expected to return a negative value (that might be lower than
+`-1`) when the first argument is inferior to the second, a positive value (maybe
+greater than `1`) when the first argument is superior to the second, and exactly
+`0` when the two arguments are equivalent.
+
+Searching for an element (when adding or finding it) is implemented with a
+binary search algorithm, and so these operations are performed in logarithmic
+time (`O(log n)` complexity).
+
+This array will not contain two identical elements at once: the function
+`sa_add` will not add the given item and return `-1` if an item equivalent as
+per the sort function is already present in the array. The array can therefore
+be used as an ordered set with logarithmic-time implementation.
+
+
 
 ### Test modules
 
