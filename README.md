@@ -30,6 +30,42 @@ pointers to primitive types, though.
 
 
 
+## Naming convention
+
+
+
+### Types
+
+Each type has its unique identifier, spelled in `PascalCase`: the words are
+joined together and the first letter of each word is capitalized.
+
+This syntax will be familiar to all developers as it is extremely common; Java
+is only one of the many high-level programming languages that have adopted it.
+
+### Functions
+
+Since C does not allow functions to share an identifier, the functions defined
+in this project are named in a specific syntax:
+
+    prefix_action
+
+The `prefix` is unambiguously bound to a type (each type has its own prefix),
+and the `action` describes the behavior of the function.
+
+Several types share an action, for example an `Array` and a `SortedArray` can
+both be `add`ed an item, however the expected behavior is different and
+therefore two different functions exist, one for each type.
+
+The prefix generally consists of the initials of the type name; the exact prefix
+is given in each type's description below.
+
+This peculiar syntax has been adopted for, as said above, its unambiguity, but
+also because it was deemed a good compromise between terseness (names are kept
+short, in terms of character length) and clarity (the type the functions is
+dedicated to and the action it is designed to perform are immediately exposed).
+
+
+
 ## Modules
 
 
@@ -55,6 +91,9 @@ designed for this specific case.
 The module **array_funcs** defines some additional functions (more or less
 useful) to manipulate the structure.
 
+The prefix of the functions dedicated to this type is `a`, so for example the
+function that adds an element to an *Array* is called `a_add`.
+
 
 #### FixedArray
 
@@ -66,6 +105,8 @@ and most likely will -- be `NULL` at some time.
 In the same manner than for *Array*, the module **fixedarray_funcs** defines
 some extra functions for *FixedArray*.
 
+The prefix for the names of the functions related to this type is `fa`.
+
 
 #### LinkedList
 
@@ -76,6 +117,8 @@ data insertion / deletion as those operations are `O(1)`; however element
 retrieval is `O(n)`.
 
 There is once again a module of supplementary functions, **linkedlist_funcs**.
+
+The prefix for this type is `ll`.
 
 
 #### BitArray
@@ -89,6 +132,8 @@ functions manipulating an instance of this type are designed to extract or
 modify each of these bits.
 
 The module **bitarray_funcs** declares extraneous functions for this type.
+
+The prefix for this type is `ba`.
 
 
 #### SortedArray
@@ -114,6 +159,8 @@ This array will not contain two identical elements at once: the function
 `sa_add` will not add the given item and return `-1` if an item equivalent as
 per the sort function is already present in the array. The array can therefore
 be used as an ordered set with logarithmic-time implementation.
+
+The prefix for this type is `sa`.
 
 
 
