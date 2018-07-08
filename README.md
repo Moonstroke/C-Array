@@ -13,7 +13,6 @@
 ![Four cods][1]
 ![Five cods][1]
 
-
 This repo defines structures for dynamically-allocated arrays.
 
 I needed one for the big project I'm working on, [A Point & Click library in
@@ -23,6 +22,7 @@ plain C](https://github.com/Moonstroke/C-SDL-Point-Click), using the SDL v2.
 
 
 ## Usage
+
 
 These implementations can not contain primitive types, only pointers, including
 pointers to primitive types, though.
@@ -41,6 +41,7 @@ joined together and the first letter of each word is capitalized.
 
 This syntax will be familiar to all developers as it is extremely common; Java
 is only one of the many high-level programming languages that have adopted it.
+
 
 ### Functions
 
@@ -174,6 +175,9 @@ functions concerning the structure *Array*.
 
 The file `test_fixedarray.c` contains a set of tests for the structure
 *FixedArray*.
+
+
+
 
 
 [1]: https://vignette.wikia.nocookie.net/minecraft/images/a/ab/RawFish.png/revision/latest "Cods!"
