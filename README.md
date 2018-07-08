@@ -24,8 +24,12 @@ plain C](https://github.com/Moonstroke/C-SDL-Point-Click), using the SDL v2.
 ## Usage
 
 
-These implementations can not contain primitive types, only pointers, including
-pointers to primitive types, though.
+These implementations can not contain primitive types, only pointers -- however
+this includes pointers to primitive types.
+
+As for any C library, the modules can be accessed by including the headers in
+the user's source files (e.g. `#include <CODS/cods.h>`) and by linking the
+library during compilation (e.g. `-lCODS` on GCC).
 
 
 
