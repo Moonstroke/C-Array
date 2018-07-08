@@ -78,6 +78,19 @@ retrieval is `O(n)`.
 There is once again a module of supplementary functions, **linkedlist_funcs**.
 
 
+#### BitArray
+
+The module **bitarray** declares the type `BitArray`, representing a bit array.
+A bit array is a specific type of fixed-size array designed to hold boolean
+values, or bits, which are either *true* or *false* (or `1` and `0` in terms of
+numerical values). The implementation is optimized to represent each element as
+a single bit of storage rather than a whole storage unit (usually an octet), the
+functions manipulating an instance of this type are designed to extract or
+modify each of these bits.
+
+The module **bitarray_funcs** declares extraneous functions for this type.
+
+
 
 ### Test modules
 
