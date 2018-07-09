@@ -94,14 +94,14 @@ static void test_is_sorted__sa_get(void) {
 }
 
 static void test_sa_indexof(void) {
-	size_t expected, got;
+	ssize_t expected, got;
 	notice("test sa_indexof");
 	for(size_t i = 0; i < INT_SORTED_ARRAY_SIZE; ++i) {
 		verbose("sa_indexof(sortedarray, %zu)", i);
-		expected = i;
-		info("expected: %zu", expected);
+		expected = (ssize_t)i;
+		info("expected: %zd", expected);
 		got = sa_indexof(sortedarray, &VALUES_SORTED[i]);
-		info("got     : %zu", got);
+		info("got     : %zd", got);
 		CUTE_assertEquals(got, expected);
 	}
 	verbose("OK");
