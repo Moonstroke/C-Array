@@ -94,7 +94,13 @@ typedef void data_t;
  */
 #define CODS_CTOR __attribute__((__malloc__, __warn_unused_result__))
 
-/** The function is a type method. */
+/**
+ * The function is a member of the type's methods.
+ *
+ * This attribute only ensures that the first argument (the type instance) is
+ * not \c NULL, however it also carries semantic information: the function is an
+ * OO-like method.
+ */
 #define CODS_MEMBER CODS_NOTNULL(1)
 
 
