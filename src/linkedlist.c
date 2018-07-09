@@ -84,7 +84,7 @@ void ll_set(LinkedList *const ll, const size_t i, data_t *const d) {
 	}
 }
 
-int ll_add(LinkedList *const ll, const size_t i, data_t *const d) {
+ssize_t ll_add(LinkedList *const ll, const size_t i, data_t *const d) {
 	Node *item;
 	if(i > ll->len) {
 		errno = ERANGE;

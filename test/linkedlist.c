@@ -161,14 +161,14 @@ static void test_ll_set__invalid(void) {
 static void test_ll_add__valid(void) {
 	static int extra = 8;
 	data_t *const param = &extra;
-	int expected, got;
+	ssize_t expected, got;
 	const size_t index = 3;
 	notice("test ll_add -- valid index");
 	info("ll_add(llist, %zu, %p)", index, param);
-	expected = (signed)index;
-	info("expected: %d", expected);
+	expected = (ssize_t)index;
+	info("expected: %zd", expected);
 	got = ll_add(llist, index, param);
-	info("got     : %d", got);
+	info("got     : %zd", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
 	verbose("OK");

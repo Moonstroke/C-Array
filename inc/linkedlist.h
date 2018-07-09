@@ -24,6 +24,7 @@
 
 #include <stddef.h> /* for size_t */
 #include <stdlib.h> /* for NULL */
+#include <unistd.h> /* for ssize_t */
 
 #include "cods.h" /* for function attrs, data_t */
 
@@ -123,7 +124,7 @@ CODS_NOTNULL(3);
  * \return The index of the element, or \c -1 in case of error: memory
  *         allocation failed, or the \a index is invalid.
  */
-CODS_MEMBER int ll_add(LinkedList *self, size_t index, data_t *item)
+CODS_MEMBER ssize_t ll_add(LinkedList *self, size_t index, data_t *item)
 CODS_NOTNULL(3);
 
 /**
