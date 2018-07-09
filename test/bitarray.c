@@ -65,7 +65,7 @@ static void test_ba_put__valid(void) {
 		param = VALUES[index];
 		verbose("ba_put(barray, %zu, %s)", index, BOOL_REPR(param));
 		expected = VALUES[index];
-		info("expected: %s", expected ? "true" : "false");
+		info("expected: %s", BOOL_REPR(expected));
 		got = ba_put(barray, index, param);
 		info("got     : %s", BOOL_REPR(got));
 		CUTE_assertEquals(got, expected);
