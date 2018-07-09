@@ -24,7 +24,12 @@ plain C](https://github.com/Moonstroke/C-SDL-Point-Click), using the SDL v2.
 ## Usage
 
 
-These implementations can not contain primitive types, only pointers -- however
+This project defines a set of generic data containers. C not featuring type
+genericity the way other higher-level languages do (C++, Java), it is achieved
+using pointers to an abstract data type, called `data_t`, to comply with C
+naming conventions.
+The downside to this implementation is that the provided structures can not
+contain primitive types (`int`, `char`, `float`, etc.), only pointers -- however
 this includes pointers to primitive types.
 
 As for any C library, the modules can be accessed by including the headers in
@@ -76,13 +81,15 @@ dedicated to and the action it is designed to perform are immediately exposed).
 
 ### `cods.h`
 
-The file `cods.h` is shared by the other modules. It defines common data and
-is included by all the other files.
-It also defines function attributes, this is a GNU extension, and when compiling
-without GNU-C compliance these attributes are defined as empty macros; however
-they can carry semantics for the user (e.g. a function with attribute `CTOR` is
-expected to return a new instance o the desired type, as an object-oriented
-constructor).
+The file `cods.h` is shared by the other modules. It defines the common data
+type `data_t`, and the function attributes. These are a GNU extension, and when
+compiling without GNU-C compatibility these attributes are defined as empty
+macros; however they can carry semantic information for the user. For instance,
+a function with attribute `CODS_NOTNULL(1, 3)` expects its first and third
+argument to not be `NULL` pointers. A GNU-compliant compiler will emit a warning
+when a `NULL` is found for any of these arguments, for any other compiler there
+is no check performed and the validity of the pointers is left to the user's
+responsibility.
 
 It can also serve as the project's main interface (hence the name): if it is
 `#include`d directly, all the project's headers are also included.
