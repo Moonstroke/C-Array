@@ -64,12 +64,11 @@ static void test_fa_size(void) {
 }
 
 static void test_fa_set__valid(void) {
-	data_t *param;
 	notice("test fa_set -- valid indices");
 	for(size_t index = 0; index < INT_FIXED_ARRAY_SIZE; ++index) {
-		param = VALUES + index;
-		verbose("fa_set(farray, %zu, %p)", index, param);
-		fa_set(farray, index, param);
+		int value = VALUES[index];
+		verbose("fa_set(farray, %zu, &(%d))", index, value);
+		fa_set(farray, index, &value);
 		info("expected errno: 0");
 		info("got errno     : %d", errno);
 		CUTE_assertNoError();
@@ -78,8 +77,7 @@ static void test_fa_set__valid(void) {
 }
 
 static void test_fa_set__invalid(void) {
-	static int extra_value = 7;
-	data_t *const param = &extra_value;
+	static int value = 7;
 	const size_t invalid_indices[3] = {
 		INT_FIXED_ARRAY_SIZE,
 		INT_FIXED_ARRAY_SIZE + 1,
@@ -89,9 +87,9 @@ static void test_fa_set__invalid(void) {
 	notice("test fa_set -- invalid indices");
 	for(size_t i = 0; i < 3; ++i) {
 		index = invalid_indices[i];
-		verbose("fa_set(farray, %zu, %p)", index, param);
+		verbose("fa_set(farray, %zu, &(%d))", index, value);
 		info("expected errno: %d", ERANGE);
-		fa_set(farray, index, param);
+		fa_set(farray, index, &value);
 		info("got      errno: %d", errno);
 		CUTE_assertErrnoEquals(ERANGE);
 	}
@@ -103,7 +101,7 @@ static void test_fa_get__valid(void) {
 	notice("test fa_get -- valid indices");
 	for(size_t index = 0; index < INT_FIXED_ARRAY_SIZE; ++index) {
 		verbose("fa_get(farray, %zu)", index);
-		expected = VALUES + index;
+		expected = &VALUES[index];
 		info("expected: %p", expected);
 		got = fa_get(farray, index);
 		info("got     : %p", got);
@@ -139,7 +137,7 @@ static void test_fa_unset__valid(void) {
 	data_t *expected, *got;
 	notice("test fa_unset -- valid index");
 	verbose("fa_unset(farray, %zu)", index);
-	expected = VALUES + index;
+	expected = &VALUES[index];
 	info("expected: %p", expected);
 	got = fa_unset(farray, index);
 	info("got     : %p", got);
@@ -185,43 +183,40 @@ static void test_fa_count(void) {
 }
 
 static void test_fa_put__valid(void) {
-	static int extra = 33;
+	static int value = 33;
 	const size_t index = 4;
-	data_t *const param = &extra;
 	ssize_t expected, got;
 	notice("test fa_put");
 	fa_unset(farray, index);
-	verbose("fa_put(farray, %p)", param);
+	verbose("fa_put(farray, &(%d))", value);
 	expected = index;
 	info("expected: %zd", expected);
-	got = fa_put(farray, param);
+	got = fa_put(farray, &value);
 	info("got     : %zd", got);
 	CUTE_assertEquals(got, expected);
 	verbose("OK");
 }
 
 static void test_fa_put__invalid(void) {
-	int extra = 7;
-	data_t *const param = &extra;
+	static int value = 7;
 	ssize_t got;
 	notice("test fa_put -- invalid (array is full)");
-	verbose("fa_put(farray, %p)", param);
+	verbose("fa_put(farray, &(%d))", value);
 	info("expected: -1");
-	got = fa_put(farray, param);
+	got = fa_put(farray, &value);
 	info("got     : %zd", got);
 	CUTE_assertEquals(got, -1);
 	verbose("OK");
 }
 
 static void test_fa_cond__valid(void) {
-	static int test_val = 55;
-	data_t *const param = &test_val;
+	static int value = 55;
 	data_t *expected, *got;
-	notice("test fa_cond -- valid element value: %d", test_val);
-	verbose("fa_cond(farray, %s, %p)", equal_as_ints_repr, param);
-	expected = VALUES + 6;
+	notice("test fa_cond -- valid element value: %d", value);
+	verbose("fa_cond(farray, %s, &(%d))", equal_as_ints_repr, value);
+	expected = &VALUES[6];
 	info("expected: %p", expected);
-	got = fa_cond(farray, equal_as_ints, param);
+	got = fa_cond(farray, equal_as_ints, &value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
@@ -229,14 +224,14 @@ static void test_fa_cond__valid(void) {
 }
 
 static void test_fa_cond__null(void) {
+	static int value = 9; /* VALUES[index] */
 	const size_t index = 5;
-	data_t *const param = VALUES + index;
 	data_t *expected, *got;
 	notice("test fa_cond -- NULL as function (compare addresses)");
-	verbose("fa_cond(farray, (nil), %p)", param);
-	expected = VALUES + index;
+	verbose("fa_cond(farray, (nil), &(%d))", value);
+	expected = &VALUES[index];
 	info("expected: %p", expected);
-	got = fa_cond(farray, NULL, param);
+	got = fa_cond(farray, NULL, &value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
@@ -244,13 +239,12 @@ static void test_fa_cond__null(void) {
 }
 
 static void test_fa_cond__invalid(void) {
-	static int test_val = 83;
-	data_t *const param = &test_val;
+	static int value = 83;
 	data_t *got;
-	notice("test fa_cond -- invalid value: %d", test_val);
-	verbose("fa_cond(farray, %s, %p)", equal_as_ints_repr, param);
+	notice("test fa_cond -- invalid value: %d", value);
+	verbose("fa_cond(farray, %s, &(%d))", equal_as_ints_repr, value);
 	info("expected: (nil)");
-	got = fa_cond(farray, equal_as_ints, param);
+	got = fa_cond(farray, equal_as_ints, &value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
 	CUTE_assertErrnoEquals(EINVAL);
@@ -258,14 +252,13 @@ static void test_fa_cond__invalid(void) {
 }
 
 static void test_fa_remove__valid(void) {
-	static int test_val = 6;
-	data_t *const param = &test_val;
+	static int value = 6;
 	data_t *expected, *got;
-	notice("test fa_remove -- valid element value: %d", test_val);
-	verbose("fa_remove(farray, %s, %p)", equal_as_ints_repr, param);
-	expected = VALUES + 2;
+	notice("test fa_remove -- valid element value: %d", value);
+	verbose("fa_remove(farray, %s, &(%d))", equal_as_ints_repr, value);
+	expected = &VALUES[2];
 	info("expected: %p", expected);
-	got = fa_cond(farray, equal_as_ints, param);
+	got = fa_cond(farray, equal_as_ints, &value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
@@ -273,14 +266,14 @@ static void test_fa_remove__valid(void) {
 }
 
 static void test_fa_remove__null(void) {
+	static int value = 9; /* VALUES[index] */
 	const size_t index = 5;
-	data_t *const param = VALUES + index;
 	data_t *expected, *got;
 	notice("test fa_remove -- NULL as function (compare addresses)");
-	verbose("fa_remove(farray, (nil), %p)", param);
-	expected = VALUES + index;
+	verbose("fa_remove(farray, (nil), &(%d))", value);
+	expected = &VALUES[index];
 	info("expected: %p", expected);
-	got = fa_cond(farray, NULL, param);
+	got = fa_cond(farray, NULL, &value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
@@ -288,13 +281,12 @@ static void test_fa_remove__null(void) {
 }
 
 static void test_fa_remove__invalid(void) {
-	static int test_val = 37;
-	data_t *const param = &test_val;
+	static int value = 37;
 	data_t *got;
-	notice("test fa_remove -- invalid element value: %d", test_val);
-	verbose("fa_remove(farray, %s, %p)", equal_as_ints_repr, param);
+	notice("test fa_remove -- invalid element value: %d", value);
+	verbose("fa_remove(farray, %s, &(%d))", equal_as_ints_repr, value);
 	info("expected: (nil)");
-	got = fa_cond(farray, equal_as_ints, param);
+	got = fa_cond(farray, equal_as_ints, &value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, NULL);
 	CUTE_assertErrnoEquals(EINVAL);

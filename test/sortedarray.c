@@ -108,32 +108,30 @@ static void test_sa_indexof(void) {
 }
 
 static void test_sa_add__last(void) {
-	static int extra = 1024;
-	data_t *const param = &extra;
+	static int value = 1024;
 	ssize_t expected, got;
 	notice("test sa_add() -- add item last in array");
-	verbose("sa_add(sortedarray, %p)", param);
+	verbose("sa_add(sortedarray, &(%d))", value);
 	expected = INT_SORTED_ARRAY_SIZE;
 	info("expected: %zu", expected);
-	got = sa_add(sortedarray, param);
+	got = sa_add(sortedarray, &value);
 	info("got     : %zu", got);
 	CUTE_assertEquals(got, expected);
 	verbose("OK");
 	// a-posteriori check of the value actually set
-	info("A posteriori validity check: sa_get(sortedarray, %zu) == %p",
-	     INT_SORTED_ARRAY_SIZE, param);
-	CUTE_assertEquals(sa_get(sortedarray, INT_SORTED_ARRAY_SIZE), param);
+	info("A posteriori validity check: sa_get(sortedarray, %zu) == %d",
+	     INT_SORTED_ARRAY_SIZE, value);
+	CUTE_assertEquals(sa_get(sortedarray, INT_SORTED_ARRAY_SIZE), &value);
 }
 
 static void test_sa_add_dup(void) {
-	static int extra = 13;
-	data_t *const param = &extra;
+	static int value = 13;
 	ssize_t expected, got;
 	notice("test sa_add() -- duplicate item is not added");
-	verbose("sa_add(sortedarray, %p)", param);
+	verbose("sa_add(sortedarray, &(%d))", value);
 	expected = -1;
 	info("expected: %zu", expected);
-	got = sa_add(sortedarray, param);
+	got = sa_add(sortedarray, &value);
 	info("got     : %zu", got);
 	CUTE_assertEquals(got, expected);
 	verbose("OK");
