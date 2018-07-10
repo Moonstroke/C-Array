@@ -56,7 +56,6 @@ size_t sa_size(const SortedArray *const self) {
 
 ssize_t sa_add(SortedArray *const self, data_t *const item) {
 	size_t end;
-	ssize_t r;
 	if(!a_size(self->array)) {
 		return a_add(self->array, 0, item);
 	} else if(a_size(self->array) == 1) {
@@ -69,11 +68,9 @@ ssize_t sa_add(SortedArray *const self, data_t *const item) {
 			return -1;
 		}
 	}
-	if(_sa_binsearch(self, item, &end) < 0) {
-		r = a_add(self->array, end, item) < 0 ? -1 : (ssize_t)end;
-	} else
-		r = -1;
-	return r;
+	if(_sa_binsearch(self, item, &end) < 0)
+		return a_add(self->array, end, item) < 0 ? -1 : (ssize_t)end;
+	return -1;
 }
 
 data_t *sa_get(const SortedArray *const self, const size_t index) {
