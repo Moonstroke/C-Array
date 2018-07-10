@@ -82,3 +82,7 @@ ssize_t sa_indexof(const SortedArray *const self, const data_t *const value) {
 }
 
 extern data_t *sa_geteq(const SortedArray*, const data_t*);
+
+data_t *sa_drop(SortedArray *const self, const size_t index) {
+	return a_drop(self->array, index);
+}

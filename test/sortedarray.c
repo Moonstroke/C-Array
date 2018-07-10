@@ -137,6 +137,8 @@ static void test_sa_add_dup(void) {
 	verbose("OK");
 }
 
+// TODO sa_drop
+
 void build_case_sortedarray(void) {
 	case_sortedarray = CUTE_newTestCase("Tests for SortedArray", 7);
 	CUTE_setCaseBefore(case_sortedarray, init);

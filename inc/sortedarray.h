@@ -33,4 +33,6 @@ data_t *sa_geteq(const SortedArray *const self, const data_t *const other) {
 	return index == -1 ? NULL : sa_get(self, index);
 }
 
+CODS_MEMBER data_t *sa_drop(SortedArray *self, size_t index);
+
 #endif /* CODS_SORTEDARRAY_H */
