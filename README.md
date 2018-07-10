@@ -42,6 +42,15 @@ library during compilation (e.g. `-lCODS` on GCC).
 ## Naming convention
 
 
+The function attributes (and include guards macros) are prefixed with `CODS_` to
+eliminate any possible name clashes, but also to discourage their utilization in
+user code, as they are only designed as project-internal features.
+Users are, of course, allowed to define their own function attributes -- as long
+as they watch out for naming conflicts.
+
+The types and functions defined in this project, however, are named without that
+prefix, as this project aims to integrate seamlessly in user code.
+
 
 ### Types
 
