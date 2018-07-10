@@ -70,7 +70,6 @@ ssize_t sa_add(SortedArray *const self, data_t *const item) {
 		}
 	}
 	if(_sa_binsearch(self, item, &end) < 0) {
-		debug("not found, add @ %zu", end);
 		r = a_add(self->array, end, item) < 0 ? -1 : (ssize_t)end;
 	} else
 		r = -1;
