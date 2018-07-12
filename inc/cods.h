@@ -106,6 +106,7 @@ typedef void data_t;
 
 #if !defined(CODS_FIXEDARRAY_H) && !defined(CODS_FIXEDARRAY_FUNCS_H) \
     && !defined(CODS_ARRAY_H) && !defined(CODS_ARRAY_FUNCS_H) \
+    && !defined(CODS_ARRAYMAP_H)\
     && !defined(CODS_LINKEDLIST_H) && !defined(CODS_LINKEDLIST_FUNCS_H) \
     && !defined(CODS_BITARRAY_H) && !defined(CODS_BITARRAY_FUNCS_H)\
     && !defined(CODS_SORTEDARRAY_H)
@@ -114,6 +115,7 @@ typedef void data_t;
 
 #include "array.h"
 #include "array_funcs.h"
+#include "arraymap.h"
 #include "bitarray.h"
 #include "bitarray_funcs.h"
 #include "fixedarray.h"
