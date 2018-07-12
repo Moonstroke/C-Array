@@ -45,6 +45,9 @@ extern void build_case_linkedlist(void);
 extern CUTE_TestCase *case_sortedarray;
 extern void build_case_sortedarray(void);
 
+extern CUTE_TestCase *case_arraymap;
+extern void build_case_arraymap(void);
+
 
 int main(void) {
 
@@ -56,13 +59,14 @@ int main(void) {
 	build_case_bitarray();
 	build_case_linkedlist();
 	build_case_sortedarray();
+	build_case_arraymap();
 
-	CUTE_prepareTestSuite(5, case_fixedarray, case_array, case_bitarray,
-	                      case_linkedlist, case_sortedarray);
+	CUTE_prepareTestSuite(6, case_fixedarray, case_array, case_bitarray,
+	                      case_linkedlist, case_sortedarray, case_arraymap);
 
 	results = CUTE_runTestSuite();
 
-	CUTE_printResults(5, results);
+	CUTE_printResults(6, results);
 
 
 	return EXIT_SUCCESS;
