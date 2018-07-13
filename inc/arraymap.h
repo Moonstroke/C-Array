@@ -12,6 +12,10 @@
  * keys can map to the same value, in that case the pointers will be considered
  * to be different elements.
  *
+ * It is not specified whether NULL is a valid key or value. To make a NULL key
+ * possible, the provided comparison function must handle that value--and of
+ * course, there can only be one NULL key in the map.
+ *
  * This structure is implemented with two arrays: one that contains the keys,
  * and the other, the values. The arrays are parallel in that a key has the same
  * index in the array of keys as its value in the array of values. The keys are
@@ -72,8 +76,7 @@ CODS_MEMBER void am_free(ArrayMap *self);
  * \return \c true if the key and the value could be placed, or \c false if any
  *         error occurred.
  */
-CODS_MEMBER bool am_put(ArrayMap *self, key_t *key, value_t *value)
-CODS_NOTNULL(2, 3);
+CODS_MEMBER bool am_put(ArrayMap *self, key_t *key, value_t *value);
 
 /**
  * \brief Retrieves the value mapped to a key in the array map.
