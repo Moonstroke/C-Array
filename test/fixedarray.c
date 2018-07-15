@@ -224,14 +224,14 @@ static void test_fa_cond__valid(void) {
 }
 
 static void test_fa_cond__null(void) {
-	static int value = 9; /* VALUES[index] */
 	const size_t index = 5;
+	const int *value = &VALUES[index];
 	data_t *expected, *got;
 	notice("test fa_cond -- NULL as function (compare addresses)");
-	verbose("fa_cond(farray, (nil), &(%d))", value);
+	verbose("fa_cond(farray, (nil), &(%d))", *value);
 	expected = &VALUES[index];
 	info("expected: %p", expected);
-	got = fa_cond(farray, NULL, &value);
+	got = fa_cond(farray, NULL, value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
@@ -266,14 +266,14 @@ static void test_fa_remove__valid(void) {
 }
 
 static void test_fa_remove__null(void) {
-	static int value = 9; /* VALUES[index] */
 	const size_t index = 5;
+	const int *value = &VALUES[index];
 	data_t *expected, *got;
 	notice("test fa_remove -- NULL as function (compare addresses)");
-	verbose("fa_remove(farray, (nil), &(%d))", value);
+	verbose("fa_remove(farray, (nil), &(%d))", *value);
 	expected = &VALUES[index];
 	info("expected: %p", expected);
-	got = fa_cond(farray, NULL, &value);
+	got = fa_cond(farray, NULL, value);
 	info("got     : %p", got);
 	CUTE_assertEquals(got, expected);
 	CUTE_assertNoError();
