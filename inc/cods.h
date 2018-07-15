@@ -1,11 +1,18 @@
 /**
- * \file "arrays.h"
+ * \file "cods.h"
  * \author joH1
  * \version 0.1
  *
- * \brief Function attributes the GNU way.
+ * \brief Main header of the project + common features.
  *
- * This file declares macros defining function and expressions attributes
+ * This file can be used as the main project of the header: including it in user
+ * source will include also all the headers in the project. It is less tedious
+ * than including all headers, and ensures that any desired feature is made
+ * accessible.
+ *
+ * Besides that, this file is also included by all the headers of the project,
+ * as it also declares content shared between the different modules: the generic
+ * type alias \c data_t, and macros defining function and expressions attributes
  * based on GNU C attributes.
  */
 
