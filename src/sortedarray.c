@@ -86,3 +86,5 @@ extern data_t *sa_geteq(const SortedArray*, const data_t*);
 data_t *sa_drop(SortedArray *const self, const size_t index) {
 	return a_drop(self->array, index);
 }
+
+extern data_t *sa_remove(SortedArray*, const data_t*);

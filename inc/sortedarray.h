@@ -127,4 +127,19 @@ data_t *sa_geteq(const SortedArray *const self, const data_t *const other) {
  */
 CODS_MEMBER data_t *sa_drop(SortedArray *self, size_t index);
 
+
+/**
+ * \brief Removes an element in the sorted array equivalent to the given value.
+ *
+ * \param[in] self  The sorted array
+ * \param[in] value The equivalent element
+ *
+ * \return A pointer to the element just returned, or \c NULL.
+ */
+CODS_MEMBER CODS_INLINE data_t *sa_remove(SortedArray *const self,
+                                          const data_t *const other) {
+	const ssize_t index = sa_indexof(self, other);
+	return index < 0 ? NULL : sa_drop(self, index);
+}
+
 #endif /* CODS_SORTEDARRAY_H */
